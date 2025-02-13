@@ -1,3 +1,7 @@
+![MAIN_LOGO](https://github.com/user-attachments/assets/2cfa5d66-5018-49d2-bcc5-6c7ae81a0a6f)
+
+https://mycodingtest.com/
+
 ## I. 프로젝트 개요
 ### 1.1 MY CODING TEST 란?
 MY CODING TEST는 코딩 테스트 문제 풀이 기록 및 복습 효율 향상를 위한 서비스입니다.
