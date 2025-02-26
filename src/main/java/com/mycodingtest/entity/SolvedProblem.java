@@ -47,15 +47,7 @@ public class SolvedProblem {
         this.recentResultText = resultText;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public int getProblemNumber() {
-        return problemNumber;
-    }
-
-    public void changeFavorite() {
+    public void reverseFavoriteStatus() {
         favorited = !favorited;
     }
 }

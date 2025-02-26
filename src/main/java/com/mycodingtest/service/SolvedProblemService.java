@@ -39,7 +39,7 @@ public class SolvedProblemService {
                 .orElseThrow(ResourceNotFoundException::new);
         if (!solvedProblem.getUser().getId().equals(userId)) throw new InvalidOwnershipException();
 
-        solvedProblem.changeFavorite();
+        solvedProblem.reverseFavoriteStatus();
     }
 
     @Transactional(readOnly = true)
