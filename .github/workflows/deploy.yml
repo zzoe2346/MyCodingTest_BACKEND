@@ -15,6 +15,7 @@ jobs:
 
       - name: Make properties with secrets
         run: |
+          mkdir -p ./src/main/resources
           touch ./src/main/resources/application.properties
           echo "${{ secrets.PROD_PROPERTIES }}" > ./src/main/resources/application.properties
       #      - run: cat ./src/main/resources/application.properties
