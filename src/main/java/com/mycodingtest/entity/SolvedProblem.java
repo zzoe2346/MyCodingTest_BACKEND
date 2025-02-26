@@ -1,25 +1,37 @@
 package com.mycodingtest.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class SolvedProblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int problemNumber;
+
     private String problemTitle;
+
+    private LocalDateTime recentSubmitAt;
+
+    private String recentResultText;
+
+    private boolean favorited = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private Review review;
-    private LocalDateTime recentSubmitAt;
-    private String recentResultText;
-    private boolean favorited = false;
+
     @OneToMany(mappedBy = "solvedProblem", cascade = CascadeType.REMOVE)
     Set<SolvedProblemTag> tags = new HashSet<>();
 
@@ -55,13 +67,5 @@ public class SolvedProblem {
 
     public void changeFavorite() {
         favorited = !favorited;
-    }
-
-    public Set<SolvedProblemTag> getTags() {
-        return tags;
-    }
-
-    public User getUser() {
-        return user;
     }
 }
