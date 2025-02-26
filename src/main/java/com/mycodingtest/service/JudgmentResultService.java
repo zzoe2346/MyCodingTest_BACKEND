@@ -6,7 +6,6 @@ import com.mycodingtest.entity.JudgmentResult;
 import com.mycodingtest.entity.Review;
 import com.mycodingtest.entity.SolvedProblem;
 import com.mycodingtest.entity.User;
-import com.mycodingtest.exception.InvalidOwnershipException;
 import com.mycodingtest.exception.NotOurUserException;
 import com.mycodingtest.repository.JudgmentResultRepository;
 import com.mycodingtest.repository.SolvedProblemRepository;
@@ -34,14 +33,29 @@ public class JudgmentResultService {
         User user = userRepository.findById(userId)
                 .orElseThrow(NotOurUserException::new);
 
-        SolvedProblem solvedProblem = solvedProblemRepository.findByUserIdAndProblemNumber(userId, request.problemNumber())
-                .orElse(new SolvedProblem(request.problemNumber(), request.problemTitle(), user, new Review(user)));
+        SolvedProblem solvedProblem = prepareSolvedProblem(request, user);
 
+        judgmentResultRepository.save(new JudgmentResult(
+                request.baekjoonId(),
+                request.codeLength(),
+                request.language(),
+                request.memory(),
+                request.problemNumber(),
+                request.resultText(),
+                request.submissionId(),
+                request.submittedAt(),
+                request.time(),
+                user,
+                solvedProblem)
+        );
+    }
+
+    private SolvedProblem prepareSolvedProblem(JudgmentResultSaveRequest request, User user) {
+        SolvedProblem solvedProblem = solvedProblemRepository.findByUserIdAndProblemNumber(user.getId(), request.problemNumber())
+                .orElseGet(() -> new SolvedProblem(request.problemNumber(), request.problemTitle(), user, new Review(user)));
         solvedProblem.setRecentSubmitAt(request.submittedAt());
         solvedProblem.setRecentResultText(request.resultText());
-        solvedProblemRepository.save(solvedProblem);
-
-        judgmentResultRepository.save(new JudgmentResult(request.baekjoonId(), request.codeLength(), request.language(), request.memory(), request.problemNumber(), request.resultText(), request.submissionId(), request.submittedAt(), request.time(), user, solvedProblem));
+        return solvedProblemRepository.save(solvedProblem);
     }
 
     @Transactional(readOnly = true)
