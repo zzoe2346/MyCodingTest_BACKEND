@@ -45,7 +45,7 @@ public class JudgmentResultController {
     @GetMapping("/api/solved-problems/judgment-results/submission-id-check/{submissionId}")
     @Operation(summary = "이미 제출된 채점 결과인지 확인", description = "특정 채점 결과의 제출 코드를 조회합니다.")
     public ResponseEntity<Void> getDuplicatedSubmissionIdCheckResult(@PathVariable Long submissionId) {
-        boolean isDuplicated = judgmentResultService.getDuplicatedSubmissionIdCheckResult(submissionId);
+        boolean isDuplicated = judgmentResultService.isSubmissionIdDuplicated(submissionId);
         if (isDuplicated) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
