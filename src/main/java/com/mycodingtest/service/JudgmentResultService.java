@@ -54,8 +54,7 @@ public class JudgmentResultService {
     private SolvedProblem prepareSolvedProblem(JudgmentResultSaveRequest request, User user) {
         SolvedProblem solvedProblem = solvedProblemRepository.findByUserIdAndProblemNumber(user.getId(), request.problemNumber())
                 .orElseGet(() -> new SolvedProblem(request.problemNumber(), request.problemTitle(), user, new Review(user)));
-        solvedProblem.setRecentSubmitAt(request.submittedAt());
-        solvedProblem.setRecentResultText(request.resultText());
+        solvedProblem.updateRecentResult(request.submittedAt(), request.resultText());
         return solvedProblemRepository.save(solvedProblem);
     }
 

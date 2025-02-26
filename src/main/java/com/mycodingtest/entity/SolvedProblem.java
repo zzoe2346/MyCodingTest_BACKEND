@@ -42,19 +42,9 @@ public class SolvedProblem {
         this.review = review;
     }
 
-    protected SolvedProblem() {
-    }
-
-    public Review getReview() {
-        return review;
-    }
-
-    public void setRecentResultText(String recentResultText) {
-        this.recentResultText = recentResultText;
-    }
-
-    public void setRecentSubmitAt(LocalDateTime recentSubmitAt) {
-        this.recentSubmitAt = recentSubmitAt;
+    public void updateRecentResult(LocalDateTime submittedAt, String resultText) {
+        this.recentSubmitAt = submittedAt;
+        this.recentResultText = resultText;
     }
 
     public Long getId() {
