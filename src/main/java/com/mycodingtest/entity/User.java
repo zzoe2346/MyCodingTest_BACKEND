@@ -1,11 +1,15 @@
 package com.mycodingtest.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@NoArgsConstructor
 @Table(name = "`USER`")
 public class User {
     @Id
@@ -25,20 +29,5 @@ public class User {
         this.picture = picture;
         this.oauthProvider = oauthProvider;
         this.oauthId = oauthId;
-    }
-
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPicture() {
-        return picture;
     }
 }
