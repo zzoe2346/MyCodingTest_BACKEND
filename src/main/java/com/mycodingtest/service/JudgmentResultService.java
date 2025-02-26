@@ -60,7 +60,7 @@ public class JudgmentResultService {
     }
 
     @Transactional(readOnly = true)
-    public boolean getDuplicatedSubmissionIdCheckResult(Long submissionId) {
+    public boolean isSubmissionIdDuplicated(Long submissionId) {
         return judgmentResultRepository.existsBySubmissionId(submissionId);
     }
 }
