@@ -4,7 +4,6 @@ import com.mycodingtest.dto.AlgorithmTagResponse;
 import com.mycodingtest.dto.AlgorithmTagSetRequest;
 import com.mycodingtest.entity.SolvedProblem;
 import com.mycodingtest.entity.SolvedProblemTag;
-import com.mycodingtest.exception.InvalidOwnershipException;
 import com.mycodingtest.exception.ResourceNotFoundException;
 import com.mycodingtest.repository.SolvedProblemRepository;
 import com.mycodingtest.repository.SolvedProblemTagRepository;
@@ -31,8 +30,7 @@ public class TagService {
     public void setAlgorithmTags(Long solvedProblemId, AlgorithmTagSetRequest request, Long userId) {
         SolvedProblem solvedProblem = solvedProblemRepository.findById(solvedProblemId)
                 .orElseThrow(ResourceNotFoundException::new);
-        if (!solvedProblem.getUser().getId().equals(userId)) throw new InvalidOwnershipException();
-
+        solvedProblem.validateOwnership(userId);
         if (request.tagIds().length == 0) {
             solvedProblemTagRepository.deleteAllBySolvedProblem(solvedProblem);
             return;
