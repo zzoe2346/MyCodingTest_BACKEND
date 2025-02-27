@@ -1,12 +1,20 @@
 package com.mycodingtest.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@IdClass(SolvedProblemTagId.class)
+@Getter
+@NoArgsConstructor
+@IdClass(SolvedProblemTag.SolvedProblemTagId.class)
 public class SolvedProblemTag {
     @Id
     private int tagId;
+
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     private SolvedProblem solvedProblem;
@@ -16,10 +24,21 @@ public class SolvedProblemTag {
         this.tagId = tagId;
     }
 
-    public SolvedProblemTag() {
-    }
+    public static class SolvedProblemTagId implements Serializable {
+        private int tagId;
+        private Long solvedProblemId;
 
-    public int getTagId() {
-        return tagId;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            SolvedProblemTagId that = (SolvedProblemTagId) o;
+            return tagId == that.tagId && Objects.equals(solvedProblemId, that.solvedProblemId);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(tagId, solvedProblemId);
+        }
     }
 }
