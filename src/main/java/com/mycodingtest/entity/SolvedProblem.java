@@ -1,5 +1,6 @@
 package com.mycodingtest.entity;
 
+import com.mycodingtest.exception.InvalidOwnershipException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,5 +50,11 @@ public class SolvedProblem {
 
     public void reverseFavoriteStatus() {
         favorited = !favorited;
+    }
+
+    public void validateOwnership(Long userId) {
+        if (!this.user.getId().equals(userId)) {
+            throw new InvalidOwnershipException("User " + userId + " does not own this solved problem");
+        }
     }
 }

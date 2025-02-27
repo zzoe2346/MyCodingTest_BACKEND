@@ -4,7 +4,6 @@ import com.mycodingtest.dto.MyTagListResponse;
 import com.mycodingtest.dto.SolvedProblemWithReviewResponse;
 import com.mycodingtest.entity.JudgmentResult;
 import com.mycodingtest.entity.SolvedProblem;
-import com.mycodingtest.exception.InvalidOwnershipException;
 import com.mycodingtest.exception.ResourceNotFoundException;
 import com.mycodingtest.repository.JudgmentResultRepository;
 import com.mycodingtest.repository.SolvedProblemRepository;
@@ -35,9 +34,7 @@ public class SolvedProblemService {
 
     @Transactional
     public void changeFavorite(Long solvedProblemId, Long userId) {
-        SolvedProblem solvedProblem = solvedProblemRepository.findById(solvedProblemId)
-                .orElseThrow(ResourceNotFoundException::new);
-        if (!solvedProblem.getUser().getId().equals(userId)) throw new InvalidOwnershipException();
+        SolvedProblem solvedProblem = getSolvedProblemAndValidateOwnership(solvedProblemId, userId);
 
         solvedProblem.reverseFavoriteStatus();
     }
@@ -64,9 +61,7 @@ public class SolvedProblemService {
 
     @Transactional
     public void deleteSolvedProblem(Long solvedProblemId, Long userId) {
-        SolvedProblem solvedProblem = solvedProblemRepository.findById(solvedProblemId)
-                .orElseThrow(ResourceNotFoundException::new);
-        if (!solvedProblem.getUser().getId().equals(userId)) throw new InvalidOwnershipException();
+        SolvedProblem solvedProblem = getSolvedProblemAndValidateOwnership(solvedProblemId, userId);
 
         List<JudgmentResult> judgmentResults = judgmentResultRepository.findAllBySolvedProblem(solvedProblem);
         List<String> submissionIdList = judgmentResults.stream()
@@ -78,5 +73,14 @@ public class SolvedProblemService {
 
         solvedProblemRepository.delete(solvedProblem);
         judgmentResultRepository.deleteAll(judgmentResults);
+    }
+
+    private SolvedProblem getSolvedProblemAndValidateOwnership(Long solvedProblemId, Long userId) {
+        SolvedProblem solvedProblem = solvedProblemRepository.findById(solvedProblemId)
+                .orElseThrow(ResourceNotFoundException::new);
+
+        solvedProblem.validateOwnership(userId);
+
+        return solvedProblem;
     }
 }
