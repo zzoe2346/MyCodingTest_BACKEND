@@ -5,7 +5,7 @@ import com.mycodingtest.dto.JudgmentResultSaveRequest;
 import com.mycodingtest.dto.UrlResponse;
 import com.mycodingtest.security.CustomUserDetails;
 import com.mycodingtest.service.JudgmentResultService;
-import com.mycodingtest.service.S3Service;
+import com.mycodingtest.service.SourceCodeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -20,11 +20,11 @@ import java.util.List;
 public class JudgmentResultController {
 
     private final JudgmentResultService judgmentResultService;
-    private final S3Service s3Service;
+    private final SourceCodeService sourceCodeService;
 
-    public JudgmentResultController(JudgmentResultService judgmentResultService, S3Service s3Service) {
+    public JudgmentResultController(JudgmentResultService judgmentResultService, SourceCodeService sourceCodeService) {
         this.judgmentResultService = judgmentResultService;
-        this.s3Service = s3Service;
+        this.sourceCodeService = sourceCodeService;
     }
 
     @PostMapping("/api/solved-problems/judgment-results")
@@ -56,7 +56,7 @@ public class JudgmentResultController {
     @Operation(summary = "제출 소스 코드 읽기 URL 획득")
     public ResponseEntity<UrlResponse> getCodeReadUrl(@PathVariable String submissionId,
                                                       @AuthenticationPrincipal CustomUserDetails userDetails) {
-        String url = s3Service.getCodeReadUrl(submissionId, userDetails.getUserId());
+        String url = sourceCodeService.getCodeReadUrl(submissionId, userDetails.getUserId());
         return ResponseEntity.ok(new UrlResponse(url));
     }
 
@@ -64,7 +64,7 @@ public class JudgmentResultController {
     @Operation(summary = "제출 소스 코드 저장,수정 URL 획득")
     public ResponseEntity<UrlResponse> getCodeUpdateUrl(@PathVariable String submissionId,
                                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
-        String url = s3Service.getCodeUpdateUrl(submissionId, userDetails.getUserId());
+        String url = sourceCodeService.getCodeUpdateUrl(submissionId, userDetails.getUserId());
         return ResponseEntity.ok(new UrlResponse(url));
     }
 }
