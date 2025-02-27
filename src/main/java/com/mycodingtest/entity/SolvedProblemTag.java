@@ -26,19 +26,19 @@ public class SolvedProblemTag {
 
     public static class SolvedProblemTagId implements Serializable {
         private int tagId;
-        private Long solvedProblemId;
+        private Long solvedProblem;
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             SolvedProblemTagId that = (SolvedProblemTagId) o;
-            return tagId == that.tagId && Objects.equals(solvedProblemId, that.solvedProblemId);
+            return tagId == that.tagId && Objects.equals(solvedProblem, that.solvedProblem);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(tagId, solvedProblemId);
+            return Objects.hash(tagId, solvedProblem);
         }
     }
 }
