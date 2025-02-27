@@ -50,12 +50,11 @@ public class ReviewController {
     }
 
     @PutMapping("/api/solved-problems/reviews/{reviewId}/status")
-    @Operation(summary = "리뷰 상태를 완료로 전환 시킴. 지금은 완료로만 바꾸는것만 고려한다. 최신 상태 응답한다.")
+    @Operation(summary = "리뷰 상태를 완료로 전환 시킴. 최신 상태 응답.")
     public ResponseEntity<ReviewRecentStatusResponse> updateReviewStatus(@PathVariable Long reviewId,
-                                                                         @RequestBody ReviewStatusUpdateRequest request,
                                                                          @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        return ResponseEntity.ok(reviewService.updateReviewStatus(reviewId, request, userDetails.getUserId()));
+        return ResponseEntity.ok(reviewService.updateReviewStatus(reviewId, userDetails.getUserId()));
     }
 
     @GetMapping("/api/solved-problems/unreviewed-count")
