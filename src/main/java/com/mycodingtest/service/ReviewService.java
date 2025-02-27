@@ -12,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final S3Service s3Service;
+    private final MemoService memoService;
 
-    public ReviewService(ReviewRepository reviewRepository, S3Service s3Service) {
+    public ReviewService(ReviewRepository reviewRepository, MemoService memoService) {
         this.reviewRepository = reviewRepository;
-        this.s3Service = s3Service;
+        this.memoService = memoService;
     }
 
     @Transactional
@@ -37,14 +37,14 @@ public class ReviewService {
     public UrlResponse getMemoUpdateUrl(Long reviewId, Long userId) {
         getReviewAndValidateOwnership(reviewId, userId);
 
-        return new UrlResponse(s3Service.getMemoUpdateUrl(String.valueOf(reviewId), userId));
+        return new UrlResponse(memoService.getMemoUpdateUrl(String.valueOf(reviewId), userId));
     }
 
     @Transactional(readOnly = true)
     public UrlResponse getMemoReadUrl(Long reviewId, Long userId) {
         getReviewAndValidateOwnership(reviewId, userId);
 
-        return new UrlResponse(s3Service.getMemoReadUrl(String.valueOf(reviewId), userId));
+        return new UrlResponse(memoService.getMemoReadUrl(String.valueOf(reviewId), userId));
     }
 
     @Transactional
