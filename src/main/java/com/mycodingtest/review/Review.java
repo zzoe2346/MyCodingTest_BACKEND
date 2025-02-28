@@ -38,7 +38,7 @@ public class Review {
 
     public void validateOwnership(Long userId) {
         if (!this.user.getId().equals(userId)) {
-            throw new InvalidOwnershipException("User " + userId + " does not own this review");
+            throw new InvalidOwnershipException();
         }
     }
 
