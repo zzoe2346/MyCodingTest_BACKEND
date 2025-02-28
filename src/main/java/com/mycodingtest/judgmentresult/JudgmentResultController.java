@@ -1,6 +1,6 @@
 package com.mycodingtest.judgmentresult;
 
-import com.mycodingtest.storage.UrlResponse;
+import com.mycodingtest.storage.dto.UrlResponse;
 import com.mycodingtest.security.CustomUserDetails;
 import com.mycodingtest.review.SourceCodeService;
 import io.swagger.v3.oas.annotations.Operation;
