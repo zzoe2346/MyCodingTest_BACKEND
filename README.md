@@ -46,7 +46,6 @@
   - 체감 난이도
   - 재복습 필요도
   - 북마크
-  - 태그
 - 모바일 UI 지원
     
 ## Deploy Architecture
