@@ -1,6 +1,8 @@
 package com.mycodingtest.solvedproblem;
 
 import com.mycodingtest.security.CustomUserDetails;
+import com.mycodingtest.solvedproblem.dto.SolvedProblemWithReviewResponse;
+import com.mycodingtest.tag.MyTagListResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

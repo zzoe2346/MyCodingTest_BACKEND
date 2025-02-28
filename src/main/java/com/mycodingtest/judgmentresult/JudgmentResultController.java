@@ -1,8 +1,9 @@
 package com.mycodingtest.judgmentresult;
 
+import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
+import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
 import com.mycodingtest.storage.dto.UrlResponse;
 import com.mycodingtest.security.CustomUserDetails;
-import com.mycodingtest.review.SourceCodeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,7 @@
 package com.mycodingtest.solvedproblem;
 
 import com.mycodingtest.review.Review;
+import com.mycodingtest.tag.SolvedProblemTag;
 import com.mycodingtest.user.User;
 import com.mycodingtest.common.exception.InvalidOwnershipException;
 import jakarta.persistence.*;

@@ -1,6 +1,10 @@
-package com.mycodingtest.solvedproblem;
+package com.mycodingtest.tag;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.solvedproblem.SolvedProblem;
+import com.mycodingtest.solvedproblem.SolvedProblemRepository;
+import com.mycodingtest.tag.dto.AlgorithmTagResponse;
+import com.mycodingtest.tag.dto.AlgorithmTagSetRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
