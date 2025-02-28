@@ -1,7 +1,7 @@
 package com.mycodingtest.review;
 
 import com.mycodingtest.security.CustomUserDetails;
-import com.mycodingtest.storage.UrlResponse;
+import com.mycodingtest.storage.dto.UrlResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
