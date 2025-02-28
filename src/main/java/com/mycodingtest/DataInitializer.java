@@ -1,9 +1,9 @@
 package com.mycodingtest;
 
-import com.mycodingtest.dto.JudgmentResultSaveRequest;
-import com.mycodingtest.entity.User;
-import com.mycodingtest.repository.UserRepository;
-import com.mycodingtest.service.JudgmentResultService;
+import com.mycodingtest.judgmentresult.JudgmentResultSaveRequest;
+import com.mycodingtest.user.User;
+import com.mycodingtest.user.UserRepository;
+import com.mycodingtest.judgmentresult.JudgmentResultService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

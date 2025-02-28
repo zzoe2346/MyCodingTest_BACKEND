@@ -1,9 +1,10 @@
 package com.mycodingtest.repository;
 
-import com.mycodingtest.entity.JudgmentResult;
-import com.mycodingtest.entity.Review;
-import com.mycodingtest.entity.SolvedProblem;
-import com.mycodingtest.entity.User;
+import com.mycodingtest.judgmentresult.JudgmentResult;
+import com.mycodingtest.judgmentresult.JudgmentResultRepository;
+import com.mycodingtest.review.Review;
+import com.mycodingtest.solvedproblem.SolvedProblem;
+import com.mycodingtest.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
