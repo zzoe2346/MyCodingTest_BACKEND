@@ -1,6 +1,5 @@
-package com.mycodingtest.util;
+package com.mycodingtest.authorization.util;
 
-import com.mycodingtest.authorization.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,35 +11,32 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JwtUtilTest {
+class JwtUtilTest {
 
     private JwtUtil jwtUtil;
 
     @BeforeEach
     void setUp() {
-        // JwtUtil 인스턴스 생성
         jwtUtil = new JwtUtil();
 
-        // @Value로 주입되는 값 설정
         String plainSecretKey = Base64.getEncoder().encodeToString("my-super-secret-key-for-jwt-testing".getBytes(StandardCharsets.UTF_8));
         ReflectionTestUtils.setField(jwtUtil, "plainSecretKey", plainSecretKey);
-        ReflectionTestUtils.setField(jwtUtil, "expiration", 3600000L); // 1시간 (밀리초 단위)
+        ReflectionTestUtils.setField(jwtUtil, "expiration", 3600000L);
 
-        // @PostConstruct 수동 호출
         jwtUtil.init();
     }
 
     @Test
     void testGenerateToken() {
-        // Given
+        // given
         Long userId = 1L;
         String picture = "profile.jpg";
         String name = "testUser";
 
-        // When
+        // when
         String token = jwtUtil.generateToken(userId, picture, name);
 
-        // Then
+        // then
         assertNotNull(token);
 
         // 토큰 파싱하여 클레임 검증
@@ -61,16 +57,16 @@ public class JwtUtilTest {
 
     @Test
     void testExtractAllClaims() {
-        // Given
+        // given
         Long userId = 2L;
         String picture = "avatar.png";
         String name = "anotherUser";
         String token = jwtUtil.generateToken(userId, picture, name);
 
-        // When
+        // when
         Claims claims = jwtUtil.extractAllClaims(token);
 
-        // Then
+        // then
         assertNotNull(claims);
         assertEquals("api", claims.getSubject());
         assertEquals(userId, claims.get("userId", Long.class));
