@@ -57,7 +57,7 @@ public class SolvedProblem {
 
     public void validateOwnership(Long userId) {
         if (!this.user.getId().equals(userId)) {
-            throw new InvalidOwnershipException("User " + userId + " does not own this solved problem");
+            throw new InvalidOwnershipException();
         }
     }
 }
