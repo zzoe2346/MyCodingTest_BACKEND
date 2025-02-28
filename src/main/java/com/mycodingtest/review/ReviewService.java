@@ -1,7 +1,7 @@
 package com.mycodingtest.review;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
-import com.mycodingtest.storage.UrlResponse;
+import com.mycodingtest.storage.dto.UrlResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

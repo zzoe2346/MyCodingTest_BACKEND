@@ -1,9 +1,9 @@
 package com.mycodingtest.solvedproblem;
 
-import com.mycodingtest.storage.S3Service;
-import com.mycodingtest.judgmentresult.JudgmentResult;
 import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.judgmentresult.JudgmentResult;
 import com.mycodingtest.judgmentresult.JudgmentResultRepository;
+import com.mycodingtest.storage.StorageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ public class SolvedProblemService {
 
     private final SolvedProblemRepository solvedProblemRepository;
     private final JudgmentResultRepository judgmentResultRepository;
-    private final S3Service s3Service;
+    private final StorageService storageService;
 
-    public SolvedProblemService(SolvedProblemRepository solvedProblemRepository, JudgmentResultRepository judgmentResultRepository, S3Service s3Service) {
+    public SolvedProblemService(SolvedProblemRepository solvedProblemRepository, JudgmentResultRepository judgmentResultRepository, StorageService storageService) {
         this.solvedProblemRepository = solvedProblemRepository;
         this.judgmentResultRepository = judgmentResultRepository;
-        this.s3Service = s3Service;
+        this.storageService = storageService;
     }
 
     @Transactional(readOnly = true)
@@ -65,8 +65,8 @@ public class SolvedProblemService {
                 .map(judgmentResult -> String.valueOf(judgmentResult.getSubmissionId()))
                 .toList();
 
-        s3Service.deleteMemo(String.valueOf(solvedProblem.getReview().getId()), userId);
-        s3Service.deleteCodes(submissionIdList, userId);
+        storageService.deleteMemo(String.valueOf(solvedProblem.getReview().getId()), userId);
+        storageService.deleteCodes(submissionIdList, userId);
 
         solvedProblemRepository.delete(solvedProblem);
         judgmentResultRepository.deleteAll(judgmentResults);
