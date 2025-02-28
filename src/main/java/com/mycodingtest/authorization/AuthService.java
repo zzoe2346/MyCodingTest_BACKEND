@@ -1,5 +1,6 @@
 package com.mycodingtest.authorization;
 
+import com.mycodingtest.authorization.dto.UserInfoResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;

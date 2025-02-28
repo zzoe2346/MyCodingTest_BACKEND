@@ -1,5 +1,8 @@
 package com.mycodingtest.review;
 
+import com.mycodingtest.review.dto.ReviewRecentStatusResponse;
+import com.mycodingtest.review.dto.ReviewResponse;
+
 public class ReviewMapper {
 
     public static ReviewResponse toResponse(Review entity) {

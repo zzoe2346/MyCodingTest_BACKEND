@@ -1,5 +1,6 @@
-package com.mycodingtest.solvedproblem;
+package com.mycodingtest.tag;
 
+import com.mycodingtest.solvedproblem.SolvedProblem;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

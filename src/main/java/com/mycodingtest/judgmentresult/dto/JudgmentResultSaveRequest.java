@@ -1,4 +1,4 @@
-package com.mycodingtest.judgmentresult;
+package com.mycodingtest.judgmentresult.dto;
 
 import java.time.LocalDateTime;
 

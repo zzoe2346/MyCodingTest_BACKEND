@@ -1,6 +1,8 @@
-package com.mycodingtest.solvedproblem;
+package com.mycodingtest.tag;
 
 import com.mycodingtest.security.CustomUserDetails;
+import com.mycodingtest.tag.dto.AlgorithmTagResponse;
+import com.mycodingtest.tag.dto.AlgorithmTagSetRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

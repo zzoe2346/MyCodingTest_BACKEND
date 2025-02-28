@@ -1,4 +1,4 @@
-package com.mycodingtest.review;
+package com.mycodingtest.judgmentresult;
 
 import com.mycodingtest.storage.StorageService;
 import org.springframework.stereotype.Service;
