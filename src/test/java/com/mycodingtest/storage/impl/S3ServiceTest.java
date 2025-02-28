@@ -42,7 +42,7 @@ class S3ServiceTest {
 
 
     @Test
-    @DisplayName("코드 읽기 URL을 생성한다")
+    @DisplayName("제출된 소스 코드 읽기 URL을 생성한다")
     void getCodeReadUrl() throws Exception {
         // given
         String submissionId = "submission1";
@@ -59,7 +59,7 @@ class S3ServiceTest {
     }
 
     @Test
-    @DisplayName("코드 업데이트 URL을 생성한다")
+    @DisplayName("제출된 소스 코드 업데이트 URL을 생성한다")
     void getCodeUpdateUrl() throws Exception {
         // given
         String submissionId = "submission1";
@@ -150,7 +150,7 @@ class S3ServiceTest {
     }
 
     @Test
-    @DisplayName("코드 삭제를 수행한다")
+    @DisplayName("제출된 소스 코드 삭제를 수행한다")
     void deleteCodes() {
         // given
         List<String> submissionIds = List.of("sub1", "sub2");
