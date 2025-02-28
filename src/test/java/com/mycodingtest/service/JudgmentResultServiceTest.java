@@ -1,23 +1,16 @@
 package com.mycodingtest.service;
 
-import com.mycodingtest.dto.JudgmentResultSaveRequest;
-import com.mycodingtest.entity.JudgmentResult;
-import com.mycodingtest.entity.Review;
-import com.mycodingtest.entity.SolvedProblem;
-import com.mycodingtest.entity.User;
-import com.mycodingtest.exception.InvalidOwnershipException;
-import com.mycodingtest.exception.NotOurUserException;
-import com.mycodingtest.repository.JudgmentResultRepository;
-import com.mycodingtest.repository.SolvedProblemRepository;
-import com.mycodingtest.repository.UserRepository;
+import com.mycodingtest.judgmentresult.JudgmentResultSaveRequest;
+import com.mycodingtest.common.exception.NotOurUserException;
+import com.mycodingtest.judgmentresult.JudgmentResultRepository;
+import com.mycodingtest.judgmentresult.JudgmentResultService;
+import com.mycodingtest.solvedproblem.SolvedProblemRepository;
+import com.mycodingtest.user.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

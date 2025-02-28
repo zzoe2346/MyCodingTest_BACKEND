@@ -1,8 +1,8 @@
 package com.mycodingtest.security;
 
-import com.mycodingtest.entity.User;
-import com.mycodingtest.repository.UserRepository;
-import com.mycodingtest.util.JwtUtil;
+import com.mycodingtest.user.User;
+import com.mycodingtest.user.UserRepository;
+import com.mycodingtest.authorization.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;

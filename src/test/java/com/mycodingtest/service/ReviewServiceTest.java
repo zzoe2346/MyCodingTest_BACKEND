@@ -1,10 +1,9 @@
 package com.mycodingtest.service;
 
-import com.mycodingtest.dto.ReviewRatingLevelsUpdateRequest;
-import com.mycodingtest.entity.Review;
-import com.mycodingtest.entity.User;
-import com.mycodingtest.exception.ResourceNotFoundException;
-import com.mycodingtest.repository.ReviewRepository;
+import com.mycodingtest.review.ReviewRatingLevelsUpdateRequest;
+import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.review.ReviewRepository;
+import com.mycodingtest.review.ReviewService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
