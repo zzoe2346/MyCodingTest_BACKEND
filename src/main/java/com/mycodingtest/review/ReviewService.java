@@ -1,6 +1,11 @@
 package com.mycodingtest.review;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.review.dto.ReviewRatingLevelsUpdateRequest;
+import com.mycodingtest.review.dto.ReviewRecentStatusResponse;
+import com.mycodingtest.review.dto.ReviewResponse;
+import com.mycodingtest.review.dto.WaitReviewCountResponse;
+import com.mycodingtest.storage.StorageService;
 import com.mycodingtest.storage.dto.UrlResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final MemoService memoService;
+    private final StorageService storageService;
 
-    public ReviewService(ReviewRepository reviewRepository, MemoService memoService) {
+    public ReviewService(ReviewRepository reviewRepository, StorageService storageService) {
         this.reviewRepository = reviewRepository;
-        this.memoService = memoService;
+        this.storageService = storageService;
     }
 
     @Transactional
@@ -34,14 +39,14 @@ public class ReviewService {
     public UrlResponse getMemoUpdateUrl(Long reviewId, Long userId) {
         getReviewAndValidateOwnership(reviewId, userId);
 
-        return new UrlResponse(memoService.getMemoUpdateUrl(String.valueOf(reviewId), userId));
+        return new UrlResponse(storageService.getMemoUpdateUrl(String.valueOf(reviewId), userId));
     }
 
     @Transactional(readOnly = true)
     public UrlResponse getMemoReadUrl(Long reviewId, Long userId) {
         getReviewAndValidateOwnership(reviewId, userId);
 
-        return new UrlResponse(memoService.getMemoReadUrl(String.valueOf(reviewId), userId));
+        return new UrlResponse(storageService.getMemoReadUrl(String.valueOf(reviewId), userId));
     }
 
     @Transactional

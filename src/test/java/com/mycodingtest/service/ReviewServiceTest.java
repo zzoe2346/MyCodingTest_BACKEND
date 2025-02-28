@@ -1,6 +1,6 @@
 package com.mycodingtest.service;
 
-import com.mycodingtest.review.ReviewRatingLevelsUpdateRequest;
+import com.mycodingtest.review.dto.ReviewRatingLevelsUpdateRequest;
 import com.mycodingtest.common.exception.ResourceNotFoundException;
 import com.mycodingtest.review.ReviewRepository;
 import com.mycodingtest.review.ReviewService;

@@ -1,4 +1,4 @@
-package com.mycodingtest.authorization;
+package com.mycodingtest.authorization.dto;
 
 public record SignInRequest(
         String username,

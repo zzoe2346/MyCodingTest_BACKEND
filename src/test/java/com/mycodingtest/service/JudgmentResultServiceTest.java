@@ -1,6 +1,6 @@
 package com.mycodingtest.service;
 
-import com.mycodingtest.judgmentresult.JudgmentResultSaveRequest;
+import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
 import com.mycodingtest.common.exception.NotOurUserException;
 import com.mycodingtest.judgmentresult.JudgmentResultRepository;
 import com.mycodingtest.judgmentresult.JudgmentResultService;

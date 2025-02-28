@@ -1,5 +1,6 @@
 package com.mycodingtest.authorization;
 
+import com.mycodingtest.authorization.dto.UserInfoResponse;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
