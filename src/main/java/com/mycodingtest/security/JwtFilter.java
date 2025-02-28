@@ -1,6 +1,6 @@
 package com.mycodingtest.security;
 
-import com.mycodingtest.authorization.JwtUtil;
+import com.mycodingtest.authorization.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -7,8 +7,4 @@ public class InvalidOwnershipException extends RuntimeException {
     public InvalidOwnershipException() {
         super(DEFAULT_MESSAGE);
     }
-
-    public InvalidOwnershipException(String message) {
-        super(message);
-    }
 }
