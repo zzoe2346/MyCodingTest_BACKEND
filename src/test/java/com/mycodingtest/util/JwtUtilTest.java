@@ -1,12 +1,11 @@
 package com.mycodingtest.util;
 
+import com.mycodingtest.authorization.JwtUtil;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
