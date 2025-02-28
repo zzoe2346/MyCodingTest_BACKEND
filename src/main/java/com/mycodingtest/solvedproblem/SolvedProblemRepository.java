@@ -12,27 +12,27 @@ import java.util.Optional;
 public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, Long> {
     Optional<SolvedProblem> findByUserIdAndProblemNumber(Long userId, int problemNumber);
 
-    @Query("SELECT new com.mycodingtest.dto.SolvedProblemWithReviewResponse(sp.id, sp.problemNumber, sp.problemTitle, sp.recentSubmitAt, sp.recentResultText, sp.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed,r.reviewedAt) " +
+    @Query("SELECT new com.mycodingtest.solvedproblem.SolvedProblemWithReviewResponse(sp.id, sp.problemNumber, sp.problemTitle, sp.recentSubmitAt, sp.recentResultText, sp.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed,r.reviewedAt) " +
             "FROM SolvedProblem sp " +
             "LEFT JOIN sp.review r " +
             "WHERE sp.user.id = :userId ")
     Page<SolvedProblemWithReviewResponse> findAllByUserId(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("SELECT new com.mycodingtest.dto.SolvedProblemWithReviewResponse(sp.id, sp.problemNumber, sp.problemTitle, sp.recentSubmitAt, sp.recentResultText, sp.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed,r.reviewedAt) " +
+    @Query("SELECT new com.mycodingtest.solvedproblem.SolvedProblemWithReviewResponse(sp.id, sp.problemNumber, sp.problemTitle, sp.recentSubmitAt, sp.recentResultText, sp.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed,r.reviewedAt) " +
             "FROM SolvedProblem sp " +
             "LEFT JOIN sp.review r " +
             "WHERE sp.user.id = :userId " +
             "AND r.reviewed = :reviewed")
     Page<SolvedProblemWithReviewResponse> findAllByUserIdAndReviewed(@Param("userId") Long userId, @Param("reviewed") boolean reviewed, Pageable pageable);
 
-    @Query("SELECT new com.mycodingtest.dto.SolvedProblemWithReviewResponse(sp.id, sp.problemNumber, sp.problemTitle, sp.recentSubmitAt, sp.recentResultText, sp.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed,r.reviewedAt) " +
+    @Query("SELECT new com.mycodingtest.solvedproblem.SolvedProblemWithReviewResponse(sp.id, sp.problemNumber, sp.problemTitle, sp.recentSubmitAt, sp.recentResultText, sp.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed,r.reviewedAt) " +
             "FROM SolvedProblem sp " +
             "LEFT JOIN sp.review r " +
             "WHERE sp.user.id = :userId " +
             "AND sp.favorited = true")
     Page<SolvedProblemWithReviewResponse> findAllByUserIdAndFavoriteIsTrue(Long userId, Pageable pageable);
 
-    @Query("SELECT new com.mycodingtest.dto.SolvedProblemWithReviewResponse(" +
+    @Query("SELECT new com.mycodingtest.solvedproblem.SolvedProblemWithReviewResponse(" +
             "sp.id, sp.problemNumber, sp.problemTitle, sp.recentSubmitAt, sp.recentResultText, sp.favorited, " +
             "r.id, r.difficultyLevel, r.importanceLevel, r.reviewed, r.reviewedAt) " +
             "FROM SolvedProblem sp " +
