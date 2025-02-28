@@ -4,7 +4,6 @@ import com.mycodingtest.common.exception.InvalidOwnershipException;
 import com.mycodingtest.common.exception.NotOurUserException;
 import com.mycodingtest.common.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,8 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getBody());
+    public ErrorResponse handleValidationExceptions(Exception ex) {
+        String errorDetails = ex.getMessage();
+        return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, errorDetails);
     }
 
     @ExceptionHandler(NotOurUserException.class)
