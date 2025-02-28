@@ -1,4 +1,4 @@
-package com.mycodingtest.tag;
+package com.mycodingtest.tag.dto;
 
 public record MyTagListResponse(
         Object[] tagIds
