@@ -1,4 +1,4 @@
-package com.mycodingtest.authorization.util;
+package com.mycodingtest.common.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
