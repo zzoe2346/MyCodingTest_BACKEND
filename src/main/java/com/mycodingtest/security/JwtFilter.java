@@ -1,13 +1,12 @@
 package com.mycodingtest.security;
 
-import com.mycodingtest.authorization.util.JwtUtil;
+import com.mycodingtest.common.util.CookieUtil;
+import com.mycodingtest.common.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,18 +18,17 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    @Value("${cookie.name}")
-    private String cookieName;
-
     private final JwtUtil jwtUtil;
+    private final CookieUtil cookieUtil;
 
-    public JwtFilter(JwtUtil jwtUtil) {
+    public JwtFilter(JwtUtil jwtUtil, CookieUtil cookieUtil) {
         this.jwtUtil = jwtUtil;
+        this.cookieUtil = cookieUtil;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = getJwtFromCookie(request);
+        String token = cookieUtil.getJwtFromCookie(request);
         if (token != null) {
             setAuthenticationContext(request, token);
         }
@@ -47,16 +45,5 @@ public class JwtFilter extends OncePerRequestFilter {
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }
-    }
-
-    private String getJwtFromCookie(HttpServletRequest request) {
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals(cookieName)) {
-                    return cookie.getValue();
-                }
-            }
-        }
-        return null;
     }
 }
