@@ -1,5 +1,6 @@
 package com.mycodingtest.authorization.util;
 
+import com.mycodingtest.common.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
