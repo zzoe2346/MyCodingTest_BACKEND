@@ -1,5 +1,7 @@
 package com.mycodingtest.user;
 
+import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.user.dto.UserDetailInfoResoponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,5 +21,11 @@ public class UserService {
 
     public User enrollNewUser(String name, String email, String picture, String provider, String oauthId) {
         return userRepository.save(new User(name, email, picture, provider, oauthId));
+    }
+
+    public UserDetailInfoResoponse getUserDetailInfo(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(ResourceNotFoundException::new);
+        return UserMapper.toDetailInfoResponse(user);
     }
 }
