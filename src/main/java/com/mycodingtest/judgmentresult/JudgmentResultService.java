@@ -1,12 +1,13 @@
 package com.mycodingtest.judgmentresult;
 
+import com.mycodingtest.common.exception.NotOurUserException;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
 import com.mycodingtest.review.Review;
 import com.mycodingtest.solvedproblem.SolvedProblem;
-import com.mycodingtest.user.User;
-import com.mycodingtest.common.exception.NotOurUserException;
 import com.mycodingtest.solvedproblem.SolvedProblemRepository;
+import com.mycodingtest.storage.StorageService;
+import com.mycodingtest.user.User;
 import com.mycodingtest.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +20,13 @@ public class JudgmentResultService {
     private final JudgmentResultRepository judgmentResultRepository;
     private final SolvedProblemRepository solvedProblemRepository;
     private final UserRepository userRepository;
+    private final StorageService storageService;
 
-    public JudgmentResultService(JudgmentResultRepository judgmentResultRepository, SolvedProblemRepository solvedProblemRepository, UserRepository userRepository) {
+    public JudgmentResultService(JudgmentResultRepository judgmentResultRepository, SolvedProblemRepository solvedProblemRepository, UserRepository userRepository, StorageService storageService) {
         this.solvedProblemRepository = solvedProblemRepository;
         this.judgmentResultRepository = judgmentResultRepository;
         this.userRepository = userRepository;
+        this.storageService = storageService;
     }
 
     @Transactional
@@ -67,5 +70,13 @@ public class JudgmentResultService {
     @Transactional(readOnly = true)
     public boolean isSubmissionIdDuplicated(Long submissionId) {
         return judgmentResultRepository.existsBySubmissionId(submissionId);
+    }
+
+    public String getCodeReadUrl(String submissionId, Long userId) {
+        return storageService.getCodeReadUrl(submissionId, userId);
+    }
+
+    public String getCodeUpdateUrl(String submissionId, Long userId) {
+        return storageService.getCodeUpdateUrl(submissionId, userId);
     }
 }
