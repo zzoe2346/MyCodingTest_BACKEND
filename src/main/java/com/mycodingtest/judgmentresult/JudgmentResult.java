@@ -1,7 +1,7 @@
 package com.mycodingtest.judgmentresult;
 
-import com.mycodingtest.user.User;
 import com.mycodingtest.solvedproblem.SolvedProblem;
+import com.mycodingtest.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,29 +9,38 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
 @NoArgsConstructor
 public class JudgmentResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
+    @Getter
     private Long submissionId;
 
+    @Getter
     private String baekjoonId;
 
+    @Getter
     private int problemId;
 
+    @Getter
     private String resultText;
 
+    @Getter
     private int memory;
 
+    @Getter
     private int time;
 
+    @Getter
     private String language;
 
+    @Getter
     private int codeLength;
 
+    @Getter
     private LocalDateTime submittedAt;
 
     @ManyToOne
