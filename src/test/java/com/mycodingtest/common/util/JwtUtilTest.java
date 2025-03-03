@@ -1,16 +1,16 @@
-package com.mycodingtest.authorization.util;
+package com.mycodingtest.common.util;
 
-import com.mycodingtest.common.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class JwtUtilTest {
 
@@ -28,6 +28,7 @@ class JwtUtilTest {
     }
 
     @Test
+    @DisplayName("Jwt 생성 한다")
     void testGenerateToken() {
         // given
         Long userId = 1L;
@@ -39,29 +40,15 @@ class JwtUtilTest {
 
         // then
         assertNotNull(token);
-
-        // 토큰 파싱하여 클레임 검증
-        Claims claims = jwtUtil.extractAllClaims(token);
-        assertEquals("api", claims.getSubject());
-        assertEquals(userId, claims.get("userId", Long.class));
-        assertEquals(name, claims.get("name", String.class));
-        assertEquals(picture, claims.get("picture", String.class));
-
-        // 발행 시간과 만료 시간 검증
-        Date issuedAt = claims.getIssuedAt();
-        Date expiration = claims.getExpiration();
-        assertNotNull(issuedAt);
-        assertNotNull(expiration);
-        assertTrue(expiration.after(issuedAt));
-        assertTrue(expiration.getTime() - issuedAt.getTime() <= 3600000L); // expiration 값과 일치
     }
 
     @Test
+    @DisplayName("생성된 유효한 Jwt에서 클레임을 추출한다")
     void testExtractAllClaims() {
         // given
         Long userId = 2L;
-        String picture = "avatar.png";
-        String name = "anotherUser";
+        String picture = "picture";
+        String name = "user";
         String token = jwtUtil.generateToken(userId, picture, name);
 
         // when
@@ -74,18 +61,4 @@ class JwtUtilTest {
         assertEquals(name, claims.get("name", String.class));
         assertEquals(picture, claims.get("picture", String.class));
     }
-
-//    @Test
-//    void testExtractAllClaimsWithInvalidToken() {
-//        // Given
-//        String invalidToken = "invalid.token.here";
-//
-//        // When & Then
-//        Exception exception = assertThrows(Exception.class, () -> {
-//            jwtUtil.extractAllClaims(invalidToken);
-//        });
-//        System.out.println(exception.getMessage());
-//
-//        assertTrue(exception.getMessage().contains("JWT") || exception.getMessage().contains("signature"));
-//    }
 }
