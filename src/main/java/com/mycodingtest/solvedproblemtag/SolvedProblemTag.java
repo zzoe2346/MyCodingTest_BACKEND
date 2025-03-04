@@ -34,6 +34,9 @@ public class SolvedProblemTag {
             this.tagId = tagId;
         }
 
+        public SolvedProblemTagId() {
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
