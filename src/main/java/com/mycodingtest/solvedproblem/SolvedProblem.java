@@ -1,9 +1,9 @@
 package com.mycodingtest.solvedproblem;
 
+import com.mycodingtest.common.exception.InvalidOwnershipException;
 import com.mycodingtest.review.Review;
 import com.mycodingtest.tag.SolvedProblemTag;
 import com.mycodingtest.user.User;
-import com.mycodingtest.common.exception.InvalidOwnershipException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,26 +13,32 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
 @NoArgsConstructor
 public class SolvedProblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     private int problemNumber;
 
+    @Getter
     private String problemTitle;
 
+    @Getter
     private LocalDateTime recentSubmitAt;
 
+    @Getter
     private String recentResultText;
 
+    @Getter
     private boolean favorited = false;
 
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @Getter
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private Review review;
 
