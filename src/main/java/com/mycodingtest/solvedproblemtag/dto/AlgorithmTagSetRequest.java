@@ -1,4 +1,4 @@
-package com.mycodingtest.tag.dto;
+package com.mycodingtest.solvedproblemtag.dto;
 
 import jakarta.validation.constraints.Size;
 

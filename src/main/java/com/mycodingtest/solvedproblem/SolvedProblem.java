@@ -2,7 +2,7 @@ package com.mycodingtest.solvedproblem;
 
 import com.mycodingtest.common.exception.InvalidOwnershipException;
 import com.mycodingtest.review.Review;
-import com.mycodingtest.tag.SolvedProblemTag;
+import com.mycodingtest.solvedproblemtag.SolvedProblemTag;
 import com.mycodingtest.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
