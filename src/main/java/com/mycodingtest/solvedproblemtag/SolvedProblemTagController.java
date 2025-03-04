@@ -1,8 +1,8 @@
-package com.mycodingtest.tag;
+package com.mycodingtest.solvedproblemtag;
 
 import com.mycodingtest.security.CustomUserDetails;
-import com.mycodingtest.tag.dto.AlgorithmTagResponse;
-import com.mycodingtest.tag.dto.AlgorithmTagSetRequest;
+import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagResponse;
+import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagSetRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "알고리즘 태그", description = "알고리즘 태그 관련 API")
-public class TagController {
+public class SolvedProblemTagController {
 
-    private final TagService tagService;
+    private final SolvedProblemTagService solvedProblemTagService;
 
-    public TagController(TagService tagService) {
-        this.tagService = tagService;
+    public SolvedProblemTagController(SolvedProblemTagService solvedProblemTagService) {
+        this.solvedProblemTagService = solvedProblemTagService;
     }
 
     @PutMapping("/api/solved-problems/{solvedProblemId}/tags")
@@ -25,13 +25,13 @@ public class TagController {
     public ResponseEntity<Void> setTags(@PathVariable Long solvedProblemId,
                                         @RequestBody @Valid AlgorithmTagSetRequest request,
                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
-        tagService.setAlgorithmTags(solvedProblemId, request, userDetails.getUserId());
+        solvedProblemTagService.setAlgorithmTags(solvedProblemId, request, userDetails.getUserId());
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/api/solved-problems/{solvedProblemId}/tags")
     @Operation(summary = "문제의 태그 조회", description = "문제에 걸린 태그 조회")
     public ResponseEntity<AlgorithmTagResponse> getTags(@PathVariable Long solvedProblemId) {
-        return ResponseEntity.ok(tagService.getAlgorithmTags(solvedProblemId));
+        return ResponseEntity.ok(solvedProblemTagService.getAlgorithmTags(solvedProblemId));
     }
 }
