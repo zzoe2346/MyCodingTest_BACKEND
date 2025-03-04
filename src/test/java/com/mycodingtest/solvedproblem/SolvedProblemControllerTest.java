@@ -4,7 +4,7 @@ import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;
 import com.mycodingtest.security.CustomUserDetails;
 import com.mycodingtest.solvedproblem.dto.SolvedProblemWithReviewResponse;
-import com.mycodingtest.tag.dto.MyTagListResponse;
+import com.mycodingtest.solvedproblemtag.dto.MyTagListResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
