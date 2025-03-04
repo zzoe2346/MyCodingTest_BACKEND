@@ -9,11 +9,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Getter
 @NoArgsConstructor
 @IdClass(SolvedProblemTag.SolvedProblemTagId.class)
 public class SolvedProblemTag {
     @Id
+    @Getter
     private int tagId;
 
     @Id
@@ -28,6 +28,11 @@ public class SolvedProblemTag {
     public static class SolvedProblemTagId implements Serializable {
         private int tagId;
         private Long solvedProblem;
+
+        public SolvedProblemTagId(Long solvedProblem, int tagId) {
+            this.solvedProblem = solvedProblem;
+            this.tagId = tagId;
+        }
 
         @Override
         public boolean equals(Object o) {
