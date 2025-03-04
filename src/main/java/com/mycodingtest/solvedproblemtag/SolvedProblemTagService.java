@@ -1,10 +1,10 @@
-package com.mycodingtest.tag;
+package com.mycodingtest.solvedproblemtag;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
 import com.mycodingtest.solvedproblem.SolvedProblem;
 import com.mycodingtest.solvedproblem.SolvedProblemRepository;
-import com.mycodingtest.tag.dto.AlgorithmTagResponse;
-import com.mycodingtest.tag.dto.AlgorithmTagSetRequest;
+import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagResponse;
+import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagSetRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class TagService {
+public class SolvedProblemTagService {
 
     private final SolvedProblemRepository solvedProblemRepository;
     private final SolvedProblemTagRepository solvedProblemTagRepository;
 
-    public TagService(SolvedProblemRepository solvedProblemRepository, SolvedProblemTagRepository solvedProblemTagRepository) {
+    public SolvedProblemTagService(SolvedProblemRepository solvedProblemRepository, SolvedProblemTagRepository solvedProblemTagRepository) {
         this.solvedProblemRepository = solvedProblemRepository;
         this.solvedProblemTagRepository = solvedProblemTagRepository;
     }

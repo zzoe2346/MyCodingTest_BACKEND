@@ -1,4 +1,4 @@
-package com.mycodingtest.tag;
+package com.mycodingtest.solvedproblemtag;
 
 import com.mycodingtest.solvedproblem.SolvedProblem;
 import jakarta.persistence.*;
