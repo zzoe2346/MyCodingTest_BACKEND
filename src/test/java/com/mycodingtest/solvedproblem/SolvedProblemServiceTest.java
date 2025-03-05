@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +46,19 @@ class SolvedProblemServiceTest {
         // given
         Long userId = 1L;
         Pageable pageable = Pageable.unpaged();
-        SolvedProblemWithReviewResponse response = mock(SolvedProblemWithReviewResponse.class);
-        given(response.problemTitle()).willReturn("문제 제목임");
+        SolvedProblemWithReviewResponse response = new SolvedProblemWithReviewResponse(
+                1L,
+                1104,
+                "문제 제목",
+                LocalDateTime.now(),
+                "result text",
+                true,
+                1L,
+                5,
+                5,
+                false,
+                LocalDateTime.now()
+        );
         List<SolvedProblemWithReviewResponse> responseList = List.of(response);
         Page<SolvedProblemWithReviewResponse> expectedPage = new PageImpl<>(responseList);
 
@@ -57,7 +69,7 @@ class SolvedProblemServiceTest {
 
         // then
         assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().getFirst().problemTitle()).isEqualTo("문제 제목임");
+        assertThat(result.getContent().getFirst().problemTitle()).isEqualTo("문제 제목");
 
         verify(solvedProblemRepository).findAllByUserId(userId, pageable);
     }

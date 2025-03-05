@@ -73,6 +73,22 @@ class SolvedProblemTest {
     }
 
     @Test
+    @DisplayName("즐겨찾기 상태를 반전시킨다")
+    void reverseFavoriteStatus2() {
+        // given
+        User user = new User("사용자", "user@example.com", "picture.jpg", "google", "oauth123");
+        Review review = new Review(user);
+        SolvedProblem solvedProblem = new SolvedProblem(1234, "두 수의 합", user, review);
+
+        // when
+        solvedProblem.reverseFavoriteStatus();//true로 변경
+        solvedProblem.reverseFavoriteStatus();//false로 변경
+
+        // then
+        assertThat(solvedProblem.isFavorited()).isFalse();
+    }
+
+    @Test
     @DisplayName("소유권 검증에 성공한다")
     void validateOwnership_Success() {
         // given
