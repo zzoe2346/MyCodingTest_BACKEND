@@ -24,6 +24,7 @@ class ReviewTest {
         Review review = new Review(user);
 
         // then
+        assertThat(review.getId()).isNull();
         assertThat(review.getUser()).isEqualTo(user);
         assertThat(review.getDifficultyLevel()).isEqualTo(-1);
         assertThat(review.getImportanceLevel()).isEqualTo(-1);
