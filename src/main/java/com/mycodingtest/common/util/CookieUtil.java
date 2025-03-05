@@ -13,6 +13,9 @@ public class CookieUtil {
     private String cookieName;
 
     public String getJwtFromCookie(HttpServletRequest request) {
+        if(request.getCookies() == null) {
+            return null;
+        }
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals(cookieName)) {
                 return cookie.getValue();
