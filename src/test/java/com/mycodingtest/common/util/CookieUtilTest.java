@@ -94,4 +94,18 @@ class CookieUtilTest {
         assertThat(cookie.getPath()).isEqualTo("/");
         assertThat(cookie.getSameSite()).isEqualTo("None");
     }
+
+    @Test
+    @DisplayName("요청에 쿠키가 아예 없는경우 null을 반환한다.")
+    void getJwtFromCookie_WhenRequestNotContainCookie() {
+        // given
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        given(request.getCookies()).willReturn(null);
+
+        // when
+        String extractedToken = cookieUtil.getJwtFromCookie(request);
+
+        // then
+        assertThat(extractedToken).isNull();
+    }
 }
