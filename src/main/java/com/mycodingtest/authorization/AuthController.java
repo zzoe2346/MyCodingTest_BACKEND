@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     @GetMapping("/api/me")
-    @Operation(summary = "요청시, 로그인를 상태 체크한다. 200 응답: 로그인 상태  401 응답: 비로그인 상태이다. DB Hit 없이 쿠키의 유효성을 확인함.")
+    @Operation(summary = "요청시, 로그인 상태를 체크한다. 200 응답: 로그인 상태  401 응답: 비로그인 상태이다. DB Hit 없이 쿠키의 유효성을 확인함.")
     public ResponseEntity<UserInfoResponse> checkSignIn(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(authService.generateUserInfo(userDetails.getPicture(), userDetails.getUsername()));
     }
