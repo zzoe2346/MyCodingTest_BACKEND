@@ -58,13 +58,13 @@ class AuthServiceTest {
 
     @Test
     @DisplayName("사용자 정보를 조회한다")
-    void getUserInfo() {
+    void generateUserInfo() {
         // given
         String picture = "testPicture";
         String username = "testName";
 
         // when
-        UserInfoResponse userInfo = authService.getUserInfo(picture, username);
+        UserInfoResponse userInfo = authService.generateUserInfo(picture, username);
 
         // then
         assertThat(userInfo.picture()).isEqualTo(picture);
