@@ -27,7 +27,7 @@ public class AuthService {
     }
 
     public void signOut(HttpServletResponse response) {
-        ResponseCookie cookieForClear = cookieUtil.clearJwtCookie();
+        ResponseCookie cookieForClear = cookieUtil.generateClearJwtCookie();
         response.addHeader(HttpHeaders.SET_COOKIE, cookieForClear.toString());
     }
 

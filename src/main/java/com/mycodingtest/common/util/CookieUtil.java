@@ -34,7 +34,7 @@ public class CookieUtil {
                 .build();
     }
 
-    public ResponseCookie clearJwtCookie() {
+    public ResponseCookie generateClearJwtCookie() {
         return ResponseCookie.from(cookieName, null)
                 .httpOnly(true)
                 .maxAge(0)

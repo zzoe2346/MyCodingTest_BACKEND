@@ -81,9 +81,9 @@ class CookieUtilTest {
 
     @Test
     @DisplayName("JWT 쿠키를 제거한다")
-    void clearJwtCookie() {
+    void generateClearJwtCookie() {
         // when
-        ResponseCookie cookie = cookieUtil.clearJwtCookie();
+        ResponseCookie cookie = cookieUtil.generateClearJwtCookie();
 
         // then
         assertThat(cookie.getName()).isEqualTo(COOKIE_NAME);
