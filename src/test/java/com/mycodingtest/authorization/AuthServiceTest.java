@@ -38,12 +38,11 @@ class AuthServiceTest {
     private UserService userService;
     @Mock
     private HttpServletResponse response;
-
     @InjectMocks
     private AuthService authService;
 
     @Test
-    @DisplayName("로그아웃 시 쿠키를 제거한다")
+    @DisplayName("로그아웃 시 우리 서버에서 만든 쿠키를 바로 만료시키는 clear 쿠키를 만들어서 응답해야한다.")
     void signOut() {
         // given
         ResponseCookie clearCookie = ResponseCookie.from("jwt", "").build();
@@ -57,7 +56,7 @@ class AuthServiceTest {
     }
 
     @Test
-    @DisplayName("사용자 정보를 조회한다")
+    @DisplayName("UserInfo 객체를 만들어줘야한다.")
     void generateUserInfo() {
         // given
         String picture = "testPicture";
@@ -74,7 +73,7 @@ class AuthServiceTest {
     @Nested
     class HandleOAuth2LoginTest {
         @Test
-        @DisplayName("구글 OAuth2 로그인 처리 - 신규 사용자")
+        @DisplayName("구글 OAuth2 로그인 처리(신규 사용자): 신규 사용자가 로그인할 때 DB에 새롭게 등록시키고 jwt 쿠키를 헤더에 넣어 응답한다.")
         void handleOAuth2Login_Google_NewUser() {
             // given
             Map<String, Object> attributes = new HashMap<>();
@@ -109,7 +108,7 @@ class AuthServiceTest {
         }
 
         @Test
-        @DisplayName("구글 OAuth2 로그인 처리 - 기존 사용자")
+        @DisplayName("구글 OAuth2 로그인 처리(기존 사용자): jwt 쿠키를 헤더에 넣어 응답한다.")
         void handleOAuth2Login_Google_ExistUser() {
             // given
             Map<String, Object> attributes = new HashMap<>();
@@ -141,7 +140,7 @@ class AuthServiceTest {
         }
 
         @Test
-        @DisplayName("카카오 OAuth2 로그인 처리 - 신규 사용자")
+        @DisplayName("카카오 OAuth2 로그인 처리(신규 사용자): 신규 사용자가 로그인할 때 DB에 새롭게 등록시키고 jwt 쿠키를 헤더에 넣어 응답한다.")
         void handleOAuth2Login_Kakao_NewUser() {
             // given
             Map<String, Object> properties = new HashMap<>();
@@ -177,7 +176,7 @@ class AuthServiceTest {
         }
 
         @Test
-        @DisplayName("카카오 OAuth2 로그인 처리 - 기존 사용자")
+        @DisplayName("카카오 OAuth2 로그인 처리(기존 사용자): jwt 쿠키를 헤더에 넣어 응답한다.")
         void handleOAuth2Login_Kakao_ExistingUser() {
             // given
             Map<String, Object> properties = new HashMap<>();
