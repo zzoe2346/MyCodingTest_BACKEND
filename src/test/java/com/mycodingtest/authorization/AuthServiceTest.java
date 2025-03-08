@@ -47,7 +47,7 @@ class AuthServiceTest {
     void signOut() {
         // given
         ResponseCookie clearCookie = ResponseCookie.from("jwt", "").build();
-        given(cookieUtil.clearJwtCookie()).willReturn(clearCookie);
+        given(cookieUtil.generateClearJwtCookie()).willReturn(clearCookie);
 
         // when
         authService.signOut(response);
