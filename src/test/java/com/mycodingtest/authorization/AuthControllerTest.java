@@ -25,7 +25,6 @@ class AuthControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockitoBean
     private AuthService authService;
     @MockitoBean
@@ -35,7 +34,7 @@ class AuthControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("로그아웃 성공시 200 상태코드를 반환한다")
+    @DisplayName("로그아웃 성공시 200 상태코드를 반환한다. 200 시 응답 헤더에 만료용 쿠키가 add")
     void signOut() throws Exception {
         // given
         doNothing().when(authService).signOut(any(HttpServletResponse.class));
@@ -50,13 +49,12 @@ class AuthControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("인증이 완료된 유저가 로그인를 체크하면 UserInfo(이름, 이미지)를 반환한다.")
+    @DisplayName("인증이 완료된 유저가 로그인 상태를 체크하면 UserInfo 반환한다.")
     void checkSignIn_success() throws Exception {
         // given
         CustomUserDetails customUserDetails = new CustomUserDetails(1L, "picture", "name");
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, null);
         TestSecurityContextHolder.setAuthentication(authToken);
-
 
         // when
         mockMvc.perform(get("/api/me"))
