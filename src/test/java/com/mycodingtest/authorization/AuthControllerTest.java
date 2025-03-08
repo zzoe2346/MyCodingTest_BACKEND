@@ -51,7 +51,7 @@ class AuthControllerTest {
     @Test
     @WithMockUser
     @DisplayName("인증이 완료된 유저가 로그인를 체크하면 UserInfo(이름, 이미지)를 반환한다.")
-    void checkMe_success() throws Exception {
+    void checkSignIn_success() throws Exception {
         // given
         CustomUserDetails customUserDetails = new CustomUserDetails(1L, "picture", "name");
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, null);
@@ -63,6 +63,6 @@ class AuthControllerTest {
                 .andExpect(status().isOk());
 
         // then
-        verify(authService, times(1)).getUserInfo("picture", "name");
+        verify(authService, times(1)).generateUserInfo("picture", "name");
     }
 }

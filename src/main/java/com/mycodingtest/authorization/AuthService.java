@@ -31,7 +31,7 @@ public class AuthService {
         response.addHeader(HttpHeaders.SET_COOKIE, cookieForClear.toString());
     }
 
-    public UserInfoResponse getUserInfo(String picture, String username) {
+    public UserInfoResponse generateUserInfo(String picture, String username) {
         return new UserInfoResponse(picture, username);
     }
 
