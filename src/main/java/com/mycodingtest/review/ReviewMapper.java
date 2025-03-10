@@ -5,6 +5,10 @@ import com.mycodingtest.review.dto.ReviewResponse;
 
 public class ReviewMapper {
 
+    private ReviewMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static ReviewResponse toResponse(Review entity) {
         return new ReviewResponse(
                 entity.getDifficultyLevel(),

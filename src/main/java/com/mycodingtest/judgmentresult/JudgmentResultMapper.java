@@ -4,6 +4,10 @@ import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
 
 public class JudgmentResultMapper {
 
+    private JudgmentResultMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static JudgmentResultResponse toResponse(JudgmentResult entity) {
         return new JudgmentResultResponse(
                 entity.getSubmissionId(),
