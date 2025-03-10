@@ -42,22 +42,24 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
-    //finalizedBy jacocoTestReport // 테스트 후 JaCoCo 리포트 생성
+    finalizedBy jacocoTestReport
 }
-//jacocoTestReport {
-//    dependsOn test // 테스트가 먼저 실행되도록
-//    reports {
-//        xml.required = true  // CI에서 사용할 수 있는 XML 리포트
-//        html.required = true // 사람이 읽기 쉬운 HTML 리포트
-//        html.outputLocation = layout.buildDirectory.dir('jacocoHtml') // 리포트 저장 경로
-//    }
-//}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacoco.xml')
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+    }
+}
 jacocoTestCoverageVerification {
     dependsOn test
     violationRules {
         rule {
             limit {
-                minimum = 1.0 // 100% 커버리지 강제
+                minimum = 1.0
             }
         }
     }
