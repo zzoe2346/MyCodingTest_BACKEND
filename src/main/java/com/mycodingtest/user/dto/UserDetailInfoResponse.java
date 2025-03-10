@@ -2,7 +2,7 @@ package com.mycodingtest.user.dto;
 
 import java.time.LocalDateTime;
 
-public record UserDetailInfoResoponse(
+public record UserDetailInfoResponse(
         Long id,
         String name,
         String picture,
