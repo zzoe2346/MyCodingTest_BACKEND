@@ -1,7 +1,7 @@
 package com.mycodingtest.user;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
-import com.mycodingtest.user.dto.UserDetailInfoResoponse;
+import com.mycodingtest.user.dto.UserDetailInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -95,7 +95,7 @@ class UserServiceTest {
         given(userRepository.findById(userId)).willReturn(Optional.of(user));
 
         // when
-        UserDetailInfoResoponse response = userService.getUserDetailInfo(userId);
+        UserDetailInfoResponse response = userService.getUserDetailInfo(userId);
 
         // then
         assertThat(response.name()).isEqualTo(user.getName());

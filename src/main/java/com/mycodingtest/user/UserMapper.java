@@ -1,6 +1,6 @@
 package com.mycodingtest.user;
 
-import com.mycodingtest.user.dto.UserDetailInfoResoponse;
+import com.mycodingtest.user.dto.UserDetailInfoResponse;
 
 public class UserMapper {
 
@@ -8,8 +8,8 @@ public class UserMapper {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    public static UserDetailInfoResoponse toDetailInfoResponse(User entity) {
-        return new UserDetailInfoResoponse(
+    public static UserDetailInfoResponse toDetailInfoResponse(User entity) {
+        return new UserDetailInfoResponse(
                 entity.getId(),
                 entity.getName(),
                 entity.getPicture(),

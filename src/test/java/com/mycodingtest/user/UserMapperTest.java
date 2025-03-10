@@ -1,7 +1,7 @@
 package com.mycodingtest.user;
 
 
-import com.mycodingtest.user.dto.UserDetailInfoResoponse;
+import com.mycodingtest.user.dto.UserDetailInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +41,7 @@ class UserMapperTest {
 
         //when
 
-        UserDetailInfoResoponse userDetailInfoResponse = UserMapper.toDetailInfoResponse(user);
+        UserDetailInfoResponse userDetailInfoResponse = UserMapper.toDetailInfoResponse(user);
 
         //then
         assertThat(userDetailInfoResponse).isNotNull();
