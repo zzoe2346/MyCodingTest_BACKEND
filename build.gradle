@@ -3,6 +3,25 @@ plugins {
     id 'org.springframework.boot' version '3.4.1'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'jacoco'
+    id("org.asciidoctor.jvm.convert") version "4.0.4"
+}
+
+configurations {
+    asciidoctorExt
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExt'
+    dependsOn test
 }
 
 group = 'com'
@@ -38,6 +57,8 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.springframework.security:spring-security-oauth2-client:6.4.2'
     implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.3.0'
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor:3.0.3'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:3.0.3'
 }
 
 tasks.named('test') {
