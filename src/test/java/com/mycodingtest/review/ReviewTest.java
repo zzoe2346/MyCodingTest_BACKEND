@@ -3,6 +3,7 @@ package com.mycodingtest.review;
 import com.mycodingtest.common.exception.InvalidOwnershipException;
 import com.mycodingtest.user.User;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@Tag("unit")
 class ReviewTest {
 
     @Test

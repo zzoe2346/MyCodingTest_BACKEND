@@ -10,6 +10,7 @@ import com.mycodingtest.storage.StorageService;
 import com.mycodingtest.user.User;
 import com.mycodingtest.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -26,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@Tag("unit")
 @MockitoSettings
 class JudgmentResultServiceTest {
 

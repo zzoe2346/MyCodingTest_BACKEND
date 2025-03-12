@@ -8,6 +8,7 @@ import com.mycodingtest.review.dto.WaitReviewCountResponse;
 import com.mycodingtest.storage.StorageService;
 import com.mycodingtest.storage.dto.UrlResponse;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
+@Tag("unit")
 @MockitoSettings
 class ReviewServiceTest {
 
