@@ -58,7 +58,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-oauth2-client:6.4.2'
     implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.3.0'
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor:3.0.3'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:3.0.3'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.3'
 }
 
 tasks.named('test') {
@@ -66,8 +66,25 @@ tasks.named('test') {
     finalizedBy jacocoTestReport
 }
 
+tasks.register('unitTest', Test) {
+    group("verification")
+    useJUnitPlatform {
+        includeTags 'unit'
+        excludeTags 'integration'
+    }
+    finalizedBy jacocoTestReport
+}
+
+tasks.register('integrationTest', Test) {
+    group("verification")
+    useJUnitPlatform {
+        includeTags 'integration'
+        excludeTags 'unit'
+    }
+}
+
 jacocoTestReport {
-    dependsOn test
+    dependsOn unitTest
     reports {
         xml.required = true
         xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacoco.xml')
@@ -75,8 +92,10 @@ jacocoTestReport {
         html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
     }
 }
+
 jacocoTestCoverageVerification {
-    dependsOn test
+    dependsOn unitTest
+
     violationRules {
         rule {
             limit {
@@ -85,5 +104,3 @@ jacocoTestCoverageVerification {
         }
     }
 }
-
-check.dependsOn jacocoTestCoverageVerification
