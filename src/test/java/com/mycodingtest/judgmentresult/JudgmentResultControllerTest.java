@@ -8,6 +8,7 @@ import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
 import com.mycodingtest.security.CustomUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,23 +34,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Tag("unit")
 @WebMvcTest(JudgmentResultController.class)
 class JudgmentResultControllerTest {
 
+    static JudgmentResultSaveRequest request;
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     @MockitoBean
     private JwtUtil jwtUtil;
     @MockitoBean
     private CookieUtil cookieUtil;
     @MockitoBean
     private JudgmentResultService judgmentResultService;
-
-    static JudgmentResultSaveRequest request;
 
     @BeforeEach
     void autoSetting() {

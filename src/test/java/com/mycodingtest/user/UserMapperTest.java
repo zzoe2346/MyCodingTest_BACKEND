@@ -3,6 +3,7 @@ package com.mycodingtest.user;
 
 import com.mycodingtest.user.dto.UserDetailInfoResponse;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
+@Tag("unit")
 class UserMapperTest {
 
     @Test

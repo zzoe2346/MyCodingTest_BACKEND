@@ -3,6 +3,7 @@ package com.mycodingtest.user;
 import com.mycodingtest.common.exception.ResourceNotFoundException;
 import com.mycodingtest.user.dto.UserDetailInfoResponse;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+@Tag("unit")
 @MockitoSettings
 class UserServiceTest {
 
@@ -112,6 +114,6 @@ class UserServiceTest {
 
         // when then
         assertThrows(ResourceNotFoundException.class, () ->
-            userService.getUserDetailInfo(userId));
+                userService.getUserDetailInfo(userId));
     }
 }
