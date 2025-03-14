@@ -50,6 +50,10 @@
     
 ## Deploy Architecture
 ![image](https://github.com/user-attachments/assets/49960a4f-a6f9-42a3-8bba-41fb015b90cb)
+## ERD
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1890c58b-fbc7-4cd3-921f-fddd8ee6a380" alt="image">
+</p>
 
 ## How To Use
 
@@ -69,8 +73,5 @@ $ ./gradlew build
 $ ./gradlew bootRun
 ```
 
-## License
-
-MIT
 
 
