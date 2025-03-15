@@ -16,11 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Make properties with secrets
+      - name: Make properties for test
         run: |
-          mkdir -p ./src/main/resources
-          touch ./src/main/resources/application.properties
-          echo "${{ secrets.PROD_PROPERTIES }}" > ./src/main/resources/application.properties
+          mkdir -p ./src/test/resources
+          touch ./src/test/resources/application.properties
+          echo "${{ secrets.TEST_PROPERTIES }}" > ./src/test/resources/application.properties
 
       - name: Set up Java 21
         uses: actions/setup-java@v3
@@ -28,11 +28,8 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Run Tests with Gradle
-        run: ./gradlew test
-
-      - name: Check Test Coverage
-        run: ./gradlew check
+      - name: Run unit test with coverage checking !!!
+        run: ./gradlew jacocoTestCoverageVerification
 
       - name: Add JaCoCo Report Comment to PR (100% Required)
         id: jacoco
@@ -51,3 +48,16 @@ jobs:
         with:
           name: jacoco-report
           path: build/reports/jacoco/
+
+      - name: Run Integration Test !!!
+        run: ./gradlew integrationTest
+
+      - name: Make API Document
+        run: ./gradlew asciidoctor
+
+      - name: Copy API Document
+        run: ./gradlew copyDocument
+
+      - name: Delete test properties (Cleanup)
+        if: always()  # gitignore 했지만 혹시나 하여 항상 프로퍼티 삭제 실행
+        run: rm -f ./src/test/resources/application.properties
