@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -34,14 +35,18 @@ import static org.springframework.restdocs.restassured.RestAssuredRestDocumentat
 class SolvedProblemTagDomainIntegrationTest {
 
     private RequestSpecification spec;
+
+    @Value("${testJWT}")
+    private String testJWT;
+
     @LocalServerPort
     private int port;
 
-    private final String SESSION_COOKIE = "mctApiAccessToken=eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhcGkiLCJ1c2VySWQiOjEsIm5hbWUiOiJTZW9uZ2h1biBKZW9uZyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKLVpBQlRjVV9ORS1lTUIyUm5WNkgtRHlZWHJ0YVEySXhrM3pZTVdjVzM3RFZfU0pSdD1zOTYtYyIsImlhdCI6MTczOTc3NjkyMywiZXhwIjo5OTk5OTk5OTk5fQ.wsn0nX48YX4OSsdJrIOkiOls-Tyty4TVKAZtLU-JdwQQ0s7ZTet6NmF7FwCN4jxl; Path=/; Expires=Sun, 18 May 2025 07:22:03 GMT";
-
+    private String SESSION_COOKIE;
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider restDocumentation) {
+        SESSION_COOKIE = String.format("mctApiAccessToken=%s; Path=/; Expires=Sun, 18 May 2025 07:22:03 GMT", testJWT);
         RestAssured.port = port;
         this.spec = new RequestSpecBuilder().addFilter(documentationConfiguration(restDocumentation)
                         .snippets()

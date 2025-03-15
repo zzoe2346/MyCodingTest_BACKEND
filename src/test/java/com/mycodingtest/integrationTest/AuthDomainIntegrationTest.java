@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,10 @@ import static org.springframework.restdocs.restassured.RestAssuredRestDocumentat
 class AuthDomainIntegrationTest {
 
     private RequestSpecification spec;
+
+    @Value("${testJWT}")
+    private String testJWT;
+
     @LocalServerPort
     private int port;
 
@@ -37,7 +42,7 @@ class AuthDomainIntegrationTest {
         RestAssured.port = port;
         this.spec = new RequestSpecBuilder().addFilter(documentationConfiguration(restDocumentation)
                         .snippets()
-                        .withDefaults(httpRequest(),httpResponse(),requestBody(),responseBody())
+                        .withDefaults(httpRequest(), httpResponse(), requestBody(), responseBody())
                         .and()
                         .operationPreprocessors()
                         .withRequestDefaults(prettyPrint())
@@ -47,7 +52,7 @@ class AuthDomainIntegrationTest {
 
     @Test
     public void testSignOut() {
-        String sessionCookie = "mctApiAccessToken=eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhcGkiLCJ1c2VySWQiOjEsIm5hbWUiOiJTZW9uZ2h1biBKZW9uZyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKLVpBQlRjVV9ORS1lTUIyUm5WNkgtRHlZWHJ0YVEySXhrM3pZTVdjVzM3RFZfU0pSdD1zOTYtYyIsImlhdCI6MTczOTc3NjkyMywiZXhwIjo5OTk5OTk5OTk5fQ.wsn0nX48YX4OSsdJrIOkiOls-Tyty4TVKAZtLU-JdwQQ0s7ZTet6NmF7FwCN4jxl; Path=/; Expires=Sun, 18 May 2025 07:22:03 GMT"; // 실제 로그인 후 쿠키로 대체
+        String sessionCookie = String.format("mctApiAccessToken=%s; Path=/; Expires=Sun, 18 May 2025 07:22:03 GMT", testJWT);
 
         RestAssured.given(this.spec)
                 .filter(document("auth/sign-out"))
@@ -56,13 +61,13 @@ class AuthDomainIntegrationTest {
                 .get("/api/sign-out")
                 .then()
                 .statusCode(HttpStatus.OK.value())
+                .log().all()
                 .cookie("mctApiAccessToken", equalTo(""));
     }
 
     @Test
     public void testCheckSignIn_Success() {
-        String sessionCookie = "mctApiAccessToken=eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhcGkiLCJ1c2VySWQiOjEsIm5hbWUiOiJTZW9uZ2h1biBKZW9uZyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKLVpBQlRjVV9ORS1lTUIyUm5WNkgtRHlZWHJ0YVEySXhrM3pZTVdjVzM3RFZfU0pSdD1zOTYtYyIsImlhdCI6MTczOTc3NjkyMywiZXhwIjo5OTk5OTk5OTk5fQ.wsn0nX48YX4OSsdJrIOkiOls-Tyty4TVKAZtLU-JdwQQ0s7ZTet6NmF7FwCN4jxl; Path=/; Expires=Sun, 18 May 2025 07:22:03 GMT"; // 실제 로그인 후 쿠키로 대체
-
+        String sessionCookie = String.format("mctApiAccessToken=%s; Path=/; Expires=Sun, 18 May 2025 07:22:03 GMT", testJWT);
 
         RestAssured.given(this.spec)
                 .header("Cookie", sessionCookie)
