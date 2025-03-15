@@ -20,7 +20,12 @@ jobs:
           mkdir -p ./src/main/resources
           touch ./src/main/resources/application.properties
           echo "${{ secrets.PROD_PROPERTIES }}" > ./src/main/resources/application.properties
-      #      - run: cat ./src/main/resources/application.properties
+
+      - name: Make properties for test
+        run: |
+          mkdir -p ./src/test/resources
+          touch ./src/test/resources/application.properties
+          echo "${{ secrets.TEST_PROPERTIES }}" > ./src/test/resources/application.properties
 
       - name: Set up Java 21
         uses: actions/setup-java@v3
