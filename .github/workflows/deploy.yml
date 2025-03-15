@@ -1,4 +1,4 @@
-name: Deploy Spring to EC2
+name: Deploy Spring to Lightsail Instance
 
 on:
   push:
@@ -27,6 +27,15 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+
+      - name: Run Integration Test !!!
+        run: ./gradlew integrationTest
+
+      - name: Make API Document
+        run: ./gradlew asciidoctor
+
+      - name: Copy API Document
+        run: ./gradlew copyDocument
 
       - name: Build the Spring Application with Gradle
         run: ./gradlew build -x test  # Gradle 빌드 실행 (테스트 제외)
