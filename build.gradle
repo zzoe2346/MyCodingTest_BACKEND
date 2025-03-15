@@ -14,16 +14,6 @@ ext {
     snippetsDir = file('build/generated-snippets')
 }
 
-test {
-    outputs.dir snippetsDir
-}
-
-asciidoctor {
-    inputs.dir snippetsDir
-    configurations 'asciidoctorExt'
-    dependsOn test
-}
-
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 
@@ -61,16 +51,19 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.3'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-    finalizedBy jacocoTestReport
+asciidoctor {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExt' //  어 이거하니 인식하네
 }
 
-tasks.register('unitTest', Test) {
-    group("verification")
-    useJUnitPlatform {
+tasks.register('copyDocument',Copy) {
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+tasks.named('test') {
+    useJUnitPlatform{
         includeTags 'unit'
-        excludeTags 'integration'
     }
     finalizedBy jacocoTestReport
 }
@@ -81,10 +74,10 @@ tasks.register('integrationTest', Test) {
         includeTags 'integration'
         excludeTags 'unit'
     }
+    outputs.dir snippetsDir
 }
 
 jacocoTestReport {
-    dependsOn unitTest
     reports {
         xml.required = true
         xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacoco.xml')
@@ -94,8 +87,7 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
-    dependsOn unitTest
-
+    dependsOn test
     violationRules {
         rule {
             limit {
