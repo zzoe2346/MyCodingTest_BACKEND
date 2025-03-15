@@ -1,0 +1,16 @@
+== Judgement Result
+
+=== ✅ *채점 결과 저장 요청*
+operation::judgment-result/save[]
+
+=== ✅ *채점 결과 리스트 조회 요청*
+operation::judgment-result/get-list[]
+
+=== ✅ *서버에 이미 저장된 채점 결과인지 확인 요청*
+operation::judgment-result/check-duplicate-submission-id[]
+
+=== ✅ *채점한 소스 코드 READ URL 요청*
+operation::judgment-result/get-code-read-url[]
+
+=== ✅ *채점한 소스 코드 UPDATE URL 요청*
+operation::judgment-result/get-code-update-url[]

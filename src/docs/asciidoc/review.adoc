@@ -1,0 +1,19 @@
+== Review
+=== ✅ *리뷰 조회*
+operation::review/get[]
+
+=== ✅ *리뷰의 메모 read url 획득*
+operation::review/memo-read-url[]
+
+=== ✅ *리뷰의 메모 update url 획득*
+operation::review/memo-update-url[]
+
+=== ✅ *미리뷰 갯수 조회*
+operation::review/unreviewed-count[]
+
+=== ✅ *리뷰 레벨 조정*
+operation::review/update-levels[]
+
+=== ✅ *리뷰 완료로 상태 전환*
+operation::review/update-status[]
+
