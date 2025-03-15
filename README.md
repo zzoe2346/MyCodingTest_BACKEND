@@ -22,7 +22,6 @@
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
   <a href="#deploy-architecture">Deploy Architecture</a> •
   <a href="#ERD">ERD</a>
 </p>
@@ -60,22 +59,6 @@
   <img src="https://github.com/user-attachments/assets/1890c58b-fbc7-4cd3-921f-fddd8ee6a380" alt="image">
 </p>
 
-## How To Use
-
-> **NOTE** Java 21이 설치되어 있어야 합니다.
-
-```zsh
-# Clone this repository
-$ git clone https://github.com/zzoe2346/MyCodingTest_BACKEND
-
-# Go into the repository
-$ cd MyCodingTest_BACKEND
-
-# Install dependencies
-$ ./gradlew build
-
-# Run the Spring Boot application
-$ ./gradlew bootRun
 ```
 
 
