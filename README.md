@@ -24,13 +24,17 @@
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#deploy-architecture">Deploy Architecture</a> •
-  <a href="#license">License</a>
+  <a href="#ERD">ERD</a>
 </p>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8b1b513b-3bfa-4f61-82d1-36c298ae60a5"
          alt="33k">
 </p>
 
+## 귀찮은 복사/붙여넣기 그만! 문제 풀이와 복습에 집중해주세요.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/988566c4-cd75-41c8-bbe6-096cea20fb8b" alt="image">
+</p>
 
 
 ## Key Features
@@ -50,6 +54,7 @@
     
 ## Deploy Architecture
 ![image](https://github.com/user-attachments/assets/49960a4f-a6f9-42a3-8bba-41fb015b90cb)
+
 ## ERD
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1890c58b-fbc7-4cd3-921f-fddd8ee6a380" alt="image">
