@@ -35,8 +35,7 @@
   <img src="https://github.com/user-attachments/assets/988566c4-cd75-41c8-bbe6-096cea20fb8b" alt="image">
 </p>
 
-
-## Key Features
+### Key Features
 - 백준에서 푼 문제 실시간 기록([크롬 확장 프로그램](https://chromewebstore.google.com/detail/my-coding-test-connector/ekmnmpgdcpflanopjcopleffealdeifj) 필요)
 - 푼 문제 모음 테이블
   - Asc, Desc 정렬 지원
@@ -50,6 +49,11 @@
   - 재복습 필요도
   - 북마크
 - 모바일 UI 지원
+
+## CI/CD Pipeline
+![cicddia](https://github.com/user-attachments/assets/f2e25372-b12b-4692-b9ed-fe5055d145ee)
+
+
     
 ## Deploy Architecture
 ![image](https://github.com/user-attachments/assets/49960a4f-a6f9-42a3-8bba-41fb015b90cb)
