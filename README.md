@@ -37,6 +37,8 @@
 
 > [MyCodingTest_ChromeExtention - Github](https://github.com/zzoe2346/MyCodingTest_Connector)
 
+> [MyCodingTest_ChromeExtention - Chrome Web Store](https://chromewebstore.google.com/detail/my-coding-test-connector/ekmnmpgdcpflanopjcopleffealdeifj)
+
 ## 비즈니스 핵심 흐름
 <img width="3686" height="1489" alt="image" src="https://github.com/user-attachments/assets/e2dbbbfd-d58f-465c-81c4-107064a46d76" />
 
