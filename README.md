@@ -20,6 +20,11 @@
          alt="33k">
 </p>
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8b1b513b-3bfa-4f61-82d1-36c298ae60a5"
+         alt="33k">
+</p>
+
 ## 귀찮은 복사/붙여넣기 그만! 문제 풀이와 복습에 집중해주세요.
 <p align="center">
   <img src="https://github.com/user-attachments/assets/988566c4-cd75-41c8-bbe6-096cea20fb8b" alt="image">
