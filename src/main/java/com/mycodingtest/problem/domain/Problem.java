@@ -1,18 +1,11 @@
 package com.mycodingtest.problem.domain;
 
 import com.mycodingtest.common.entity.BaseEntity;
-import com.mycodingtest.common.exception.InvalidOwnershipException;
-import com.mycodingtest.review.Review;
-import com.mycodingtest.solvedproblemtag.SolvedProblemTag;
-import com.mycodingtest.user.domain.User;
+import com.mycodingtest.review.domain.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor

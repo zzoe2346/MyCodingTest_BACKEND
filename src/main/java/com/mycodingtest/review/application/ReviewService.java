@@ -1,37 +1,35 @@
-package com.mycodingtest.review;
+package com.mycodingtest.review.application;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.review.dto.ReviewMapper;
+import com.mycodingtest.review.domain.Review;
+import com.mycodingtest.review.domain.ReviewRepository;
 import com.mycodingtest.review.dto.ReviewRatingLevelsUpdateRequest;
 import com.mycodingtest.review.dto.ReviewRecentStatusResponse;
 import com.mycodingtest.review.dto.ReviewResponse;
 import com.mycodingtest.review.dto.WaitReviewCountResponse;
 import com.mycodingtest.storage.StorageService;
 import com.mycodingtest.storage.dto.UrlResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final StorageService storageService;
 
-    public ReviewService(ReviewRepository reviewRepository, StorageService storageService) {
-        this.reviewRepository = reviewRepository;
-        this.storageService = storageService;
-    }
-
     @Transactional
     public void updateReviewRatingLevels(ReviewRatingLevelsUpdateRequest request, Long reviewId, Long userId) {
         Review review = getReviewAndValidateOwnership(reviewId, userId);
-
         review.updateRatingLevels(request.difficultyLevel(), request.importanceLevel());
     }
 
     @Transactional(readOnly = true)
     public ReviewResponse getReview(Long reviewId, Long userId) {
         Review review = getReviewAndValidateOwnership(reviewId, userId);
-
         return ReviewMapper.toResponse(review);
     }
 

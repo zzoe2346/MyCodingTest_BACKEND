@@ -1,7 +1,6 @@
-package com.mycodingtest.review;
+package com.mycodingtest.review.dto;
 
-import com.mycodingtest.review.dto.ReviewRecentStatusResponse;
-import com.mycodingtest.review.dto.ReviewResponse;
+import com.mycodingtest.review.domain.Review;
 
 public class ReviewMapper {
 

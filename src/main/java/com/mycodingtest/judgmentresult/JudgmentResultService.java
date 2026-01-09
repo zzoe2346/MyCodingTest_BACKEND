@@ -3,7 +3,7 @@ package com.mycodingtest.judgmentresult;
 import com.mycodingtest.common.exception.NotOurUserException;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
-import com.mycodingtest.review.Review;
+import com.mycodingtest.review.domain.Review;
 import com.mycodingtest.problem.domain.Problem;
 import com.mycodingtest.problem.domain.ProblemRepository;
 import com.mycodingtest.storage.StorageService;

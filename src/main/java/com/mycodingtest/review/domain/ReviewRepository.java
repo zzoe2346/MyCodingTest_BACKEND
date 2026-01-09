@@ -1,4 +1,4 @@
-package com.mycodingtest.review;
+package com.mycodingtest.review.domain;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
