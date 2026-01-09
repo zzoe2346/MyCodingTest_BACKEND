@@ -1,6 +1,6 @@
 package com.mycodingtest.solvedproblemtag;
 
-import com.mycodingtest.solvedproblem.SolvedProblem;
+import com.mycodingtest.problem.SolvedProblem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,9 @@
-package com.mycodingtest.solvedproblem;
+package com.mycodingtest.problem;
 
 import com.mycodingtest.common.exception.InvalidOwnershipException;
 import com.mycodingtest.review.Review;
 import com.mycodingtest.solvedproblemtag.SolvedProblemTag;
-import com.mycodingtest.user.User;
+import com.mycodingtest.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

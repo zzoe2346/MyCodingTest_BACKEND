@@ -3,7 +3,7 @@ package com.mycodingtest.solvedproblemtag;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;
-import com.mycodingtest.security.CustomUserDetails;
+import com.mycodingtest.common.security.CustomUserDetails;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagResponse;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagSetRequest;
 import org.junit.jupiter.api.BeforeEach;

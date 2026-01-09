@@ -1,6 +1,7 @@
 package com.mycodingtest.security;
 
 import com.mycodingtest.authorization.AuthService;
+import com.mycodingtest.common.security.CustomOAuth2SuccessHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;

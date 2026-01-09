@@ -1,4 +1,4 @@
-package com.mycodingtest.user;
+package com.mycodingtest.user.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

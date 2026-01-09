@@ -1,5 +1,6 @@
 package com.mycodingtest.user;
 
+import com.mycodingtest.user.domain.User;
 import com.mycodingtest.user.dto.UserDetailInfoResponse;
 
 public class UserMapper {

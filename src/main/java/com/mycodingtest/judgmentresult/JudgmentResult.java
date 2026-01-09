@@ -1,7 +1,7 @@
 package com.mycodingtest.judgmentresult;
 
-import com.mycodingtest.solvedproblem.SolvedProblem;
-import com.mycodingtest.user.User;
+import com.mycodingtest.problem.SolvedProblem;
+import com.mycodingtest.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,9 @@
 package com.mycodingtest.user;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.user.application.UserService;
+import com.mycodingtest.user.domain.User;
+import com.mycodingtest.user.domain.UserRepository;
 import com.mycodingtest.user.dto.UserDetailInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

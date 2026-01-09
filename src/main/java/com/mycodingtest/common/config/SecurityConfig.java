@@ -1,7 +1,7 @@
-package com.mycodingtest.config;
+package com.mycodingtest.common.config;
 
-import com.mycodingtest.security.CustomOAuth2SuccessHandler;
-import com.mycodingtest.security.JwtFilter;
+import com.mycodingtest.common.security.CustomOAuth2SuccessHandler;
+import com.mycodingtest.common.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

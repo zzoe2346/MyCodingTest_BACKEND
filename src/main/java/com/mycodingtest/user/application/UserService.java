@@ -1,19 +1,20 @@
-package com.mycodingtest.user;
+package com.mycodingtest.user.application;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.user.UserMapper;
+import com.mycodingtest.user.domain.User;
+import com.mycodingtest.user.domain.UserRepository;
 import com.mycodingtest.user.dto.UserDetailInfoResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public Optional<User> findByOauthProviderAndOauthId(String provider, String oauthId) {
         return userRepository.findByOauthProviderAndOauthId(provider, oauthId);
@@ -28,4 +29,5 @@ public class UserService {
                 .orElseThrow(ResourceNotFoundException::new);
         return UserMapper.toDetailInfoResponse(user);
     }
+
 }

@@ -1,9 +1,9 @@
-package com.mycodingtest.solvedproblem;
+package com.mycodingtest.problem;
 
 import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;
-import com.mycodingtest.security.CustomUserDetails;
-import com.mycodingtest.solvedproblem.dto.SolvedProblemWithReviewResponse;
+import com.mycodingtest.common.security.CustomUserDetails;
+import com.mycodingtest.problem.dto.SolvedProblemWithReviewResponse;
 import com.mycodingtest.solvedproblemtag.dto.MyTagListResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

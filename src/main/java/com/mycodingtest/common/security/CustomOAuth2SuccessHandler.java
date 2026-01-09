@@ -1,4 +1,4 @@
-package com.mycodingtest.security;
+package com.mycodingtest.common.security;
 
 import com.mycodingtest.authorization.AuthService;
 import jakarta.servlet.http.HttpServletRequest;

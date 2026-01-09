@@ -1,6 +1,6 @@
 package com.mycodingtest.solvedproblemtag;
 
-import com.mycodingtest.solvedproblem.SolvedProblem;
+import com.mycodingtest.problem.SolvedProblem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

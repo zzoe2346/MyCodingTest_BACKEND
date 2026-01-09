@@ -1,6 +1,6 @@
 package com.mycodingtest.review;
 
-import com.mycodingtest.user.User;
+import com.mycodingtest.user.domain.User;
 import com.mycodingtest.common.exception.InvalidOwnershipException;
 import jakarta.persistence.*;
 import lombok.Getter;

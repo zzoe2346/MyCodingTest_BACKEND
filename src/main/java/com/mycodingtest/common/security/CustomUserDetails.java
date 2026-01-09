@@ -1,4 +1,4 @@
-package com.mycodingtest.security;
+package com.mycodingtest.common.security;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

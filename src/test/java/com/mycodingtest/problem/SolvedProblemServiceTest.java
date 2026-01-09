@@ -1,10 +1,10 @@
-package com.mycodingtest.solvedproblem;
+package com.mycodingtest.problem;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
 import com.mycodingtest.judgmentresult.JudgmentResult;
 import com.mycodingtest.judgmentresult.JudgmentResultRepository;
 import com.mycodingtest.review.Review;
-import com.mycodingtest.solvedproblem.dto.SolvedProblemWithReviewResponse;
+import com.mycodingtest.problem.dto.SolvedProblemWithReviewResponse;
 import com.mycodingtest.solvedproblemtag.dto.MyTagListResponse;
 import com.mycodingtest.storage.StorageService;
 import org.junit.jupiter.api.DisplayName;

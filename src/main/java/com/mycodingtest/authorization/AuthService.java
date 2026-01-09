@@ -3,9 +3,10 @@ package com.mycodingtest.authorization;
 import com.mycodingtest.authorization.dto.UserInfoResponse;
 import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;
-import com.mycodingtest.user.User;
-import com.mycodingtest.user.UserService;
+import com.mycodingtest.user.domain.User;
+import com.mycodingtest.user.application.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -14,17 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final CookieUtil cookieUtil;
     private final JwtUtil jwtUtil;
     private final UserService userService;
-
-    public AuthService(CookieUtil cookieUtil, JwtUtil jwtUtil, UserService userService) {
-        this.cookieUtil = cookieUtil;
-        this.jwtUtil = jwtUtil;
-        this.userService = userService;
-    }
 
     /**
      * 서버에서 발급한 쿠키를 바로 만료시키는 로그아웃용 clear 쿠키를 발급하여 HttpServletResponse의 헤더에 add 시킨다.

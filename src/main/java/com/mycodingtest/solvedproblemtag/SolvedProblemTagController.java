@@ -1,6 +1,6 @@
 package com.mycodingtest.solvedproblemtag;
 
-import com.mycodingtest.security.CustomUserDetails;
+import com.mycodingtest.common.security.CustomUserDetails;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagResponse;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagSetRequest;
 import io.swagger.v3.oas.annotations.Operation;

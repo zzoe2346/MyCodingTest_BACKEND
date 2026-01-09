@@ -1,8 +1,8 @@
 package com.mycodingtest.solvedproblemtag;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
-import com.mycodingtest.solvedproblem.SolvedProblem;
-import com.mycodingtest.solvedproblem.SolvedProblemRepository;
+import com.mycodingtest.problem.SolvedProblem;
+import com.mycodingtest.problem.SolvedProblemRepository;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagResponse;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagSetRequest;
 import org.junit.jupiter.api.DisplayName;

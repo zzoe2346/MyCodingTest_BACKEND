@@ -1,4 +1,4 @@
-package com.mycodingtest.solvedproblem.dto;
+package com.mycodingtest.problem.dto;
 
 import java.time.LocalDateTime;
 

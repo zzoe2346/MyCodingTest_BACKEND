@@ -1,5 +1,6 @@
 package com.mycodingtest.user;
 
+import com.mycodingtest.user.domain.User;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 

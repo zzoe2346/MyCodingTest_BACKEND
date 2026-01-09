@@ -1,8 +1,8 @@
-package com.mycodingtest.solvedproblem;
+package com.mycodingtest.problem;
 
 import com.mycodingtest.common.exception.InvalidOwnershipException;
 import com.mycodingtest.review.Review;
-import com.mycodingtest.user.User;
+import com.mycodingtest.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

@@ -2,7 +2,7 @@ package com.mycodingtest.authorization;
 
 import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;
-import com.mycodingtest.security.CustomUserDetails;
+import com.mycodingtest.common.security.CustomUserDetails;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

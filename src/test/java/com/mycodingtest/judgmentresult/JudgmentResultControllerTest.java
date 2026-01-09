@@ -5,7 +5,7 @@ import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
-import com.mycodingtest.security.CustomUserDetails;
+import com.mycodingtest.common.security.CustomUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

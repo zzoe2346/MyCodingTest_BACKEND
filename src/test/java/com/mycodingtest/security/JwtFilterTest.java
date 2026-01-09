@@ -1,5 +1,6 @@
 package com.mycodingtest.security;
 
+import com.mycodingtest.common.security.JwtFilter;
 import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;
 import io.jsonwebtoken.Claims;

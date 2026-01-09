@@ -1,5 +1,6 @@
 package com.mycodingtest.security;
 
+import com.mycodingtest.common.security.CustomUserDetails;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.mycodingtest.user;
+package com.mycodingtest.user.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;

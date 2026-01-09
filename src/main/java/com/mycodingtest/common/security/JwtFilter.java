@@ -1,4 +1,4 @@
-package com.mycodingtest.security;
+package com.mycodingtest.common.security;
 
 import com.mycodingtest.common.util.CookieUtil;
 import com.mycodingtest.common.util.JwtUtil;

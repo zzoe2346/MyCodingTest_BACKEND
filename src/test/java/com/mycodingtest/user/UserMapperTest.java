@@ -1,6 +1,7 @@
 package com.mycodingtest.user;
 
 
+import com.mycodingtest.user.domain.User;
 import com.mycodingtest.user.dto.UserDetailInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

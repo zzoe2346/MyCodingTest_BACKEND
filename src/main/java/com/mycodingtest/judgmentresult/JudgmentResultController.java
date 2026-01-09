@@ -2,7 +2,7 @@ package com.mycodingtest.judgmentresult;
 
 import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
-import com.mycodingtest.security.CustomUserDetails;
+import com.mycodingtest.common.security.CustomUserDetails;
 import com.mycodingtest.storage.dto.UrlResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
