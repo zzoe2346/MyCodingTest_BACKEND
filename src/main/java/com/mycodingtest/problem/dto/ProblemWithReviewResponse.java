@@ -2,7 +2,7 @@ package com.mycodingtest.problem.dto;
 
 import java.time.LocalDateTime;
 
-public record SolvedProblemWithReviewResponse(
+public record ProblemWithReviewResponse(
         Long solvedProblemId,
         int problemNumber,
         String problemTitle,

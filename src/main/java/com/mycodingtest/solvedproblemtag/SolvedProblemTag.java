@@ -1,6 +1,6 @@
 package com.mycodingtest.solvedproblemtag;
 
-import com.mycodingtest.problem.SolvedProblem;
+import com.mycodingtest.problem.domain.Problem;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +18,10 @@ public class SolvedProblemTag {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    private SolvedProblem solvedProblem;
+    private Problem problem;
 
-    public SolvedProblemTag(SolvedProblem solvedProblem, int tagId) {
-        this.solvedProblem = solvedProblem;
+    public SolvedProblemTag(Problem problem, int tagId) {
+        this.problem = problem;
         this.tagId = tagId;
     }
 

@@ -1,6 +1,6 @@
 package com.mycodingtest.judgmentresult;
 
-import com.mycodingtest.problem.SolvedProblem;
+import com.mycodingtest.problem.domain.Problem;
 import com.mycodingtest.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -47,9 +47,9 @@ public class JudgmentResult {
     private User user;
 
     @ManyToOne
-    private SolvedProblem solvedProblem;
+    private Problem problem;
 
-    public JudgmentResult(String baekjoonId, int codeLength, String language, int memory, int problemId, String resultText, Long submissionId, LocalDateTime submittedAt, int time, User user, SolvedProblem solvedProblem) {
+    public JudgmentResult(String baekjoonId, int codeLength, String language, int memory, int problemId, String resultText, Long submissionId, LocalDateTime submittedAt, int time, User user, Problem problem) {
         this.baekjoonId = baekjoonId;
         this.codeLength = codeLength;
         this.language = language;
@@ -60,6 +60,6 @@ public class JudgmentResult {
         this.submittedAt = submittedAt;
         this.time = time;
         this.user = user;
-        this.solvedProblem = solvedProblem;
+        this.problem = problem;
     }
 }

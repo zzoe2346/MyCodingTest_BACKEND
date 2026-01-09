@@ -1,6 +1,6 @@
 package com.mycodingtest.judgmentresult;
 
-import com.mycodingtest.problem.SolvedProblem;
+import com.mycodingtest.problem.domain.Problem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +18,6 @@ public interface JudgmentResultRepository extends JpaRepository<JudgmentResult, 
 
     boolean existsBySubmissionId(Long submissionId);
 
-    List<JudgmentResult> findAllBySolvedProblem(SolvedProblem solvedProblem);
+    List<JudgmentResult> findAllBySolvedProblem(Problem problem);
 }
 

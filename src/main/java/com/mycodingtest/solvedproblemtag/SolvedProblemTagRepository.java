@@ -1,12 +1,12 @@
 package com.mycodingtest.solvedproblemtag;
 
-import com.mycodingtest.problem.SolvedProblem;
+import com.mycodingtest.problem.domain.Problem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface SolvedProblemTagRepository extends JpaRepository<SolvedProblemTag, SolvedProblemTag.SolvedProblemTagId> {
-    void deleteAllBySolvedProblem(SolvedProblem solvedProblem);
+    void deleteAllBySolvedProblem(Problem problem);
 
-    List<SolvedProblemTag> findAllBySolvedProblem(SolvedProblem solvedProblem);
+    List<SolvedProblemTag> findAllBySolvedProblem(Problem problem);
 }

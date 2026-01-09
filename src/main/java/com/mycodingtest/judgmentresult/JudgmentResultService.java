@@ -4,8 +4,8 @@ import com.mycodingtest.common.exception.NotOurUserException;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
 import com.mycodingtest.judgmentresult.dto.JudgmentResultSaveRequest;
 import com.mycodingtest.review.Review;
-import com.mycodingtest.problem.SolvedProblem;
-import com.mycodingtest.problem.SolvedProblemRepository;
+import com.mycodingtest.problem.domain.Problem;
+import com.mycodingtest.problem.domain.ProblemRepository;
 import com.mycodingtest.storage.StorageService;
 import com.mycodingtest.user.domain.User;
 import com.mycodingtest.user.domain.UserRepository;
@@ -18,11 +18,11 @@ import java.util.List;
 public class JudgmentResultService {
 
     private final JudgmentResultRepository judgmentResultRepository;
-    private final SolvedProblemRepository solvedProblemRepository;
+    private final ProblemRepository solvedProblemRepository;
     private final UserRepository userRepository;
     private final StorageService storageService;
 
-    public JudgmentResultService(JudgmentResultRepository judgmentResultRepository, SolvedProblemRepository solvedProblemRepository, UserRepository userRepository, StorageService storageService) {
+    public JudgmentResultService(JudgmentResultRepository judgmentResultRepository, ProblemRepository solvedProblemRepository, UserRepository userRepository, StorageService storageService) {
         this.solvedProblemRepository = solvedProblemRepository;
         this.judgmentResultRepository = judgmentResultRepository;
         this.userRepository = userRepository;
@@ -34,7 +34,7 @@ public class JudgmentResultService {
         User user = userRepository.findById(userId)
                 .orElseThrow(NotOurUserException::new);
 
-        SolvedProblem solvedProblem = prepareSolvedProblem(request, user);
+        Problem problem = prepareSolvedProblem(request, user);
 
         judgmentResultRepository.save(new JudgmentResult(
                 request.baekjoonId(),
@@ -47,15 +47,15 @@ public class JudgmentResultService {
                 request.submittedAt(),
                 request.time(),
                 user,
-                solvedProblem)
+                problem)
         );
     }
 
-    private SolvedProblem prepareSolvedProblem(JudgmentResultSaveRequest request, User user) {
-        SolvedProblem solvedProblem = solvedProblemRepository.findByUserIdAndProblemNumber(user.getId(), request.problemNumber())
-                .orElseGet(() -> new SolvedProblem(request.problemNumber(), request.problemTitle(), user, new Review(user)));
-        solvedProblem.updateRecentResult(request.submittedAt(), request.resultText());
-        return solvedProblemRepository.save(solvedProblem);
+    private Problem prepareSolvedProblem(JudgmentResultSaveRequest request, User user) {
+        Problem problem = solvedProblemRepository.findByUserIdAndProblemNumber(user.getId(), request.problemNumber())
+                .orElseGet(() -> new Problem(request.problemNumber(), request.problemTitle(), user, new Review(user)));
+        problem.updateRecentResult(request.submittedAt(), request.resultText());
+        return solvedProblemRepository.save(problem);
     }
 
     @Transactional(readOnly = true)

@@ -1,8 +1,8 @@
 package com.mycodingtest.solvedproblemtag;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
-import com.mycodingtest.problem.SolvedProblem;
-import com.mycodingtest.problem.SolvedProblemRepository;
+import com.mycodingtest.problem.domain.Problem;
+import com.mycodingtest.problem.domain.ProblemRepository;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagResponse;
 import com.mycodingtest.solvedproblemtag.dto.AlgorithmTagSetRequest;
 import org.springframework.stereotype.Service;
@@ -16,25 +16,25 @@ import java.util.Set;
 @Service
 public class SolvedProblemTagService {
 
-    private final SolvedProblemRepository solvedProblemRepository;
+    private final ProblemRepository solvedProblemRepository;
     private final SolvedProblemTagRepository solvedProblemTagRepository;
 
-    public SolvedProblemTagService(SolvedProblemRepository solvedProblemRepository, SolvedProblemTagRepository solvedProblemTagRepository) {
+    public SolvedProblemTagService(ProblemRepository solvedProblemRepository, SolvedProblemTagRepository solvedProblemTagRepository) {
         this.solvedProblemRepository = solvedProblemRepository;
         this.solvedProblemTagRepository = solvedProblemTagRepository;
     }
 
     @Transactional
     public void setAlgorithmTags(Long solvedProblemId, AlgorithmTagSetRequest request, Long userId) {
-        SolvedProblem solvedProblem = solvedProblemRepository.findById(solvedProblemId)
+        Problem problem = solvedProblemRepository.findById(solvedProblemId)
                 .orElseThrow(ResourceNotFoundException::new);
-        solvedProblem.validateOwnership(userId);
+        problem.validateOwnership(userId);
         if (request.tagIds().length == 0) {
-            solvedProblemTagRepository.deleteAllBySolvedProblem(solvedProblem);
+            solvedProblemTagRepository.deleteAllBySolvedProblem(problem);
             return;
         }
 
-        List<SolvedProblemTag> existingSolvedProblemTags = solvedProblemTagRepository.findAllBySolvedProblem(solvedProblem);
+        List<SolvedProblemTag> existingSolvedProblemTags = solvedProblemTagRepository.findAllBySolvedProblem(problem);
 
         List<SolvedProblemTag> tagsToRemove = existingSolvedProblemTags.stream()
                 .filter(tag -> Arrays.stream(request.tagIds()).noneMatch(reqTagId -> reqTagId == tag.getTagId()))
@@ -42,7 +42,7 @@ public class SolvedProblemTagService {
 
         Set<SolvedProblemTag> newSolvedProblemTags = new HashSet<>();
         for (int tagId : request.tagIds()) {
-            newSolvedProblemTags.add(new SolvedProblemTag(solvedProblem, tagId));
+            newSolvedProblemTags.add(new SolvedProblemTag(problem, tagId));
         }
 
         solvedProblemTagRepository.deleteAllInBatch(tagsToRemove);
