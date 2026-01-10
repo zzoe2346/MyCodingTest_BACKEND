@@ -23,9 +23,8 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public ReviewResponse getReview(Long reviewId, Long userId) {
-        Review review = getReviewAndValidateOwnership(reviewId, userId);
-        return ReviewMapper.toResponse(review);
+    public Review getReview(Long reviewId, Long userId) {
+        return getReviewAndValidateOwnership(reviewId, userId);
     }
 
     @Transactional

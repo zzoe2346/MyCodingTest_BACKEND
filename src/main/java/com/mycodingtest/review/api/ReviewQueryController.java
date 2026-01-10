@@ -1,9 +1,9 @@
 package com.mycodingtest.review.api;
 
 import com.mycodingtest.common.security.CustomUserDetails;
-import com.mycodingtest.review.application.ReviewService;
-import com.mycodingtest.review.api.dto.ReviewResponse;
 import com.mycodingtest.review.api.dto.WaitReviewCountResponse;
+import com.mycodingtest.review.application.ReviewService;
+import com.mycodingtest.review.domain.Review;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -22,12 +22,12 @@ public class ReviewQueryController {
 
     @GetMapping("/api/reviews/{reviewId}")
     @Operation(summary = "리뷰 유무, 날짜, 체감 난이도, 재복습 필요도 획득")
-    public ResponseEntity<ReviewResponse> getReview(@PathVariable Long reviewId,
-                                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<Review> getReview(@PathVariable Long reviewId,
+                                            @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(reviewService.getReview(reviewId, userDetails.getUserId()));
     }
 
-    @GetMapping("/api/reviews/unreviewed-counting")
+    @GetMapping("/api/reviews/unreviewed/count")
     @Operation(summary = "리뷰를 기다리는 문제 개수 반환")
     public ResponseEntity<WaitReviewCountResponse> getWaitReviewCount(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(reviewService.getWaitReviewCount(userDetails.getUserId()));
