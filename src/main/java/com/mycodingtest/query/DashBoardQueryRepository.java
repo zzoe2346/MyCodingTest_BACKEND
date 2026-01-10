@@ -27,7 +27,6 @@ public class DashBoardQueryRepository {
                 FROM Problem p \
                 INNER JOIN Review r \
                 ON p.id = r.problemId \
-                INNER JOIN Judgment j \
                 WHERE r.userId = :userId \
                 """;
 
