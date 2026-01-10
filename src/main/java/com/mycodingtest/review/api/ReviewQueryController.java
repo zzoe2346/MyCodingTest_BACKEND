@@ -2,8 +2,8 @@ package com.mycodingtest.review.api;
 
 import com.mycodingtest.common.security.CustomUserDetails;
 import com.mycodingtest.review.application.ReviewService;
-import com.mycodingtest.review.dto.ReviewResponse;
-import com.mycodingtest.review.dto.WaitReviewCountResponse;
+import com.mycodingtest.review.api.dto.ReviewResponse;
+import com.mycodingtest.review.api.dto.WaitReviewCountResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

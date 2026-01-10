@@ -1,9 +1,9 @@
 package com.mycodingtest.review.application;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
+import com.mycodingtest.review.api.dto.*;
 import com.mycodingtest.review.domain.Review;
 import com.mycodingtest.review.domain.ReviewRepository;
-import com.mycodingtest.review.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

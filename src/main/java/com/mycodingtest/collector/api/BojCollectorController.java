@@ -1,7 +1,7 @@
 package com.mycodingtest.collector.api;
 
 import com.mycodingtest.collector.application.BojIngestionService;
-import com.mycodingtest.collector.dto.CreateBojProblemAndJudgmentRequest;
+import com.mycodingtest.collector.api.dto.CreateBojProblemAndJudgmentRequest;
 import com.mycodingtest.common.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

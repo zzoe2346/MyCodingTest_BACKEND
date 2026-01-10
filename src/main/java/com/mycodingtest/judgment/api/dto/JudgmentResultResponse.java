@@ -1,4 +1,4 @@
-package com.mycodingtest.judgment.dto;
+package com.mycodingtest.judgment.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

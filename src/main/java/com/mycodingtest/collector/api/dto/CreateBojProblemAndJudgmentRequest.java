@@ -1,4 +1,4 @@
-package com.mycodingtest.collector.dto;
+package com.mycodingtest.collector.api.dto;
 
 import com.mycodingtest.collector.application.CreateProblemAndJudgmentFromBojCommand;
 

@@ -1,4 +1,4 @@
-package com.mycodingtest.review.dto;
+package com.mycodingtest.review.api.dto;
 
 public record ReviewRatingLevelsUpdateRequest(
         int difficultyLevel,
