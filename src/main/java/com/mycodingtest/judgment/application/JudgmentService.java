@@ -76,7 +76,8 @@ public class JudgmentService {
                                 command.getLanguage(),
                                 command.getCodeLength(),
                                 command.getSubmittedAt()
-                        )
+                        ),
+                        command.getSourceCode()
                 ));
     }
 

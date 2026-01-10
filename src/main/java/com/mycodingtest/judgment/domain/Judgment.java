@@ -31,8 +31,9 @@ public class Judgment extends BaseEntity {
     private Platform platform;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "json")
+    @Column(columnDefinition = "longtext")
     private MetaData metaData;
+    private String sourceCode;
 
     public static Judgment of(
             Long problemId,
@@ -40,7 +41,8 @@ public class Judgment extends BaseEntity {
             Long submissionId,
             JudgmentStatus status,
             Platform platform,
-            MetaData metaData
+            MetaData metaData,
+            String sourceCode
     ) {
         return Judgment.builder()
                 .problemId(problemId)
@@ -49,6 +51,7 @@ public class Judgment extends BaseEntity {
                 .status(status)
                 .platform(platform)
                 .metaData(metaData)
+                .sourceCode(sourceCode)
                 .build();
     }
 }
