@@ -14,7 +14,8 @@ public record CreateBojProblemAndJudgmentRequest(
         int time,
         String language,
         int codeLength,
-        LocalDateTime submittedAt
+        LocalDateTime submittedAt,
+        String code
 ) {
 
     public CreateProblemAndJudgmentFromBojCommand toCommand() {
@@ -28,7 +29,8 @@ public record CreateBojProblemAndJudgmentRequest(
                 time,
                 language,
                 codeLength,
-                submittedAt
+                submittedAt,
+                code
         );
     }
 

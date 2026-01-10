@@ -18,4 +18,5 @@ public class CreateProblemAndJudgmentFromBojCommand {
     String language;
     int codeLength;
     LocalDateTime submittedAt;
+    String sourceCode;
 }
