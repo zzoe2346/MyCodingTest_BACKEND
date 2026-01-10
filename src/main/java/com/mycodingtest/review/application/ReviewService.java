@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -47,8 +49,8 @@ public class ReviewService {
         return review;
     }
 
-    public void createReview(Long problemId, Long userId, String sourceCode) {
-        reviewRepository.save(new Review(problemId, userId, sourceCode));
+    public void createReview(Long problemId, Long userId, String sourceCode, LocalDateTime submittedAt, String resultText) {
+        reviewRepository.save(new Review(problemId, userId, sourceCode,submittedAt, resultText));
     }
 
     public void changeFavorite(Long reviewId, Long userId) {

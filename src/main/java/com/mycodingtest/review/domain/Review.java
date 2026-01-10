@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Review extends BaseEntity {
 
     private Long problemId;
@@ -28,8 +27,10 @@ public class Review extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReviewStatus status;
     private boolean favorited;
+    private LocalDateTime recentSubmitAt;
+    private String recentResult;
 
-    public Review(Long problemId, Long userId, String sourceCode) {
+    public Review(Long problemId, Long userId, String sourceCode, LocalDateTime recentSubmitAt, String recentResult) {
         this.problemId = problemId;
         this.userId = userId;
         this.sourceCode = sourceCode;

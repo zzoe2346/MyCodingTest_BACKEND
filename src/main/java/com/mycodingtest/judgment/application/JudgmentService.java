@@ -59,8 +59,8 @@ public class JudgmentService {
     }
 
     @Transactional
-    public void createJudgmentFromBoj(CreateProblemAndJudgmentFromBojCommand command, Long problemId, Long userId) {
-        judgmentRepository.save(
+    public Judgment createJudgmentFromBoj(CreateProblemAndJudgmentFromBojCommand command, Long problemId, Long userId) {
+        return judgmentRepository.save(
                 Judgment.of(
                         problemId,
                         userId,

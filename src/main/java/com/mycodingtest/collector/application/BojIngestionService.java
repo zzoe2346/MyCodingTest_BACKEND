@@ -24,7 +24,7 @@ public class BojIngestionService {
                 command.getProblemTitle()
         );
         judgmentService.createJudgmentFromBoj(command, problem.getId(), userId);
-        reviewService.createReview(problem.getId(), userId, command.getSourceCode());
+        reviewService.createReview(problem.getId(), userId, command.getSourceCode(), command.getSubmittedAt(), command.getResultText());
     }
 
     public void checkDuplicatedSubmissionId(Long submissionId) {

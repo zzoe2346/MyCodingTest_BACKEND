@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class JudgmentQueryController {
     @GetMapping("/api/judgments")
     @Operation(summary = "채점 결과 목록 조회", description = "특정 문제의 채점 결과 목록을 조회합니다.")
     public ResponseEntity<List<Judgment>> getJudgmentResultList(
-            @RequestBody Long problemId,
+            @RequestParam Long problemId,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         List<Judgment> judgments = judgmentService.readJudgments(problemId, userDetails.getUserId());
