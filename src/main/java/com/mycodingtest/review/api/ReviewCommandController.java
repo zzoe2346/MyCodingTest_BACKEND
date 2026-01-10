@@ -22,6 +22,7 @@ public class ReviewCommandController {
     private final ReviewService reviewService;
 
     @PutMapping("/api/reviews/{reviewId}/favorite")
+    @Operation(summary = "즐겨찾기 변경", description = "리뷰의 즐겨찾기 상태를 변경합니다.")
     public ResponseEntity<Void> changeFavorite(@PathVariable Long reviewId,
                                                @AuthenticationPrincipal CustomUserDetails userDetails) {
         reviewService.changeFavorite(reviewId, userDetails.getUserId());
