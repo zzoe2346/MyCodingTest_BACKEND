@@ -1,8 +1,5 @@
-package com.mycodingtest.common;
+package com.mycodingtest.common.exception;
 
-import com.mycodingtest.common.exception.InvalidOwnershipException;
-import com.mycodingtest.common.exception.NotOurUserException;
-import com.mycodingtest.common.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
