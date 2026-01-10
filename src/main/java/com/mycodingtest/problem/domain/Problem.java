@@ -1,7 +1,7 @@
 package com.mycodingtest.problem.domain;
 
+import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.common.entity.BaseEntity;
-import com.mycodingtest.review.domain.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,10 +14,11 @@ import lombok.NoArgsConstructor;
 public class Problem extends BaseEntity {
 
     private Integer problemNumber;
-
     private String problemTitle;
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    private Review review;
-
+    public static Problem of(Integer problemNumber, String problemTitle, Platform platform) {
+        return new Problem(problemNumber, problemTitle, platform);
+    }
 }
