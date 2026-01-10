@@ -1,6 +1,4 @@
-package com.mycodingtest.judgmentresult;
-
-import com.mycodingtest.judgmentresult.dto.JudgmentResultResponse;
+package com.mycodingtest.judgment.dto;
 
 public class JudgmentResultMapper {
 
@@ -8,7 +6,7 @@ public class JudgmentResultMapper {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    public static JudgmentResultResponse toResponse(JudgmentResult entity) {
+    public static JudgmentResultResponse toResponse(Submission entity) {
         return new JudgmentResultResponse(
                 entity.getSubmissionId(),
                 entity.getBaekjoonId(),

@@ -1,8 +1,8 @@
-package com.mycodingtest.judgmentresult.dto;
+package com.mycodingtest.judgment.dto;
 
 import java.time.LocalDateTime;
 
-public record JudgmentResultSaveRequest(
+public record CreateJudgmentRequest(
         Long submissionId,
         String baekjoonId,
         int problemNumber,
