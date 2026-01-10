@@ -27,6 +27,7 @@ public class Review extends BaseEntity {
     private LocalDateTime reviewedAt;
     @Enumerated(EnumType.STRING)
     private ReviewStatus status;
+    private boolean favorited;
 
     public Review(Long problemId, Long userId, String sourceCode) {
         this.problemId = problemId;
@@ -60,5 +61,9 @@ public class Review extends BaseEntity {
         if (!this.userId.equals(currentUserId)) {
             throw new InvalidOwnershipException();
         }
+    }
+
+    public void changeFavorite() {
+        this.favorited = !this.favorited;
     }
 }

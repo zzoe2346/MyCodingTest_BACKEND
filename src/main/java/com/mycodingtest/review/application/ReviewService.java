@@ -4,8 +4,6 @@ import com.mycodingtest.common.exception.ResourceNotFoundException;
 import com.mycodingtest.review.domain.Review;
 import com.mycodingtest.review.domain.ReviewRepository;
 import com.mycodingtest.review.dto.*;
-import com.mycodingtest.storage.StorageService;
-import com.mycodingtest.storage.dto.UrlResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final StorageService storageService;
 
     @Transactional
     public void updateReviewRatingLevels(ReviewRatingLevelsUpdateRequest request, Long reviewId, Long userId) {
@@ -29,26 +26,10 @@ public class ReviewService {
         return ReviewMapper.toResponse(review);
     }
 
-    @Transactional(readOnly = true)
-    public UrlResponse getMemoUpdateUrl(Long reviewId, Long userId) {
-        getReviewAndValidateOwnership(reviewId, userId);
-
-        return new UrlResponse(storageService.getMemoUpdateUrl(String.valueOf(reviewId), userId));
-    }
-
-    @Transactional(readOnly = true)
-    public UrlResponse getMemoReadUrl(Long reviewId, Long userId) {
-        getReviewAndValidateOwnership(reviewId, userId);
-
-        return new UrlResponse(storageService.getMemoReadUrl(String.valueOf(reviewId), userId));
-    }
-
     @Transactional
     public ReviewRecentStatusResponse updateReviewStatus(Long reviewId, Long userId) {
         Review review = getReviewAndValidateOwnership(reviewId, userId);
-
         review.completeReview();
-
         return ReviewMapper.toRecentStatusResponse(review);
     }
 
@@ -70,12 +51,12 @@ public class ReviewService {
         reviewRepository.save(new Review(problemId, userId, sourceCode));
     }
 
-    //이사
-//
-//    @Transactional
-//    public void changeFavorite(Long solvedProblemId, Long userId) {
-//        Problem problem = getSolvedProblemAndValidateOwnership(solvedProblemId, userId);
-//        problem.reverseFavoriteStatus();
-//    }
+    public void changeFavorite(Long reviewId, Long userId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow();
+        review.validateOwnership(userId);
+        review.changeFavorite();
+        reviewRepository.save(review);
+    }
 
 }
