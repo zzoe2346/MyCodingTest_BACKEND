@@ -21,12 +21,14 @@ public class ProblemController {
 
     private final ProblemService problemService;
 
+    //TODO: query로 이동
     @GetMapping("/api/solved-problems")
     public ResponseEntity<Page<ProblemWithReviewResponse>> getSolvedProblemWithReviewPage(@PageableDefault Pageable pageable,
                                                                                           @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(problemService.getSolvedProblemWithRiviewPage(pageable, userDetails.getUserId()));
     }
 
+    //TODO: 리뷰로 이동
     @PatchMapping("/api/solved-problems/{solvedProblemId}/favorite")
     public ResponseEntity<Void> changeFavorite(@PathVariable Long solvedProblemId,
                                                @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -34,6 +36,7 @@ public class ProblemController {
         return ResponseEntity.ok().build();
     }
 
+    //TODO: query로 이동
     @GetMapping("/api/solved-problems/review/{isReviewed}")
     public ResponseEntity<Page<ProblemWithReviewResponse>> getSolvedProblemByReviewStatus(@PathVariable boolean isReviewed,
                                                                                           @PageableDefault Pageable pageable,
@@ -41,12 +44,14 @@ public class ProblemController {
         return ResponseEntity.ok(problemService.getSolvedProblemsByReviewedStatus(isReviewed, pageable, userDetails.getUserId()));
     }
 
+    //TODO: query로 이동
     @GetMapping("/api/solved-problems/favorites")
     public ResponseEntity<Page<ProblemWithReviewResponse>> getFavoriteSolvedProblem(@PageableDefault Pageable pageable,
                                                                                     @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(problemService.getFavoriteSolvedProblem(pageable, userDetails.getUserId()));
     }
 
+    //TODO: query로 이동
     @GetMapping("/api/solved-problems/tags/{tagId}")
     public ResponseEntity<Page<ProblemWithReviewResponse>> getTaggedSolvedProblem(@PathVariable Long tagId,
                                                                                   @PageableDefault Pageable pageable,
@@ -54,11 +59,13 @@ public class ProblemController {
         return ResponseEntity.ok(problemService.getTaggedSolvedProblem(tagId, pageable, userDetails.getUserId()));
     }
 
+    //TODO: query로 이동
     @GetMapping("/api/solved-problems/tags")
     public ResponseEntity<MyTagListResponse> getMyTagList(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(problemService.getMyTagList(userDetails.getUserId()));
     }
 
+    //TODO: 보류
     @DeleteMapping("/api/solved-problems/{solvedProblemId}")
     public ResponseEntity<Void> deleteSolvedProblem(@PathVariable Long solvedProblemId,
                                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
