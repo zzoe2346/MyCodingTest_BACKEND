@@ -8,6 +8,5 @@ import java.util.Optional;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     int countAllByReviewedIsFalseAndUserId(Long userId);
 
-    @EntityGraph(attributePaths = "user")
     Optional<Review> findById(Long reviewId);
 }
