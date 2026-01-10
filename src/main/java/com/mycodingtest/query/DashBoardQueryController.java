@@ -11,7 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,24 +21,25 @@ public class DashBoardQueryController {
 
     private final DashBoardQueryRepository dashBoardQueryRepository;
 
-    @GetMapping("/api/solved-problems")
+    @GetMapping("/api/solved-problems/all")
     @Operation(summary = "푼 문제 목록 조회", description = "푼 문제 목록을 조회합니다.")
     public ResponseEntity<Page<ReviewSummaryResponse>> getSolvedProblemWithReviewPage(@PageableDefault Pageable pageable,
                                                                                       @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(dashBoardQueryRepository.findAllProblemWithReviewByUserId(userDetails.getUserId(), pageable));
     }
 
-    @GetMapping("/api/solved-problems/review/{isReviewed}")
+    @GetMapping("/api/solved-problems")
     @Operation(summary = "리뷰 상태별 푼 문제 목록 조회", description = "리뷰 상태별 푼 문제 목록을 조회합니다.")
-    public ResponseEntity<Page<ReviewSummaryResponse>> getSolvedProblemByReviewStatus(@PathVariable boolean isReviewed,
+    public ResponseEntity<Page<ReviewSummaryResponse>> getSolvedProblemByReviewStatus(@RequestParam boolean isReviewed,
                                                                                       @PageableDefault Pageable pageable,
                                                                                       @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(dashBoardQueryRepository.findAllByUserIdAndReviewed(userDetails.getUserId(), isReviewed, pageable));
     }
 
-    @GetMapping("/api/solved-problems/favorites")
+    @GetMapping("/api/solved-problems/favorite")
     @Operation(summary = "즐겨찾기한 문제 목록 조회", description = "즐겨찾기한 문제 목록을 조회합니다.")
-    public ResponseEntity<Page<ReviewSummaryResponse>> getFavoriteSolvedProblem(@PageableDefault Pageable pageable,
+    public ResponseEntity<Page<ReviewSummaryResponse>> getFavoriteSolvedProblem(@RequestParam boolean isFavorite,
+                                                                                @PageableDefault Pageable pageable,
                                                                                 @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(dashBoardQueryRepository.findAllByUserIdAndFavoriteIsTrue(userDetails.getUserId(), pageable));
     }
