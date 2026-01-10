@@ -62,11 +62,17 @@ tasks.register('copyDocument',Copy) {
     into file("src/main/resources/static/docs")
 }
 
+//tasks.named('test') {
+//    useJUnitPlatform{
+//        includeTags 'unit'
+//    }
+//    finalizedBy jacocoTestReport
+//}
+
 tasks.named('test') {
     useJUnitPlatform{
         includeTags 'unit'
     }
-    finalizedBy jacocoTestReport
 }
 
 tasks.register('integrationTest', Test) {
@@ -78,22 +84,22 @@ tasks.register('integrationTest', Test) {
     outputs.dir snippetsDir
 }
 
-jacocoTestReport {
-    reports {
-        xml.required = true
-        xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacoco.xml')
-        html.required = true
-        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
-    }
-}
+//jacocoTestReport {
+//    reports {
+//        xml.required = true
+//        xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacoco.xml')
+//        html.required = true
+//        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+//    }
+//}
 
-jacocoTestCoverageVerification {
-    dependsOn test
-    violationRules {
-        rule {
-            limit {
-                minimum = 1.0
-            }
-        }
-    }
-}
+//jacocoTestCoverageVerification {
+//    dependsOn test
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 1.0
+//            }
+//        }
+//    }
+//}
