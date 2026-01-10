@@ -1,13 +1,9 @@
 package com.mycodingtest.review.application;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
-import com.mycodingtest.review.dto.ReviewMapper;
 import com.mycodingtest.review.domain.Review;
 import com.mycodingtest.review.domain.ReviewRepository;
-import com.mycodingtest.review.dto.ReviewRatingLevelsUpdateRequest;
-import com.mycodingtest.review.dto.ReviewRecentStatusResponse;
-import com.mycodingtest.review.dto.ReviewResponse;
-import com.mycodingtest.review.dto.WaitReviewCountResponse;
+import com.mycodingtest.review.dto.*;
 import com.mycodingtest.storage.StorageService;
 import com.mycodingtest.storage.dto.UrlResponse;
 import lombok.RequiredArgsConstructor;
@@ -69,4 +65,17 @@ public class ReviewService {
 
         return review;
     }
+
+    public void createReview(Long problemId, Long userId, String sourceCode) {
+        reviewRepository.save(new Review(problemId, userId, sourceCode));
+    }
+
+    //이사
+//
+//    @Transactional
+//    public void changeFavorite(Long solvedProblemId, Long userId) {
+//        Problem problem = getSolvedProblemAndValidateOwnership(solvedProblemId, userId);
+//        problem.reverseFavoriteStatus();
+//    }
+
 }

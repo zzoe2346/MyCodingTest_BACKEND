@@ -23,13 +23,18 @@ public class Review extends BaseEntity {
     private boolean reviewed;
     private Integer difficultyLevel = -1;
     private Integer importanceLevel = -1;
+    private String sourceCode;
     private LocalDateTime reviewedAt;
     @Enumerated(EnumType.STRING)
-    private ReviewStatus status = ReviewStatus.TO_DO;
+    private ReviewStatus status;
 
-    public Review(Long problemId, Long userId) {
+    public Review(Long problemId, Long userId, String sourceCode) {
         this.problemId = problemId;
         this.userId = userId;
+        this.sourceCode = sourceCode;
+        this.content = "";
+        this.reviewed = false;
+        this.status = ReviewStatus.TO_DO;//NOT REVIEWED
     }
 
     public void startReview() {
