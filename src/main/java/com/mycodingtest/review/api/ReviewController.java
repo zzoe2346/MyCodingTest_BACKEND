@@ -38,20 +38,20 @@ public class ReviewController {
                                                     @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(reviewService.getReview(reviewId, userDetails.getUserId()));
     }
-
-    @GetMapping("/api/solved-problems/reviews/{reviewId}/memo/update")
-    @Operation(summary = "메모 수정/저장 URL 획득")
-    public ResponseEntity<UrlResponse> saveMemo(@PathVariable Long reviewId,
-                                                @AuthenticationPrincipal CustomUserDetails userDetails) {
-        return ResponseEntity.ok(reviewService.getMemoUpdateUrl(reviewId, userDetails.getUserId()));
-    }
-
-    @GetMapping("/api/solved-problems/reviews/{reviewId}/memo/read")
-    @Operation(summary = "메모 읽기 URL 획득")
-    public ResponseEntity<UrlResponse> getMemo(@PathVariable Long reviewId,
-                                               @AuthenticationPrincipal CustomUserDetails userDetails) {
-        return ResponseEntity.ok(reviewService.getMemoReadUrl(reviewId, userDetails.getUserId()));
-    }
+//
+//    @GetMapping("/api/solved-problems/reviews/{reviewId}/memo/update")
+//    @Operation(summary = "메모 수정/저장 URL 획득")
+//    public ResponseEntity<UrlResponse> saveMemo(@PathVariable Long reviewId,
+//                                                @AuthenticationPrincipal CustomUserDetails userDetails) {
+//        return ResponseEntity.ok(reviewService.getMemoUpdateUrl(reviewId, userDetails.getUserId()));
+//    }
+//
+//    @GetMapping("/api/solved-problems/reviews/{reviewId}/memo/read")
+//    @Operation(summary = "메모 읽기 URL 획득")
+//    public ResponseEntity<UrlResponse> getMemo(@PathVariable Long reviewId,
+//                                               @AuthenticationPrincipal CustomUserDetails userDetails) {
+//        return ResponseEntity.ok(reviewService.getMemoReadUrl(reviewId, userDetails.getUserId()));
+//    }
 
     @PutMapping("/api/solved-problems/reviews/{reviewId}/status")
     @Operation(summary = "리뷰 상태를 완료로 전환 시킴. 최신 상태 응답.")
