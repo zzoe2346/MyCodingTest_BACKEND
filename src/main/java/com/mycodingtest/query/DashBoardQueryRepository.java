@@ -48,6 +48,7 @@ public class DashBoardQueryRepository {
                 SELECT new com.mycodingtest.query.dto.ReviewSummaryResponse(p.id, p.problemNumber, p.problemTitle, r.recentSubmitAt, r.recentResult, r.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed, r.reviewedAt) \
                 FROM Problem p \
                 INNER JOIN Review r \
+                ON p.id = r.problemId \
                 WHERE r.userId = :userId \
                 AND r.reviewed = :reviewed
                 """;
@@ -72,7 +73,7 @@ public class DashBoardQueryRepository {
                 SELECT new com.mycodingtest.query.dto.ReviewSummaryResponse(p.id, p.problemNumber, p.problemTitle, r.recentSubmitAt, r.recentResult, r.favorited, r.id, r.difficultyLevel, r.importanceLevel, r.reviewed, r.reviewedAt) \
                 FROM Problem p \
                 LEFT JOIN Review r \
-                WHERE r.userId = :userId \
+                ON r.userId = :userId \
                 AND r.favorited = true
                 """;
 
