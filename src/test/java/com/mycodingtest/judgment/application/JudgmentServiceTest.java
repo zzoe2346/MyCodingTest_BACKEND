@@ -1,7 +1,7 @@
 package com.mycodingtest.judgment.application;
 
-import com.mycodingtest.collector.application.CreateProblemAndJudgmentFromBojCommand;
 import com.mycodingtest.common.domain.Platform;
+import com.mycodingtest.judgment.application.dto.RegisterBojJudgmentCommand;
 import com.mycodingtest.judgment.domain.Judgment;
 import com.mycodingtest.judgment.domain.JudgmentRepository;
 import com.mycodingtest.judgment.domain.JudgmentStatus;
@@ -33,7 +33,7 @@ class JudgmentServiceTest {
         // given
         Long problemId = 1L;
         Long userId = 1L;
-        List<Judgment> judgments = List.of(Judgment.of(problemId, userId, 100L, JudgmentStatus.SUCCESS, Platform.BOJ, null));
+        List<Judgment> judgments = List.of(Judgment.of(problemId, userId, 100L, JudgmentStatus.SUCCESS, Platform.BOJ, null, "code"));
         
         given(judgmentRepository.findByProblemIdAndUserId(problemId, userId)).willReturn(judgments);
 
@@ -64,12 +64,19 @@ class JudgmentServiceTest {
         // given
         Long problemId = 1L;
         Long userId = 2L;
-        CreateProblemAndJudgmentFromBojCommand command = new CreateProblemAndJudgmentFromBojCommand(
-                "bojId", 1000, "Title", "Success", 12345L,
-                "Java", 100, 200, 300, LocalDateTime.now(), "code"
-        );
+        RegisterBojJudgmentCommand command = RegisterBojJudgmentCommand.builder()
+                .baekjoonId("bojId")
+                .submissionId(12345L)
+                .resultText("Success")
+                .memory(100)
+                .time(200)
+                .language("Java")
+                .codeLength(300)
+                .submittedAt(LocalDateTime.now())
+                .sourceCode("code")
+                .build();
 
-        Judgment savedJudgment = Judgment.of(problemId, userId, command.getSubmissionId(), JudgmentStatus.SUCCESS, Platform.BOJ, null);
+        Judgment savedJudgment = Judgment.of(problemId, userId, command.getSubmissionId(), JudgmentStatus.SUCCESS, Platform.BOJ, null, command.getSourceCode());
         given(judgmentRepository.save(any(Judgment.class))).willReturn(savedJudgment);
 
         // when

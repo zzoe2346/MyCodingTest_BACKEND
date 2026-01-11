@@ -71,7 +71,7 @@ class AuthServiceTest {
 
         // then
         assertThat(userInfo.picture()).isEqualTo(picture);
-        assertThat(userInfo.username()).isEqualTo(username);
+        assertThat(userInfo.name()).isEqualTo(username);
     }
 
     @Test

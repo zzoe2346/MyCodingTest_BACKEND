@@ -2,6 +2,7 @@ package com.mycodingtest.collector.application;
 
 import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.judgment.application.JudgmentService;
+import com.mycodingtest.judgment.application.dto.RegisterBojJudgmentCommand;
 import com.mycodingtest.problem.application.ProblemService;
 import com.mycodingtest.problem.domain.Problem;
 import com.mycodingtest.review.application.ReviewService;
@@ -14,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -36,10 +39,19 @@ class BojIngestionServiceTest {
     void 백준_문제_및_판정_수집_성공() {
         // given
         Long userId = 1L;
-        CreateProblemAndJudgmentFromBojCommand command = new CreateProblemAndJudgmentFromBojCommand(
-                "bojId", 1000, "Title", "Success", 12345L,
-                "Java", 100, 200, 300, LocalDateTime.now(), "code"
-        );
+        RegisterBojSolutionCommand command = RegisterBojSolutionCommand.builder()
+                .problemNumber(1000)
+                .problemTitle("Title")
+                .baekjoonId("bojId")
+                .resultText("Success")
+                .submissionId(12345L)
+                .language("Java")
+                .memory(100)
+                .time(200)
+                .codeLength(300)
+                .submittedAt(LocalDateTime.now())
+                .sourceCode("code")
+                .build();
 
         Problem problem = Problem.of(1000, "Title", Platform.BOJ);
         given(problemService.getOrCreateProblemFromBoj(command.getProblemNumber(), command.getProblemTitle()))
@@ -50,7 +62,8 @@ class BojIngestionServiceTest {
 
         // then
         verify(problemService).getOrCreateProblemFromBoj(command.getProblemNumber(), command.getProblemTitle());
-        verify(judgmentService).createJudgmentFromBoj(command, problem.getId(), userId);
+        // Updated to match the mapped command type
+        verify(judgmentService).createJudgmentFromBoj(any(RegisterBojJudgmentCommand.class), eq(problem.getId()), eq(userId));
         verify(reviewService).createReview(problem.getId(), userId, command.getSourceCode(), command.getSubmittedAt(), command.getResultText());
     }
 

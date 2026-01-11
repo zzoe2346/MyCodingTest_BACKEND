@@ -72,7 +72,7 @@ class ReviewServiceTest {
         given(reviewRepository.findById(reviewId)).willReturn(Optional.of(review));
 
         // when
-        ReviewResponse response = reviewService.getReview(reviewId, userId);
+        Review response = reviewService.getReview(reviewId, userId);
 
         // then
         assertThat(response).isNotNull();

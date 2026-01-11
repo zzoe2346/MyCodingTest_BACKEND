@@ -1,7 +1,7 @@
 package com.mycodingtest.judgment.application;
 
-import com.mycodingtest.collector.application.CreateProblemAndJudgmentFromBojCommand;
 import com.mycodingtest.common.domain.Platform;
+import com.mycodingtest.judgment.application.dto.RegisterBojJudgmentCommand;
 import com.mycodingtest.judgment.domain.BojMetaData;
 import com.mycodingtest.judgment.domain.Judgment;
 import com.mycodingtest.judgment.domain.JudgmentRepository;
@@ -12,54 +12,42 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * <h3>채점 기록 관리 서비스 (JudgmentService)</h3>
+ * <p>
+ * 플랫폼별 채점 상세 내역을 저장하고 조회하는 유스케이스를 담당합니다.
+ * </p>
+ */
 @Service
 @RequiredArgsConstructor
 public class JudgmentService {
 
     private final JudgmentRepository judgmentRepository;
 
-//    @Transactional *** 과거에 하던 방식. 필요할 수 도 있으니 아직 삭제는 않는다.
-//    public void createJudgment(CreateJudgmentRequest request, Long userId) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(NotOurUserException::new);
-//
-//        Problem problem = prepareSolvedProblem(request, user);
-//
-//        judgmentRepository.save(new Judgment(
-//                request.baekjoonId(),
-//                request.codeLength(),
-//                request.language(),
-//                request.memory(),
-//                request.problemNumber(),
-//                request.resultText(),
-//                request.submissionId(),
-//                request.submittedAt(),
-//                request.time(),
-//                user,
-//                problem)
-//        );
-//    }
-//
-//    private Problem prepareSolvedProblem(CreateJudgmentRequest request, User user) {
-//        Problem problem = solvedDashBoardQuearyRepository.findByUserIdAndProblemNumber(user.getId(), request.problemNumber())
-//                .orElseGet(() -> new Problem(request.problemNumber(), request.problemTitle(), user, new Review(user)));
-//        problem.updateRecentResult(request.submittedAt(), request.resultText());
-//        return solvedDashBoardQuearyRepository.save(problem);
-//    }
-
+    /**
+     * 특정 문제와 사용자에 대한 모든 채점 기록을 최신순으로 조회합니다.
+     */
     @Transactional(readOnly = true)
     public List<Judgment> readJudgments(Long problemId, Long userId) {
-//        List<Judgment> judgments = judgmentRepository.findJudgmentResultsWithUserBySolvedProblemIdAndUserIdOrderBySubmissionIdDesc(solvedProblemId, userId);
         return judgmentRepository.findByProblemIdAndUserId(problemId, userId);
     }
 
+    /**
+     * 외부 플랫폼의 특정 제출 기록이 이미 시스템에 등록되어 있는지 확인합니다.
+     */
     @Transactional(readOnly = true)
-    public boolean isJudgmentExist(Long submissionId, Platform boj) {
+    public boolean isJudgmentExist(Long submissionId, Platform platform) {
         return judgmentRepository.existsBySubmissionId(submissionId);//TODO: 플랫폼 조건 빠짐
     }
 
+    /**
+     * <b>백준 전용 채점 결과 생성</b>
+     * <p>
+     * 전달받은 커맨드 객체로부터 백준 특화 메타데이터를 추출하여 {@link Judgment} 엔티티를 생성하고 저장합니다.
+     * </p>
+     */
     @Transactional
-    public Judgment createJudgmentFromBoj(CreateProblemAndJudgmentFromBojCommand command, Long problemId, Long userId) {
+    public Judgment createJudgmentFromBoj(RegisterBojJudgmentCommand command, Long problemId, Long userId) {
         return judgmentRepository.save(
                 Judgment.of(
                         problemId,
@@ -81,6 +69,9 @@ public class JudgmentService {
                 ));
     }
 
+    /**
+     * 특정 채점 기록을 삭제합니다.
+     */
     @Transactional
     public void deleteJudgment(Long judgmentId, Long userId) {
         judgmentRepository.deleteByIdAndUserId(judgmentId, userId);

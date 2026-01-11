@@ -2,7 +2,7 @@ package com.mycodingtest.problem.application;
 
 import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.problem.domain.Problem;
-import com.mycodingtest.problem.repository.ProblemRepository;
+import com.mycodingtest.problem.domain.ProblemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
