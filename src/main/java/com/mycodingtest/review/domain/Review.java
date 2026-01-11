@@ -2,6 +2,7 @@ package com.mycodingtest.review.domain;
 
 import com.mycodingtest.common.entity.BaseEntity;
 import com.mycodingtest.common.exception.InvalidOwnershipException;
+import com.mycodingtest.judgment.domain.Judgment;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,6 +31,7 @@ public class Review extends BaseEntity {
      */
     private String content;
 
+    //TODO 이거 ReviewStatus 필드랑 중복이다. 제거 예정.
     /**
      * 리뷰 완료 여부 (Status와 연동됨)
      */
@@ -48,9 +50,10 @@ public class Review extends BaseEntity {
     private Integer importanceLevel = -1;
 
     /**
-     * 당시 제출한 소스 코드 스냅샷
+     * 사용자가 {@link Judgment}의 sourceCode를 수정한 코드
+     * {@link Judgment}의 sourceCode는 로그용도로써 수정 불가하다.
      */
-    private String sourceCode;
+    private String revisedCode;
 
     /**
      * 리뷰 완료 시점
@@ -71,10 +74,10 @@ public class Review extends BaseEntity {
     private LocalDateTime recentSubmitAt;
     private String recentResult;
 
-    public Review(Long problemId, Long userId, String sourceCode, LocalDateTime recentSubmitAt, String recentResult) {
+    public Review(Long problemId, Long userId, String revisedCode, LocalDateTime recentSubmitAt, String recentResult) {
         this.problemId = problemId;
         this.userId = userId;
-        this.sourceCode = sourceCode;
+        this.revisedCode = revisedCode;
         this.content = "";
         this.reviewed = false;
         this.status = ReviewStatus.TO_DO;// 기본 상태: 리뷰 대기
