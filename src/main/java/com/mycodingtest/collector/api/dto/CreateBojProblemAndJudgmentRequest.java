@@ -1,6 +1,6 @@
 package com.mycodingtest.collector.api.dto;
 
-import com.mycodingtest.collector.application.CreateProblemAndJudgmentFromBojCommand;
+import com.mycodingtest.collector.application.RegisterBojSolutionCommand;
 
 import java.time.LocalDateTime;
 
@@ -18,20 +18,20 @@ public record CreateBojProblemAndJudgmentRequest(
         String code
 ) {
 
-    public CreateProblemAndJudgmentFromBojCommand toCommand() {
-        return new CreateProblemAndJudgmentFromBojCommand(
-                problemNumber,
-                problemTitle,
-                submissionId,
-                baekjoonId,
-                resultText,
-                memory,
-                time,
-                language,
-                codeLength,
-                submittedAt,
-                code
-        );
+    public RegisterBojSolutionCommand toCommand() {
+        return RegisterBojSolutionCommand.builder()
+                .problemNumber(problemNumber)
+                .problemTitle(problemTitle)
+                .submissionId(submissionId)
+                .baekjoonId(baekjoonId)
+                .resultText(resultText)
+                .memory(memory)
+                .time(time)
+                .language(language)
+                .codeLength(codeLength)
+                .submittedAt(submittedAt)
+                .sourceCode(code)
+                .build();
     }
 
 }
