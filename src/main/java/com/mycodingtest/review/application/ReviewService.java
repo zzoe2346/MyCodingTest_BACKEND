@@ -44,18 +44,18 @@ public class ReviewService {
      * <p>사용자가 복습을 완료했을 때 호출되며, 상태를 COMPLETED로 변경합니다.</p>
      */
     @Transactional
-    public ReviewRecentStatusResponse updateReviewStatus(Long reviewId, Long userId) {
+    public Review updateReviewStatus(Long reviewId, Long userId) {
         Review review = getReviewAndValidateOwnership(reviewId, userId);
         review.completeReview();
-        return ReviewMapper.toRecentStatusResponse(review);
+        return review;
     }
 
     /**
      * 현재 사용자가 아직 복습하지 않은(TO_DO) 문제의 개수를 반환합니다.
      */
     @Transactional(readOnly = true)
-    public WaitReviewCountResponse getWaitReviewCount(Long userId) {
-        return new WaitReviewCountResponse(reviewRepository.countAllByReviewedIsFalseAndUserId(userId));
+    public long getWaitReviewCount(Long userId) {
+        return reviewRepository.countAllByReviewedIsFalseAndUserId(userId);
     }
 
     /**

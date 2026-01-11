@@ -30,6 +30,7 @@ public class ReviewQueryController {
     @GetMapping("/api/reviews/unreviewed/count")
     @Operation(summary = "리뷰를 기다리는 문제 개수 반환")
     public ResponseEntity<WaitReviewCountResponse> getWaitReviewCount(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        return ResponseEntity.ok(reviewService.getWaitReviewCount(userDetails.getUserId()));
+        return ResponseEntity.ok(new WaitReviewCountResponse(reviewService.getWaitReviewCount(userDetails.getUserId())));
     }
+
 }

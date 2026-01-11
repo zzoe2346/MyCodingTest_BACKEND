@@ -8,6 +8,7 @@ import com.mycodingtest.review.api.dto.ReviewResponse;
 import com.mycodingtest.review.api.dto.WaitReviewCountResponse;
 import com.mycodingtest.review.domain.Review;
 import com.mycodingtest.review.domain.ReviewRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 class ReviewServiceTest {
 
@@ -102,10 +104,10 @@ class ReviewServiceTest {
         given(reviewRepository.findById(reviewId)).willReturn(Optional.of(review));
 
         // when
-        ReviewRecentStatusResponse response = reviewService.updateReviewStatus(reviewId, userId);
+        Review updated = reviewService.updateReviewStatus(reviewId, userId);
 
         // then
-        assertThat(response).isNotNull();
+        assertThat(updated).isNotNull();
     }
 
     @Test
@@ -116,10 +118,10 @@ class ReviewServiceTest {
         given(reviewRepository.countAllByReviewedIsFalseAndUserId(userId)).willReturn(count);
 
         // when
-        WaitReviewCountResponse response = reviewService.getWaitReviewCount(userId);
+        long returnCount = reviewService.getWaitReviewCount(userId);
 
         // then
-        assertThat(response.count()).isEqualTo(count);
+        assertThat(returnCount).isEqualTo(count);
     }
 
     @Test

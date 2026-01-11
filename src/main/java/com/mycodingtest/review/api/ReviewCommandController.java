@@ -4,6 +4,7 @@ import com.mycodingtest.common.security.CustomUserDetails;
 import com.mycodingtest.review.application.ReviewService;
 import com.mycodingtest.review.api.dto.ReviewRatingLevelsUpdateRequest;
 import com.mycodingtest.review.api.dto.ReviewRecentStatusResponse;
+import com.mycodingtest.review.domain.Review;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -44,7 +45,8 @@ public class ReviewCommandController {
                                                                          @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         //TODO 지금은 그냥 완료로 바뀌도록 한다 추후 고도화 대상
-        return ResponseEntity.ok(reviewService.updateReviewStatus(reviewId, userDetails.getUserId()));
+        Review review = reviewService.updateReviewStatus(reviewId, userDetails.getUserId());
+        return ResponseEntity.ok(new ReviewRecentStatusResponse(review.isReviewed(), review.getReviewedAt()));
     }
 
 }
