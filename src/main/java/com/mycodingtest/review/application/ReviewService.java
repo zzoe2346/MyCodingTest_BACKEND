@@ -90,4 +90,26 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
+    /**
+     * 리뷰의 코드를 수정합니다.
+     */
+    public void updateReviewCode(Long reviewId, Long userId, String code) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow();
+        review.validateOwnership(userId);
+        review.updateRevisedCode(code);
+        reviewRepository.save(review);
+    }
+
+    /**
+     * 리뷰의 내용(content)를 수정합니다.
+     */
+    public void updateReviewMemo(Long reviewId, Long userId, String content) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow();
+        review.validateOwnership(userId);
+        review.updateContent(content);
+        reviewRepository.save(review);
+    }
+
 }

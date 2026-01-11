@@ -49,4 +49,22 @@ public class ReviewCommandController {
         return ResponseEntity.ok(new ReviewRecentStatusResponse(review.isReviewed(), review.getReviewedAt()));
     }
 
+    @PutMapping("/api/reviews/{reviewId}/code")
+    @Operation(summary = "코드 수정")
+    public ResponseEntity<Void> updateCode(@PathVariable Long reviewId,
+                                               @RequestBody String code,
+                                               @AuthenticationPrincipal CustomUserDetails userDetails) {
+        reviewService.updateReviewCode(reviewId, userDetails.getUserId(), code);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/api/reviews/{reviewId}/content")
+    @Operation(summary = "리뷰 내용(메모) 수정")
+    public ResponseEntity<Void> updateMemo(@PathVariable Long reviewId,
+                                           @RequestBody String content,
+                                           @AuthenticationPrincipal CustomUserDetails userDetails) {
+        reviewService.updateReviewMemo(reviewId, userDetails.getUserId(), content);
+        return ResponseEntity.ok().build();
+    }
+
 }

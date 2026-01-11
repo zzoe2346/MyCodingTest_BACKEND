@@ -138,4 +138,12 @@ public class Review extends BaseEntity {
     public void changeFavorite() {
         this.favorited = !this.favorited;
     }
+
+    public void updateRevisedCode(String code) {
+        this.revisedCode = code;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
