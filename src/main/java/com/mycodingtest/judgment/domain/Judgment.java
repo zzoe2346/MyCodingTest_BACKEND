@@ -2,6 +2,7 @@ package com.mycodingtest.judgment.domain;
 
 import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.common.entity.BaseEntity;
+import com.mycodingtest.judgment.application.dto.CreateBojJudgmentCommand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -78,23 +79,19 @@ public class Judgment extends BaseEntity {
      * Judgment 객체 생성을 위한 정적 팩토리 메서드.
      * <p>도메인 규칙에 맞는 유효한 객체 생성을 보장합니다.</p>
      */
-    public static Judgment of(
-            Long problemId,
-            Long userId,
-            Long submissionId,
-            JudgmentStatus status,
-            Platform platform,
-            MetaData metaData,
-            String sourceCode
-    ) {
+    public static Judgment from(CreateBojJudgmentCommand command, Platform platform) {
         return Judgment.builder()
-                .problemId(problemId)
-                .userId(userId)
-                .submissionId(submissionId)
-                .status(status)
+                .sourceCode(command.sourceCode())
+                .status(getJudgmentStatus(command.resultText()))
+                .submissionId(command.submissionId())
+                .userId(command.userId())
                 .platform(platform)
-                .metaData(metaData)
-                .sourceCode(sourceCode)
+                .metaData(BojMetaData.from(command))
+                .problemId(command.problemId())
                 .build();
+    }
+
+    private static JudgmentStatus getJudgmentStatus(String resultText) {
+        return JudgmentStatus.SUCCESS;//임시
     }
 }

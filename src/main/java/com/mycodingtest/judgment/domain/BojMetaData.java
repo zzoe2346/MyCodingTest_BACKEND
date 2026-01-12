@@ -1,8 +1,9 @@
 package com.mycodingtest.judgment.domain;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mycodingtest.judgment.application.dto.CreateBojJudgmentCommand;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -13,8 +14,7 @@ import java.time.LocalDateTime;
  * {@link MetaData} 인터페이스를 구현하며, Judgment 엔티티의 JSON 컬럼에 저장됩니다.
  * </p>
  */
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @Getter
 public class BojMetaData implements MetaData {
 
@@ -56,5 +56,18 @@ public class BojMetaData implements MetaData {
     /**
      * 제출 일시
      */
+    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH:mm:ss")
     LocalDateTime submittedAt;
+    //소스도?
+
+    public static MetaData from(CreateBojJudgmentCommand command) {
+        return BojMetaData.builder()
+                .baekjoonId(command.baekjoonId())
+                .codeLength(command.codeLength())
+                .language(command.language())
+                .resultText(command.resultText())
+                .memory(command.memory())
+                .submittedAt(command.submittedAt())
+                .build();
+    }
 }

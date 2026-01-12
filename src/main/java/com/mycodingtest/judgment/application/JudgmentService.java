@@ -1,11 +1,11 @@
 package com.mycodingtest.judgment.application;
 
 import com.mycodingtest.common.domain.Platform;
-import com.mycodingtest.judgment.application.dto.RegisterBojJudgmentCommand;
-import com.mycodingtest.judgment.domain.BojMetaData;
+import com.mycodingtest.judgment.application.dto.CreateBojJudgmentCommand;
+import com.mycodingtest.judgment.application.dto.DeleteJudgmentCommand;
+import com.mycodingtest.judgment.application.dto.ReadJudgmentsCommand;
 import com.mycodingtest.judgment.domain.Judgment;
 import com.mycodingtest.judgment.domain.JudgmentRepository;
-import com.mycodingtest.judgment.domain.JudgmentStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +28,8 @@ public class JudgmentService {
      * 특정 문제와 사용자에 대한 모든 채점 기록을 최신순으로 조회합니다.
      */
     @Transactional(readOnly = true)
-    public List<Judgment> readJudgments(Long problemId, Long userId) {
-        return judgmentRepository.findByProblemIdAndUserId(problemId, userId);
+    public List<Judgment> readJudgments(ReadJudgmentsCommand command) {
+        return judgmentRepository.findByProblemIdAndUserId(command.problemId(), command.userId());
     }
 
     /**
@@ -47,33 +47,15 @@ public class JudgmentService {
      * </p>
      */
     @Transactional
-    public Judgment createJudgmentFromBoj(RegisterBojJudgmentCommand command, Long problemId, Long userId) {
-        return judgmentRepository.save(
-                Judgment.of(
-                        problemId,
-                        userId,
-                        command.getSubmissionId(),
-                        JudgmentStatus.SUCCESS,
-                        Platform.BOJ,
-                        new BojMetaData(
-                                command.getSubmissionId(),
-                                command.getBaekjoonId(),
-                                command.getResultText(),
-                                command.getMemory(),
-                                command.getTime(),
-                                command.getLanguage(),
-                                command.getCodeLength(),
-                                command.getSubmittedAt()
-                        ),
-                        command.getSourceCode()
-                ));
+    public Judgment createJudgmentFromBoj(CreateBojJudgmentCommand command) {
+        return judgmentRepository.save(Judgment.from(command, Platform.BOJ));
     }
 
     /**
      * 특정 채점 기록을 삭제합니다.
      */
     @Transactional
-    public void deleteJudgment(Long judgmentId, Long userId) {
-        judgmentRepository.deleteByIdAndUserId(judgmentId, userId);
+    public void deleteJudgment(DeleteJudgmentCommand command) {
+        judgmentRepository.deleteByIdAndUserId(command.judgmentId(), command.userId());
     }
 }

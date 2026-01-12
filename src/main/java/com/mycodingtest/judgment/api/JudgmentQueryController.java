@@ -1,8 +1,9 @@
 package com.mycodingtest.judgment.api;
 
 import com.mycodingtest.common.security.CustomUserDetails;
+import com.mycodingtest.judgment.api.dto.response.JudgmentResponse;
 import com.mycodingtest.judgment.application.JudgmentService;
-import com.mycodingtest.judgment.domain.Judgment;
+import com.mycodingtest.judgment.application.dto.ReadJudgmentsCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +22,17 @@ public class JudgmentQueryController {
 
     private final JudgmentService judgmentService;
 
-    //    @GetMapping("/api/solved-problems/{solvedProblemId}/judgment-results")
     @GetMapping("/api/judgments")
     @Operation(summary = "채점 결과 목록 조회", description = "특정 문제의 채점 결과 목록을 조회합니다.")
-    public ResponseEntity<List<Judgment>> getJudgmentResultList(
+    public ResponseEntity<List<JudgmentResponse>> getJudgmentResultList(
             @RequestParam Long problemId,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        List<Judgment> judgments = judgmentService.readJudgments(problemId, userDetails.getUserId());
-        return ResponseEntity.ok(judgments);
-//        return ResponseEntity.ok(judgments.stream()
-//                .map(JudgmentResultMapper::toResponse)
-//                .toList()); TODO: 일단 바쁘다 프론트랑 통신하는건 막판에 조정해도 되니 보류
+        return ResponseEntity.ok(judgmentService.readJudgments(ReadJudgmentsCommand.from(problemId, userDetails.getUserId()))
+                .stream()
+                .map(JudgmentResponse::from)
+                .toList()
+        );
     }
 
 }
