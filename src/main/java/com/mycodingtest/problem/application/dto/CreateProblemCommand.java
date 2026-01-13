@@ -1,6 +1,6 @@
 package com.mycodingtest.problem.application.dto;
 
-import com.mycodingtest.collector.application.RegisterBojSolutionCommand;
+import com.mycodingtest.collector.application.IngestProblemAndJudgmentCommand;
 import com.mycodingtest.common.domain.Platform;
 
 public record CreateProblemCommand(
@@ -8,7 +8,7 @@ public record CreateProblemCommand(
         String problemTitle,
         Platform platform
 ) {
-    public static CreateProblemCommand from(RegisterBojSolutionCommand command, Platform platform) {
+    public static CreateProblemCommand from(IngestProblemAndJudgmentCommand command, Platform platform) {
         return new CreateProblemCommand(command.problemNumber(), command.problemTitle(), platform);
     }
 }
