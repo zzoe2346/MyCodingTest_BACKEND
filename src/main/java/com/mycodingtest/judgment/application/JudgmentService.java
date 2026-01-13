@@ -4,6 +4,7 @@ import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.judgment.application.dto.CreateBojJudgmentCommand;
 import com.mycodingtest.judgment.application.dto.DeleteJudgmentCommand;
 import com.mycodingtest.judgment.application.dto.ReadJudgmentsCommand;
+import com.mycodingtest.judgment.domain.BojMetaData;
 import com.mycodingtest.judgment.domain.Judgment;
 import com.mycodingtest.judgment.domain.JudgmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +49,16 @@ public class JudgmentService {
      */
     @Transactional
     public Judgment createJudgmentFromBoj(CreateBojJudgmentCommand command) {
-        return judgmentRepository.save(Judgment.from(command, Platform.BOJ));
+        return judgmentRepository.save(
+                Judgment.builder()
+                        .sourceCode(command.sourceCode())
+                        .status(Judgment.getJudgmentStatus(command.resultText()))
+                        .submissionId(command.submissionId())
+                        .userId(command.userId())
+                        .platform(Platform.BOJ)
+                        .metaData(BojMetaData.from(command))
+                        .problemId(command.problemId())
+                        .build());
     }
 
     /**

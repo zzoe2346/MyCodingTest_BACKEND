@@ -2,15 +2,11 @@ package com.mycodingtest.judgment.domain;
 
 import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.common.entity.BaseEntity;
-import com.mycodingtest.judgment.application.dto.CreateBojJudgmentCommand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -22,8 +18,8 @@ import org.hibernate.type.SqlTypes;
  * </p>
  */
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
 public class Judgment extends BaseEntity {
@@ -75,23 +71,7 @@ public class Judgment extends BaseEntity {
      */
     private String sourceCode;
 
-    /**
-     * Judgment 객체 생성을 위한 정적 팩토리 메서드.
-     * <p>도메인 규칙에 맞는 유효한 객체 생성을 보장합니다.</p>
-     */
-    public static Judgment from(CreateBojJudgmentCommand command, Platform platform) {
-        return Judgment.builder()
-                .sourceCode(command.sourceCode())
-                .status(getJudgmentStatus(command.resultText()))
-                .submissionId(command.submissionId())
-                .userId(command.userId())
-                .platform(platform)
-                .metaData(BojMetaData.from(command))
-                .problemId(command.problemId())
-                .build();
-    }
-
-    private static JudgmentStatus getJudgmentStatus(String resultText) {
+    public static JudgmentStatus getJudgmentStatus(String resultText) {
         return JudgmentStatus.SUCCESS;//임시
     }
 }
