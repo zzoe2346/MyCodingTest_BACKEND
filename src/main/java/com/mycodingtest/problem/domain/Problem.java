@@ -2,10 +2,10 @@ package com.mycodingtest.problem.domain;
 
 import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.common.entity.BaseEntity;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.*;
 
 /**
  * <h3>문제 (Problem)</h3>
@@ -15,8 +15,9 @@ import lombok.NoArgsConstructor;
  * </p>
  */
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Getter
 public class Problem extends BaseEntity {
 
@@ -39,7 +40,7 @@ public class Problem extends BaseEntity {
     /**
      * 정적 팩토리 메서드
      */
-    public static Problem of(Integer problemNumber, String problemTitle, Platform platform) {
+    public static Problem from(Integer problemNumber, String problemTitle, Platform platform) {
         return new Problem(problemNumber, problemTitle, platform);
     }
 }

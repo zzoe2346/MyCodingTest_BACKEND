@@ -1,6 +1,7 @@
 package com.mycodingtest.problem.application;
 
 import com.mycodingtest.common.domain.Platform;
+import com.mycodingtest.problem.application.dto.CreateProblemCommand;
 import com.mycodingtest.problem.domain.Problem;
 import com.mycodingtest.problem.domain.ProblemRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +22,19 @@ public class ProblemService {
     /**
      * <b>문제 정보 동기화</b>
      * <p>
-     * 전달받은 문제 번호와 플랫폼 정보를 기준으로 DB를 검색하여 
+     * 전달받은 문제 번호와 플랫폼 정보를 기준으로 DB를 검색하여
      * 이미 존재하면 기존 정보를 반환하고, 없으면 새로 생성하여 저장합니다.
      * </p>
      */
-    public Problem getOrCreateProblemFromBoj(Integer problemNumber, String problemTitle) {
-        return problemRepository.findByProblemNumberAndPlatform(problemNumber, Platform.BOJ)
+    public Problem getOrCreateProblem(CreateProblemCommand command) {
+        return problemRepository.findByProblemNumberAndPlatform(command.problemNumber(), command.platform())
                 .orElseGet(() -> problemRepository.save(
-                        Problem.of(problemNumber, problemTitle, Platform.BOJ)
-                ));
+                                Problem.builder()
+                                        .problemNumber(command.problemNumber())
+                                        .problemTitle(command.problemTitle()).platform(Platform.BOJ)
+                                        .build()
+                        )
+                );
     }
 
 }
