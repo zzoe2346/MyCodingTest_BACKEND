@@ -2,10 +2,12 @@ package com.mycodingtest.collector.application;
 
 import com.mycodingtest.common.domain.Platform;
 import com.mycodingtest.judgment.application.JudgmentService;
-import com.mycodingtest.judgment.application.dto.RegisterBojJudgmentCommand;
+import com.mycodingtest.judgment.application.dto.CreateBojJudgmentCommand;
 import com.mycodingtest.problem.application.ProblemService;
+import com.mycodingtest.problem.application.dto.CreateProblemCommand;
 import com.mycodingtest.problem.domain.Problem;
 import com.mycodingtest.review.application.ReviewService;
+import com.mycodingtest.review.application.dto.CreateReviewCommand;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,34 +35,18 @@ public class BojIngestionService {
      * </ol>
      */
     @Transactional
-    public void ingest(RegisterBojSolutionCommand command, Long userId) {
+    public void ingest(IngestProblemAndJudgmentCommand command) {
         // 1. 문제 엔티티 확보
-        Problem problem = problemService.getOrCreateProblemFromBoj(
-                command.getProblemNumber(),
-                command.getProblemTitle()
-        );
-        
-        // 2. 채점 상세 기록 저장 (Collector Command -> Judgment Command 변환)
-        RegisterBojJudgmentCommand judgmentCommand = RegisterBojJudgmentCommand.builder()
-                .submissionId(command.getSubmissionId())
-                .baekjoonId(command.getBaekjoonId())
-                .resultText(command.getResultText())
-                .memory(command.getMemory())
-                .time(command.getTime())
-                .language(command.getLanguage())
-                .codeLength(command.getCodeLength())
-                .submittedAt(command.getSubmittedAt())
-                .sourceCode(command.getSourceCode())
-                .build();
-
-        judgmentService.createJudgmentFromBoj(judgmentCommand, problem.getId(), userId);
-        
+        Problem problem = problemService.getOrCreateProblem(CreateProblemCommand.from(command, Platform.BOJ));
+        // 2. 채점 상세 기록 저장
+        judgmentService.createJudgmentFromBoj(CreateBojJudgmentCommand.from(command, problem.getId()));
         // 3. 리뷰 오답 노트 생성
-        reviewService.createReview(problem.getId(), userId, command.getSourceCode(), command.getSubmittedAt(), command.getResultText());
+        reviewService.createReview(CreateReviewCommand.from(command, problem.getId()));
     }
 
     /**
      * 중복 수집 방지를 위해 외부 제출 번호의 존재 여부를 체크합니다.
+     *
      * @throws IllegalStateException 이미 수집된 제출 번호인 경우
      */
     public void checkDuplicatedSubmissionId(Long submissionId) {

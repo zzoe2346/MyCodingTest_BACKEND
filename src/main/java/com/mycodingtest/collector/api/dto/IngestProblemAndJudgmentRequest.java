@@ -1,10 +1,10 @@
 package com.mycodingtest.collector.api.dto;
 
-import com.mycodingtest.collector.application.RegisterBojSolutionCommand;
+import com.mycodingtest.collector.application.IngestProblemAndJudgmentCommand;
 
 import java.time.LocalDateTime;
 
-public record CreateBojProblemAndJudgmentRequest(
+public record IngestProblemAndJudgmentRequest(
         Integer problemNumber,
         String problemTitle,
         Long submissionId,
@@ -18,8 +18,8 @@ public record CreateBojProblemAndJudgmentRequest(
         String code
 ) {
 
-    public RegisterBojSolutionCommand toCommand() {
-        return RegisterBojSolutionCommand.builder()
+    public IngestProblemAndJudgmentCommand toCommand(Long userId) {
+        return IngestProblemAndJudgmentCommand.builder()
                 .problemNumber(problemNumber)
                 .problemTitle(problemTitle)
                 .submissionId(submissionId)
@@ -31,6 +31,7 @@ public record CreateBojProblemAndJudgmentRequest(
                 .codeLength(codeLength)
                 .submittedAt(submittedAt)
                 .sourceCode(code)
+                .userId(userId)
                 .build();
     }
 
