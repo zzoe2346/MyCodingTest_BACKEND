@@ -33,6 +33,24 @@ public class JwtFilter extends OncePerRequestFilter {
             setAuthenticationContext(request, token);
         }
         filterChain.doFilter(request, response);
+//        String token = resolveToken(request);
+//        if (token != null) {
+//            try {
+//                setAuthenticationContext(request, token);
+//            } catch (Exception e) {
+//                // If token is invalid, we just ignore it and let the request proceed as anonymous
+//                // Log can be added here if needed
+//            }
+//        }
+//        filterChain.doFilter(request, response);
+    }
+
+    private String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return cookieUtil.getJwtFromCookie(request);
     }
 
     private void setAuthenticationContext(HttpServletRequest request, String token) {
