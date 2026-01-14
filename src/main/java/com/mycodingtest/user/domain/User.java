@@ -1,5 +1,6 @@
 package com.mycodingtest.user.domain;
 
+import com.mycodingtest.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,13 +18,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-@Getter
 @Table(name = "`USER`")
-public class User {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity {
 
     /**
      * 사용자의 실명 또는 닉네임
@@ -50,8 +46,5 @@ public class User {
      * <p>제공자 내에서 사용자를 유일하게 구분하는 ID입니다.</p>
      */
     private String oauthId;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
 
 }

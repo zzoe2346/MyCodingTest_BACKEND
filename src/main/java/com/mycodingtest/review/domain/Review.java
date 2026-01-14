@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
  * </p>
  */
 @Entity
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
