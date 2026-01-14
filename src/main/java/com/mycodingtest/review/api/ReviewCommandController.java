@@ -46,7 +46,7 @@ public class ReviewCommandController {
     ) {
         //TODO 지금은 그냥 완료로 바뀌도록 한다 추후 고도화 대상
         Review review = reviewService.updateReviewStatus(reviewId, userDetails.getUserId());
-        return ResponseEntity.ok(new ReviewRecentStatusResponse(review.isReviewed(), review.getReviewedAt()));
+        return ResponseEntity.ok(new ReviewRecentStatusResponse(review.getStatus(), review.getReviewedAt()));
     }
 
     @PutMapping("/api/reviews/{reviewId}/code")
