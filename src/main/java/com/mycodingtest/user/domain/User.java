@@ -1,8 +1,7 @@
 package com.mycodingtest.user.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -15,8 +14,10 @@ import java.time.LocalDateTime;
  * </p>
  */
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Getter
-@NoArgsConstructor
 @Table(name = "`USER`")
 public class User {
     
@@ -53,11 +54,4 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public User(String name, String email, String picture, String oauthProvider, String oauthId) {
-        this.name = name;
-        this.email = email;
-        this.picture = picture;
-        this.oauthProvider = oauthProvider;
-        this.oauthId = oauthId;
-    }
 }

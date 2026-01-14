@@ -37,10 +37,4 @@ public class Problem extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Platform platform;
 
-    /**
-     * 정적 팩토리 메서드
-     */
-    public static Problem from(Integer problemNumber, String problemTitle, Platform platform) {
-        return new Problem(problemNumber, problemTitle, platform);
-    }
 }

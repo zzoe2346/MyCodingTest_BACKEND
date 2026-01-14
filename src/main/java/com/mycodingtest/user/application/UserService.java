@@ -33,7 +33,14 @@ public class UserService {
      * 신규 사용자를 시스템에 등록합니다.
      */
     public User enrollNewUser(String name, String email, String picture, String provider, String oauthId) {
-        return userRepository.save(new User(name, email, picture, provider, oauthId));
+        return userRepository.save(User.builder()
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .oauthProvider(provider)
+                .oauthId(oauthId)
+                .build()
+        );
     }
 
     /**
