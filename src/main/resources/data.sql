@@ -30,13 +30,13 @@ VALUES (3, 1, 2, 10003, 'SUCCESS', 'BOJ', '{"type": "BOJ", "submissionId": 10003
 
 -- Review Data
 -- Review for Problem 1 by User 1 (Completed)
-INSERT INTO review (id, problem_id, user_id, content, reviewed, difficulty_level, importance_level, source_code, reviewed_at, status, favorited, recent_submit_at, recent_result, created_at, updated_at)
-VALUES (1, 1, 1, 'Very easy basic problem.', true, 1, 1, 'import java.util.*; ...', CURRENT_TIMESTAMP(), 'COMPLETED', false, CURRENT_TIMESTAMP(), 'SUCCESS', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+INSERT INTO review (id, problem_id, user_id, content, difficulty_level, importance_level, revised_code, reviewed_at, status, favorited, recent_submit_at, recent_result, created_at, updated_at)
+VALUES (1, 1, 1, 'Very easy basic problem.', 1, 1, 'import java.util.*; ...', CURRENT_TIMESTAMP(), 'COMPLETED', false, CURRENT_TIMESTAMP(), 'SUCCESS', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
 -- Review for Problem 2 by User 1 (To Do)
-INSERT INTO review (id, problem_id, user_id, content, reviewed, difficulty_level, importance_level, source_code, reviewed_at, status, favorited, recent_submit_at, recent_result, created_at, updated_at)
-VALUES (2, 2, 1, '', false, -1, -1, NULL, NULL, 'TO_DO', true, CURRENT_TIMESTAMP(), 'FAIL', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+INSERT INTO review (id, problem_id, user_id, content, difficulty_level, importance_level, revised_code, reviewed_at, status, favorited, recent_submit_at, recent_result, created_at, updated_at)
+VALUES (2, 2, 1, '', -1, -1, NULL, NULL, 'TO_DO', true, CURRENT_TIMESTAMP(), 'FAIL', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
 -- Review for Problem 3 by User 2 (In Progress)
-INSERT INTO review (id, problem_id, user_id, content, reviewed, difficulty_level, importance_level, source_code, reviewed_at, status, favorited, recent_submit_at, recent_result, created_at, updated_at)
-VALUES (3, 3, 2, 'Need to review output format.', false, 1, 2, 'print("Hello World")', NULL, 'IN_PROGRESS', false, CURRENT_TIMESTAMP(), 'SUCCESS', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+INSERT INTO review (id, problem_id, user_id, content, difficulty_level, importance_level, revised_code, reviewed_at, status, favorited, recent_submit_at, recent_result, created_at, updated_at)
+VALUES (3, 3, 2, 'Need to review output format.', 1, 2, 'print("Hello World")', NULL, 'IN_PROGRESS', false, CURRENT_TIMESTAMP(), 'SUCCESS', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
