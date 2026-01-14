@@ -26,12 +26,12 @@ public interface ReviewRepository {
     Optional<Review> findById(Long id);
 
     /**
-     * 특정 사용자의 '리뷰하지 않은(Reviewed=false)' 문제 개수를 카운트합니다.
+     * 특정 사용자의 '리뷰하지 않은(Pending)' 문제 개수를 카운트합니다.
      * <p>사용자에게 남은 과제(To-Do)가 얼마나 있는지 보여주는 대시보드 지표로 활용됩니다.</p>
      * 
      * @param userId 사용자 식별자
      * @return 리뷰 대기 중인 항목의 개수
      */
-    long countAllByReviewedIsFalseAndUserId(Long userId);
+    long countPendingReviewsByUserId(Long userId);
 
 }

@@ -2,6 +2,7 @@ package com.mycodingtest.review.infrastructure;
 
 import com.mycodingtest.review.domain.Review;
 import com.mycodingtest.review.domain.ReviewRepository;
+import com.mycodingtest.review.domain.ReviewStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public long countAllByReviewedIsFalseAndUserId(Long userId) {
-        return jpaReviewRepository.countAllByReviewedIsFalseAndUserId(userId);
+    public long countPendingReviewsByUserId(Long userId) {
+        // Pending = TO_DO 상태인 것들
+        return jpaReviewRepository.countAllByStatusAndUserId(ReviewStatus.TO_DO, userId);
     }
 }

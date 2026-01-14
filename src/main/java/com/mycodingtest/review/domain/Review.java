@@ -2,12 +2,10 @@ package com.mycodingtest.review.domain;
 
 import com.mycodingtest.common.entity.BaseEntity;
 import com.mycodingtest.common.exception.InvalidOwnershipException;
-import com.mycodingtest.judgment.domain.Judgment;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +18,9 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class Review extends BaseEntity {
 
     private Long problemId;
@@ -30,12 +30,6 @@ public class Review extends BaseEntity {
      * 리뷰 내용 (Markdown 지원 예정)
      */
     private String content;
-
-    //TODO 이거 ReviewStatus 필드랑 중복이다. 제거 예정.
-    /**
-     * 리뷰 완료 여부 (Status와 연동됨)
-     */
-    private boolean reviewed;
 
     /**
      * 체감 난이도 (1~5)
@@ -79,7 +73,6 @@ public class Review extends BaseEntity {
         this.userId = userId;
         this.revisedCode = revisedCode;
         this.content = "";
-        this.reviewed = false;
         this.status = ReviewStatus.TO_DO;// 기본 상태: 리뷰 대기
         this.recentSubmitAt = recentSubmitAt;
         this.recentResult = recentResult;
@@ -111,6 +104,7 @@ public class Review extends BaseEntity {
 
     /**
      * 난이도와 중요도를 갱신합니다.
+     *
      * @param difficultyLevel 새로운 난이도
      * @param importanceLevel 새로운 중요도
      */
@@ -122,7 +116,7 @@ public class Review extends BaseEntity {
     /**
      * 리뷰의 소유권을 검증합니다.
      * <p>자신의 리뷰만 수정/조회할 수 있다는 보안 규칙을 도메인 레벨에서 강제합니다.</p>
-     * 
+     *
      * @param currentUserId 요청한 사용자의 ID
      * @throws InvalidOwnershipException 소유자가 아닐 경우 발생
      */

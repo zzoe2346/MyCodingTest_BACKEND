@@ -1,14 +1,13 @@
 package com.mycodingtest.review.application;
 
 import com.mycodingtest.common.exception.ResourceNotFoundException;
-import com.mycodingtest.review.api.dto.*;
+import com.mycodingtest.review.api.dto.ReviewRatingLevelsUpdateRequest;
+import com.mycodingtest.review.application.dto.CreateReviewCommand;
 import com.mycodingtest.review.domain.Review;
 import com.mycodingtest.review.domain.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 /**
  * <h3>리뷰 및 오답 노트 서비스 (ReviewService)</h3>
@@ -55,7 +54,7 @@ public class ReviewService {
      */
     @Transactional(readOnly = true)
     public long getWaitReviewCount(Long userId) {
-        return reviewRepository.countAllByReviewedIsFalseAndUserId(userId);
+        return reviewRepository.countPendingReviewsByUserId(userId);
     }
 
     /**
@@ -74,8 +73,16 @@ public class ReviewService {
      * 새로운 리뷰를 생성합니다. (수집 엔진에 의해 호출됨)
      */
     @Transactional
-    public void createReview(Long problemId, Long userId, String sourceCode, LocalDateTime submittedAt, String resultText) {
-        reviewRepository.save(new Review(problemId, userId, sourceCode, submittedAt, resultText));
+    public void createReview(CreateReviewCommand command) {
+        reviewRepository.save(
+                Review.builder()
+                        .problemId(command.problemId())
+                        .userId(command.userId())
+                        .revisedCode(command.sourceCode())
+                        .recentSubmitAt(command.submittedAt())
+                        .recentResult(command.resultText())
+                        .build()
+        );
     }
 
     /**
