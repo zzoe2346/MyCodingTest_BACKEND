@@ -28,7 +28,7 @@
 
 ### System Overview
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e2dbbbfd-d58f-465c-81c4-107064a46d76" alt="Business Flow" width="800">
+  <img src="https://github.com/user-attachments/assets/2d958346-4f9e-4377-9ae7-b48d760ec250" alt="Business Flow" width="800">
 </p>
 
 ### Deployment
@@ -55,8 +55,6 @@ com.mycodingtest/
 
 ### Domain Module Structure
 
-각 도메인 모듈은 **Layered Architecture**를 따릅니다:
-
 ```
 [domain]/
 ├── api/                 # Presentation Layer
@@ -81,15 +79,65 @@ com.mycodingtest/
 | **Domain** | 핵심 비즈니스 로직, 엔티티 | 없음 (최하위) |
 | **Infrastructure** | 기술 구현 (JPA, 외부 API) | → Domain |
 
-> **DIP(Dependency Inversion Principle)**: Repository 인터페이스는 Domain Layer에, 구현체는 Infrastructure Layer에 위치하여 도메인이 기술에 의존하지 않습니다.
-
 ---
 
 ## ERD
+```mermaid
+erDiagram
+    USER {
+        Long id PK
+        String name
+        String email
+        String picture
+        String oauthProvider
+        String oauthId
+        LocalDateTime createdAt
+    }
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/d4eaa855-99de-421d-8efa-d43c09ceaf28" alt="ERD" width="700">
-</p>
+    PROBLEM {
+        Long id PK
+        Integer problemNumber
+        String problemTitle
+        Platform platform
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+
+    JUDGMENT {
+        Long id PK
+        Long problemId FK
+        Long userId FK
+        Long submissionId UK
+        JudgmentStatus status
+        Platform platform
+        MetaData metaData
+        String sourceCode
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+
+    REVIEW {
+        Long id PK
+        Long problemId FK
+        Long userId FK
+        String content
+        Integer difficultyLevel
+        Integer importanceLevel
+        String revisedCode
+        LocalDateTime reviewedAt
+        ReviewStatus status
+        boolean favorited
+        LocalDateTime recentSubmitAt
+        String recentResult
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+
+    USER ||--o{ JUDGMENT : "한 사용자는 여러<br/>채점 기록 소유 (1:N)"
+    USER ||--o{ REVIEW : "한 사용자는 여러<br/>오답 노트 소유 (1:N)"
+    PROBLEM ||--o{ JUDGMENT : "한 문제는 여러<br/>채점 기록 소유 (1:N)"
+    PROBLEM ||--o{ REVIEW : "한 문제는 여러<br/>오답 노트를 가짐 (1:N)"
+```
 
 ---
 
