@@ -49,10 +49,9 @@ public class JudgmentService {
      */
     @Transactional
     public Judgment createJudgmentFromBoj(CreateBojJudgmentCommand command) {
-        //이건 나중에 정적 팩토리 도입하든지 하자...
         Judgment judgment = Judgment.builder()
                 .sourceCode(command.sourceCode())
-                .status(Judgment.getJudgmentStatus(command.resultText()))
+                .status(Platform.BOJ.toStatus(command.resultText()))
                 .submissionId(command.submissionId())
                 .userId(command.userId())
                 .platform(Platform.BOJ)
@@ -64,6 +63,8 @@ public class JudgmentService {
                                 .language(command.language())
                                 .resultText(command.resultText())
                                 .memory(command.memory())
+                                .time(command.time())
+                                .submissionId(command.submissionId())
                                 .submittedAt(command.submittedAt())
                                 .build()
                 )
