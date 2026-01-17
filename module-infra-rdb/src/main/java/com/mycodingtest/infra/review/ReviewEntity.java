@@ -68,6 +68,7 @@ public class ReviewEntity extends BaseEntity {
      * 즐겨찾기/북마크 여부
      */
     private boolean favorited;
+    private boolean reviewed;
 
     private LocalDateTime recentSubmitAt;
     private String recentResult;

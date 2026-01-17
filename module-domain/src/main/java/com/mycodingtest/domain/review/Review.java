@@ -56,6 +56,7 @@ public class Review {
     private boolean favorited;
 
     private LocalDateTime recentSubmitAt;
+    private Boolean reviewed;
     private String recentResult;
 
     /**
@@ -83,5 +84,12 @@ public class Review {
                 this.reviewedAt = LocalDateTime.now();
             }
         }
+    }
+
+    public void onJudgmentCreated(LocalDateTime recentSubmitAt, String recentResult) {
+        this.reviewed = false;
+        this.status = ReviewStatus.TO_DO;
+        this.recentSubmitAt = recentSubmitAt;
+        this.recentResult = recentResult;
     }
 }
