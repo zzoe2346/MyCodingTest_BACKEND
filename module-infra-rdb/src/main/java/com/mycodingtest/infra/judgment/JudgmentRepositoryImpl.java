@@ -13,12 +13,11 @@ import java.util.List;
 public class JudgmentRepositoryImpl implements JudgmentRepository {
 
     private final JpaJudgmentRepository jpaJudgmentRepository;
-    private final JudgmentMapper mapper;
 
     @Override
     public Judgment save(Judgment judgment) {
-        JudgmentEntity save = jpaJudgmentRepository.save(mapper.toEntity(judgment));
-        return mapper.toDomain(save);
+        JudgmentEntity save = jpaJudgmentRepository.save(JudgmentEntity.from(judgment));
+        return save.toDomain();
     }
 
     @Override
@@ -35,7 +34,7 @@ public class JudgmentRepositoryImpl implements JudgmentRepository {
     public List<Judgment> findByProblemIdAndUserId(Long problemId, Long userId) {
         return jpaJudgmentRepository.findByProblemIdAndUserId(problemId, userId)
                 .stream()
-                .map(mapper::toDomain)
+                .map(JudgmentEntity::toDomain)
                 .toList();
     }
 

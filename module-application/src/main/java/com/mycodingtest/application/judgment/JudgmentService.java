@@ -6,7 +6,6 @@ import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.BojMetaData;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentRepository;
-import com.mycodingtest.infra.judgment.JudgmentEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,26 +48,25 @@ public class JudgmentService {
      */
     @Transactional
     public Judgment createJudgmentFromBoj(CreateBojJudgmentCommand command) {
-        Judgment judgment = Judgment.builder()
-                .sourceCode(command.sourceCode())
-                .status(Platform.BOJ.toStatus(command.resultText()))
+        BojMetaData metaData = BojMetaData.builder()
+                .baekjoonId(command.baekjoonId())
+                .codeLength(command.codeLength())
+                .language(command.language())
+                .resultText(command.resultText())
+                .memory(command.memory())
+                .time(command.time())
                 .submissionId(command.submissionId())
-                .userId(command.userId())
-                .platform(Platform.BOJ)
-                .problemId(command.problemId())
-                .metaData(
-                        BojMetaData.builder()
-                                .baekjoonId(command.baekjoonId())
-                                .codeLength(command.codeLength())
-                                .language(command.language())
-                                .resultText(command.resultText())
-                                .memory(command.memory())
-                                .time(command.time())
-                                .submissionId(command.submissionId())
-                                .submittedAt(command.submittedAt())
-                                .build()
-                )
+                .submittedAt(command.submittedAt())
                 .build();
+
+        Judgment judgment = Judgment.from(
+                command.problemId(),
+                command.userId(),
+                command.submissionId(),
+                Platform.BOJ.toStatus(command.resultText()),
+                Platform.BOJ,
+                metaData,
+                command.sourceCode());
         return judgmentRepository.save(judgment);
     }
 

@@ -1,6 +1,7 @@
 package com.mycodingtest.infra.judgment;
 
 import com.mycodingtest.domain.common.Platform;
+import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentStatus;
 import com.mycodingtest.domain.judgment.MetaData;
 import com.mycodingtest.infra.BaseEntity;
@@ -27,5 +28,30 @@ public class JudgmentEntity extends BaseEntity {
     @Column(columnDefinition = "longtext")
     private MetaData metaData;
     private String sourceCode;
+
+    public Judgment toDomain() {
+        return Judgment.builder()
+                .id(getId())
+                .problemId(this.problemId)
+                .userId(userId)
+                .submissionId(submissionId)
+                .status(status)
+                .platform(platform)
+                .metaData(metaData)
+                .sourceCode(sourceCode)
+                .build();
+    }
+
+    public static JudgmentEntity from(Judgment domain) {
+        return JudgmentEntity.builder()
+                .problemId(domain.getProblemId())
+                .userId(domain.getUserId())
+                .submissionId(domain.getSubmissionId())
+                .status(domain.getStatus())
+                .platform(domain.getPlatform())
+                .metaData(domain.getMetaData())
+                .sourceCode(domain.getSourceCode())
+                .build();
+    }
 
 }
