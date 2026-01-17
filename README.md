@@ -10,78 +10,168 @@
 
 <p align="center">
      <img src="https://img.shields.io/badge/java_21-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
-     <img src="https://img.shields.io/badge/spring_boot_3-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white" alt="Spring">
+     <img src="https://img.shields.io/badge/spring_boot_3-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white" alt="Spring Boot">
      <img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
      <img src="https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS">
 </p>
 
 <p align="center">
-  <a href="#architecture">Architecture</a> •
-  <a href="#package-structure">Package Structure</a> •
-  <a href="#related-repositories">Related Repositories</a> •
-  <a href="#getting-started">Getting Started</a>
+  <a href="#multi-module-architecture">Multi-Module Architecture</a> •
+  <a href="#module-structure">Module Structure</a> •
+  <a href="#domain-model">Domain Model</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#related-repositories">Related Repositories</a>
 </p>
 
 ---
 
-## Architecture
+## Multi-Module Architecture
 
-### System Overview
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/2d958346-4f9e-4377-9ae7-b48d760ec250" alt="Business Flow" width="800">
-</p>
+본 프로젝트는 **DDD(Domain-Driven Design)** 와 **계층형 아키텍처**를 적용한 멀티 모듈 구조로 설계되었습니다.
 
-### Deployment
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/49960a4f-a6f9-42a3-8bba-41fb015b90cb" alt="Deploy Architecture" width="600">
-</p>
+```mermaid
+graph TB
+    subgraph "Presentation Layer"
+        API[module-api<br/>REST Controllers]
+    end
+
+    subgraph "Security Layer"
+        SEC[module-security<br/>OAuth2, JWT]
+    end
+
+    subgraph "Application Layer"
+        APP[module-application<br/>Use Cases, Services]
+    end
+
+    subgraph "Domain Layer"
+        DOM[module-domain<br/>Entities, Repositories]
+    end
+
+    subgraph "Infrastructure Layer"
+        INFRA[module-infra-rdb<br/>JPA, DB Access]
+    end
+
+    API --> APP
+    API --> SEC
+    SEC --> APP
+    APP --> DOM
+    APP --> INFRA
+    INFRA --> DOM
+    SEC --> DOM
+```
+
+### 의존성 규칙
+
+- **상위 레이어 → 하위 레이어** 방향으로만 의존
+- **Domain Layer**는 어떤 모듈에도 의존하지 않음
+- **Infrastructure Layer**는 Domain의 Repository 인터페이스를 구현
 
 ---
 
-## Package Structure
+## Module Structure
 
-프로젝트는 **DDD(Domain-Driven Design)** 기반으로 설계되었습니다.
+### 📦 module-api
 
-```
-com.mycodingtest/
-├── judgment/        # 채점 도메인 - 플랫폼별 채점 결과 관리
-├── problem/         # 문제 도메인 - 알고리즘 문제 정보 관리
-├── review/          # 리뷰 도메인 - 오답노트 및 복습 기능
-├── user/            # 사용자 도메인 - OAuth 인증 및 프로필
-├── collector/       # 수집 도메인 - 외부 플랫폼 데이터 통합
-├── query/           # CQRS Query Side - 조회 전용 API
-└── common/          # 공통 모듈 - 보안, 설정, 예외처리
-```
+> Presentation Layer - REST API 엔드포인트
 
-### Domain Module Structure
+| 패키지       | 설명                        |
+| ------------ | --------------------------- |
+| `auth/`      | 인증 관련 API               |
+| `collector/` | 외부 플랫폼 데이터 수집 API |
+| `judgment/`  | 채점 결과 조회 API          |
+| `review/`    | 오답노트 CRUD API           |
 
-```
-[domain]/
-├── api/                 # Presentation Layer
-│   ├── *Controller.java     # REST API 엔드포인트
-│   └── dto/                 # Request/Response DTO
-├── application/         # Application Layer
-│   ├── *Service.java        # 유스케이스 구현
-│   └── dto/                 # Command 객체
-├── domain/              # Domain Layer
-│   ├── *.java               # Entity, Value Object
-│   └── *Repository.java     # Repository 인터페이스
-└── infrastructure/      # Infrastructure Layer
-    └── *RepositoryImpl.java # Repository 구현체
-```
-
-### Layer Responsibilities
-
-| Layer | 역할 | 의존 방향 |
-|-------|------|----------|
-| **API** | HTTP 요청/응답 처리, 인증 | → Application |
-| **Application** | 비즈니스 유스케이스 조율 | → Domain |
-| **Domain** | 핵심 비즈니스 로직, 엔티티 | 없음 (최하위) |
-| **Infrastructure** | 기술 구현 (JPA, 외부 API) | → Domain |
+**Dependencies**: `module-application`, `module-domain`, `module-security`
 
 ---
 
-## ERD
+### 📦 module-application
+
+> Application Layer - 비즈니스 로직의 응집 및 트랜잭션 경계 설정, 도메인 객체들을 조합하여 비즈니스 유스케이스를 완성함
+
+```
+application/
+├── collector/       # 데이터 수집 서비스
+├── judgment/        # 채점 처리 서비스
+├── problem/         # 문제 정보 서비스
+├── review/          # 리뷰 관리 서비스
+└── user/            # 사용자 관리 서비스
+```
+
+**Dependencies**: `module-domain`, `module-infra-rdb`
+
+---
+
+### 📦 module-domain
+
+> Domain Layer - 핵심 비즈니스 로직 (순수 도메인)
+
+```
+domain/
+├── common/          # 공통 유틸리티
+├── judgment/        # 채점 도메인
+│   ├── Judgment.java           # Entity
+│   ├── JudgmentRepository.java # Repository Interface
+│   ├── JudgmentStatus.java     # Enum
+│   └── MetaData.java           # Value Object
+├── problem/         # 문제 도메인
+│   ├── Problem.java
+│   └── ProblemRepository.java
+├── review/          # 리뷰 도메인
+│   ├── Review.java
+│   ├── ReviewRepository.java
+│   └── ReviewStatus.java
+└── user/            # 사용자 도메인
+    ├── User.java
+    └── UserRepository.java
+```
+
+**Dependencies**: 없음 (Spring Context, Validation만 사용)
+
+---
+
+### 📦 module-infra-rdb
+
+> Infrastructure Layer - JPA 기반 영속성 구현
+
+```
+infra/
+├── BaseEntity.java              # 공통 엔티티
+├── judgment/
+│   ├── JudgmentEntity.java      # JPA Entity
+│   ├── JpaJudgmentRepository.java   # Spring Data JPA
+│   ├── JudgmentRepositoryImpl.java  # Repository 구현체
+│   └── JudgmentMapper.java      # Domain ↔ Entity 변환
+├── problem/
+├── review/
+└── user/
+```
+
+**Dependencies**: `module-domain`
+
+---
+
+### 📦 module-security
+
+> Security Layer - 인증/인가
+
+```
+security/
+├── SecurityConfig.java           # Spring Security 설정
+├── CustomOAuth2SuccessHandler.java   # OAuth2 성공 핸들러
+├── CustomUserDetails.java        # UserDetails 구현
+├── JwtFilter.java                # JWT 인증 필터
+├── JwtUtil.java                  # JWT 유틸리티
+├── CookieUtil.java               # 쿠키 관리
+└── GlobalExceptionHandler.java   # 예외 핸들러
+```
+
+**Dependencies**: `module-domain`, `module-application`
+
+---
+
+## Domain Model
+
 ```mermaid
 erDiagram
     USER {
@@ -133,44 +223,61 @@ erDiagram
         LocalDateTime updatedAt
     }
 
-    USER ||--o{ JUDGMENT : "한 사용자는 여러<br/>채점 기록 소유 (1:N)"
-    USER ||--o{ REVIEW : "한 사용자는 여러<br/>오답 노트 소유 (1:N)"
-    PROBLEM ||--o{ JUDGMENT : "한 문제는 여러<br/>채점 기록 소유 (1:N)"
-    PROBLEM ||--o{ REVIEW : "한 문제는 여러<br/>오답 노트를 가짐 (1:N)"
+    USER ||--o{ JUDGMENT : "owns"
+    USER ||--o{ REVIEW : "owns"
+    PROBLEM ||--o{ JUDGMENT : "has"
+    PROBLEM ||--o{ REVIEW : "has"
 ```
 
 ---
 
-## Related Repositories
+## System Architecture
 
-| Repository | Description |
-|------------|-------------|
-| [MyCodingTest_FE](https://github.com/zzoe2346/MyCodingTest_FE) | React 프론트엔드 |
-| [MyCodingTest_Connector](https://github.com/zzoe2346/MyCodingTest_Connector) | Chrome Extension |
+### Deployment
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/49960a4f-a6f9-42a3-8bba-41fb015b90cb" alt="Deploy Architecture" width="600">
+</p>
+
+### CI/CD Pipeline
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f2e25372-b12b-4692-b9ed-fe5055d145ee" alt="CI/CD Pipeline" width="700">
+</p>
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
+
 - Java 21
 - MySQL 8.0+
 - Gradle 8.x
 
 ### Run Locally
+
 ```bash
 ./gradlew bootRun
 ```
 
 ### Run Tests
+
 ```bash
 ./gradlew test
 ```
 
+### Build
+
+```bash
+./gradlew :module-api:bootJar
+```
+
 ---
 
-## CI/CD
+## Related Repositories
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/f2e25372-b12b-4692-b9ed-fe5055d145ee" alt="CI/CD Pipeline" width="700">
-</p>
+| Repository                                                                   | Description      |
+| ---------------------------------------------------------------------------- | ---------------- |
+| [MyCodingTest_FE](https://github.com/zzoe2346/MyCodingTest_FE)               | React 프론트엔드 |
+| [MyCodingTest_Connector](https://github.com/zzoe2346/MyCodingTest_Connector) | Chrome Extension |
