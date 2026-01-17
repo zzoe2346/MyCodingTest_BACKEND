@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "채점 결과", description = "채점 결과 관련 API")
+@Tag(name = "수집", description = "문제, 채점 등 정보 수집 관련 API")
 @RestController
 @RequiredArgsConstructor
 public class BojCollectorQueryController {
