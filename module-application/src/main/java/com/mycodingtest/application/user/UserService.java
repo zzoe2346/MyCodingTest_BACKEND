@@ -4,6 +4,7 @@ import com.mycodingtest.domain.user.User;
 import com.mycodingtest.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <h3>사용자 관리 서비스 (UserService)</h3>
@@ -20,6 +21,7 @@ public class UserService {
     /**
      * 신규 사용자를 시스템에 등록합니다.
      */
+    @Transactional
     public User getOrCreateUser(String name, String email, String picture, String provider, String oauthId) {
         return userRepository.save(
                 User.builder()
