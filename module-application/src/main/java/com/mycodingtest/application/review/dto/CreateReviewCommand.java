@@ -1,6 +1,6 @@
 package com.mycodingtest.application.review.dto;
 
- import com.mycodingtest.application.collector.IngestProblemAndJudgmentCommand;
+ import com.mycodingtest.application.collector.CreateProblemAndJudgmentCommand;
  import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ public record CreateReviewCommand(
         LocalDateTime submittedAt,
         String resultText
 ) {
-    public static CreateReviewCommand from(IngestProblemAndJudgmentCommand command, Long problemId) {
+    public static CreateReviewCommand from(CreateProblemAndJudgmentCommand command, Long problemId) {
         return CreateReviewCommand.builder()
                 .problemId(problemId)
                 .userId(command.userId())
