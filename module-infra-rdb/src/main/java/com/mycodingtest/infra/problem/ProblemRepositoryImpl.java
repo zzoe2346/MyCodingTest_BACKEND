@@ -6,6 +6,7 @@ import com.mycodingtest.domain.problem.ProblemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -24,5 +25,12 @@ public class ProblemRepositoryImpl implements ProblemRepository {
     @Override
     public Optional<Problem> findProblem(Integer problemNumber, Platform platform) {
         return repository.findByProblemNumberAndPlatform(problemNumber, platform).map(mapper::toDomain);
+    }
+
+    @Override
+    public List<Problem> findAllByIdIn(List<Long> problemIds) {
+        return repository.findAllById(problemIds).stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }

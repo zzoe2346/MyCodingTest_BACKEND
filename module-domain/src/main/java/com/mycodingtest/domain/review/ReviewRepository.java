@@ -1,5 +1,7 @@
 package com.mycodingtest.domain.review;
 
+import com.mycodingtest.domain.common.DomainPage;
+
 import java.util.Optional;
 
 /**
@@ -13,14 +15,17 @@ public interface ReviewRepository {
 
     /**
      * 리뷰를 저장합니다.
+     *
      * @param review 저장할 리뷰 엔티티
      * @return 저장된 리뷰 엔티티
      */
     Review create(Review review);
+
     Review update(Review review);
 
     /**
      * ID로 리뷰를 조회합니다.
+     *
      * @param id 리뷰 ID
      * @return 리뷰 엔티티 (Optional)
      */
@@ -29,10 +34,13 @@ public interface ReviewRepository {
     /**
      * 특정 사용자의 '리뷰하지 않은(Pending)' 문제 개수를 카운트합니다.
      * <p>사용자에게 남은 과제(To-Do)가 얼마나 있는지 보여주는 대시보드 지표로 활용됩니다.</p>
-     * 
+     *
      * @param userId 사용자 식별자
      * @return 리뷰 대기 중인 항목의 개수
      */
     long countPendingReviewsByUserId(Long userId);
 
+    Optional<Review> findByProblemIdAndUserId(Long problemId, Long userId);
+
+    DomainPage<Review> findAllByUserIdAndStatus(Long userId, ReviewStatus filter, int page, int size);
 }

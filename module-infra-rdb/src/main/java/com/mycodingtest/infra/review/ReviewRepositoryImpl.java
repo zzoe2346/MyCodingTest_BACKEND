@@ -1,9 +1,12 @@
 package com.mycodingtest.infra.review;
 
+import com.mycodingtest.domain.common.DomainPage;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewRepository;
 import com.mycodingtest.domain.review.ReviewStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -38,5 +41,25 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     public long countPendingReviewsByUserId(Long userId) {
         // Pending = TO_DO 상태인 것들
         return repository.countAllByStatusAndUserId(ReviewStatus.TO_DO, userId);
+    }
+
+    @Override
+    public Optional<Review> findByProblemIdAndUserId(Long problemId, Long userId) {
+        return repository.findByProblemIdAndUserId(problemId, userId)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public DomainPage<Review> findAllByUserIdAndStatus(Long userId, ReviewStatus filter, int page, int size) {
+        Page<ReviewEntity> entityPage = repository.findAllByUserIdAndStatus(userId, filter, Pageable.ofSize(size).withPage(page));
+
+        return new DomainPage<>(
+                entityPage.getContent().stream().map(mapper::toDomain).toList(),
+                entityPage.getTotalElements(),
+                entityPage.getTotalPages(),
+                entityPage.getNumber(),
+                entityPage.getSize(),
+                entityPage.isLast()
+        );
     }
 }

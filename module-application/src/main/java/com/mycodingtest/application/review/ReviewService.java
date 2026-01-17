@@ -1,14 +1,24 @@
 package com.mycodingtest.application.review;
 
+import com.mycodingtest.application.review.dto.CreateReviewCommand;
+import com.mycodingtest.application.review.dto.PagedResult;
+import com.mycodingtest.application.review.dto.ReviewSummary;
 import com.mycodingtest.application.review.dto.UpdateReviewCommand;
+import com.mycodingtest.domain.common.DomainPage;
 import com.mycodingtest.domain.common.exception.ResourceNotFoundException;
+import com.mycodingtest.domain.problem.Problem;
+import com.mycodingtest.domain.problem.ProblemRepository;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewRepository;
-import com.mycodingtest.application.review.dto.CreateReviewCommand;
+import com.mycodingtest.domain.review.ReviewStatus;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <h3>리뷰 및 오답 노트 서비스 (ReviewService)</h3>
@@ -21,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ProblemRepository problemRepository;
 
     /**
      * 단건 리뷰 정보를 조회합니다. (소유권 검증 포함)
@@ -88,5 +99,24 @@ public class ReviewService {
                 command.status()
         );
         return review;
+    }
+
+    public PagedResult<ReviewSummary> getReviewSummaries(Long userId, int page, int size, ReviewStatus filter) {
+        // 1. 리뷰 목록 페이징 조회
+        DomainPage<Review> domainPage = reviewRepository.findAllByUserIdAndStatus(userId, filter, page, size);
+        List<Review> reviews = domainPage.content();
+
+        // 2. 연관된 ID 추출
+        List<Long> problemIds = reviews.stream().map(Review::getProblemId).toList();
+
+        // 3. 문제 정보들 한꺼번에 가져오기
+        Map<Long, Problem> problemMap = problemRepository.findAllByIdIn(problemIds).stream()
+                .collect(Collectors.toMap(Problem::getId, problem -> problem));
+
+        // 5. 조립
+        List<ReviewSummary> reviewSummaries = reviews.stream()
+                .map(review -> ReviewSummary.from(problemMap.get(review.getProblemId()), review))
+                .toList();
+        return PagedResult.from(reviewSummaries, domainPage);
     }
 }
