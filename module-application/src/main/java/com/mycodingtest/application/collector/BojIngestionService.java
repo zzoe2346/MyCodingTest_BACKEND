@@ -1,5 +1,6 @@
 package com.mycodingtest.application.collector;
 
+import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.problem.Problem;
 import com.mycodingtest.application.judgment.JudgmentService;

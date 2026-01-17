@@ -1,6 +1,6 @@
 package com.mycodingtest.application.review.dto;
 
- import com.mycodingtest.application.collector.CreateProblemAndJudgmentCommand;
+ import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
  import lombok.Builder;
 
 import java.time.LocalDateTime;

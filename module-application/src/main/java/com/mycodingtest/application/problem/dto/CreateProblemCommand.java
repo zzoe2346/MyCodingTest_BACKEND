@@ -1,6 +1,6 @@
 package com.mycodingtest.application.problem.dto;
 
- import com.mycodingtest.application.collector.CreateProblemAndJudgmentCommand;
+ import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
  import com.mycodingtest.domain.common.Platform;
 
 public record CreateProblemCommand(
