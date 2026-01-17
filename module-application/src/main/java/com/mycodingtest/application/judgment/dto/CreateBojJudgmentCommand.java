@@ -1,6 +1,6 @@
 package com.mycodingtest.application.judgment.dto;
 
- import com.mycodingtest.application.collector.IngestProblemAndJudgmentCommand;
+ import com.mycodingtest.application.collector.CreateProblemAndJudgmentCommand;
  import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public record CreateBojJudgmentCommand(
         Long problemId,
         Long userId
 ) {
-    public static CreateBojJudgmentCommand from(IngestProblemAndJudgmentCommand command, Long problemId) {
+    public static CreateBojJudgmentCommand from(CreateProblemAndJudgmentCommand command, Long problemId) {
         return CreateBojJudgmentCommand.builder()
                 .submissionId(command.submissionId())
                 .baekjoonId(command.baekjoonId())

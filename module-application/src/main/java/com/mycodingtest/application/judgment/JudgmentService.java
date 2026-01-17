@@ -1,14 +1,13 @@
 package com.mycodingtest.application.judgment;
 
+import com.mycodingtest.application.judgment.dto.CreateBojJudgmentCommand;
+import com.mycodingtest.application.judgment.dto.DeleteJudgmentCommand;
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.BojMetaData;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentRepository;
 import com.mycodingtest.infra.judgment.JudgmentEntity;
 import com.mycodingtest.infra.judgment.JudgmentMapper;
-import com.mycodingtest.application.judgment.dto.CreateBojJudgmentCommand;
-import com.mycodingtest.application.judgment.dto.DeleteJudgmentCommand;
-import com.mycodingtest.application.judgment.dto.ReadJudgmentsCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +31,8 @@ public class JudgmentService {
      * 특정 문제와 사용자에 대한 모든 채점 기록을 최신순으로 조회합니다.
      */
     @Transactional(readOnly = true)
-    public List<Judgment> readJudgments(ReadJudgmentsCommand command) {
-        return repository.findByProblemIdAndUserId(command.problemId(), command.userId());
+    public List<Judgment> readJudgments(Long problemId, Long userId) {
+        return repository.findByProblemIdAndUserId(problemId, userId);
     }
 
     /**

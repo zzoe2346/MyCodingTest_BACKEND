@@ -1,4 +1,4 @@
-package com.mycodingtest.api.judgment.dto.response;
+package com.mycodingtest.api.judgment.dto;
 
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.Judgment;

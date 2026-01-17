@@ -1,8 +1,7 @@
 package com.mycodingtest.api.judgment;
 
+import com.mycodingtest.api.judgment.dto.JudgmentResponse;
 import com.mycodingtest.application.judgment.JudgmentService;
-import com.mycodingtest.api.judgment.dto.response.JudgmentResponse;
-import com.mycodingtest.application.judgment.dto.ReadJudgmentsCommand;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +26,8 @@ public class JudgmentQueryController {
     public ResponseEntity<List<JudgmentResponse>> getJudgmentResultList(
             @RequestParam Long problemId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
-        return ResponseEntity
-                .ok(judgmentService.readJudgments(ReadJudgmentsCommand.from(problemId, userDetails.getUserId()))
+        return ResponseEntity.ok(
+                judgmentService.readJudgments(problemId, userDetails.getUserId())
                         .stream()
                         .map(JudgmentResponse::from)
                         .toList());
