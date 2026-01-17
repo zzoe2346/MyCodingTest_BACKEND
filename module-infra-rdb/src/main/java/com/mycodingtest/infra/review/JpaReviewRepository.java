@@ -14,4 +14,5 @@ public interface JpaReviewRepository extends JpaRepository<ReviewEntity, Long> {
     Optional<ReviewEntity> findByProblemIdAndUserId(Long problemId, Long userId);
 
     Page<ReviewEntity> findAllByUserIdAndStatus(Long userId, ReviewStatus status, Pageable pageable);
+
 }

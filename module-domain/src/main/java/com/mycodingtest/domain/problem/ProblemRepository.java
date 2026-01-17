@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * <h3>Problem Repository Interface (Domain Layer)</h3>
  * <p>
- * {@link ProblemEntity} 엔티티에 대한 데이터 접근을 담당합니다.
+ * {@link Problem} 엔티티에 대한 데이터 접근을 담당합니다.
  * 도메인 영역에 위치하며, 구체적인 기술(JPA 등)에 의존하지 않습니다.
  * </p>
  */
@@ -29,7 +29,7 @@ public interface ProblemRepository {
      * @param platform      플랫폼 (BOJ 등)
      * @return 문제 엔티티 (Optional)
      */
-    Optional<Problem> findProblem(Integer problemNumber, Platform platform);
+    Optional<Problem> findProblemByproblemNumberAndPlatform(Integer problemNumber, Platform platform);
 
     List<Problem> findAllByIdIn(List<Long> problemIds);
 }

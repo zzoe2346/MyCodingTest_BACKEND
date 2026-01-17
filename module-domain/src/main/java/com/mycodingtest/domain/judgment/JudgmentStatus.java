@@ -8,13 +8,7 @@ package com.mycodingtest.domain.judgment;
  * </p>
  */
 public enum JudgmentStatus {
-    /**
-     * 정답
-     */
     SUCCESS,
-
-    /**
-     * 오답
-     */
-    FAIL
+    FAIL,
+    ERROR
 }
