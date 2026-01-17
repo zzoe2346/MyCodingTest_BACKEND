@@ -28,8 +28,7 @@ public class UserService {
                         .picture(picture)
                         .oauthProvider(provider)
                         .oauthId(oauthId)
-                        .build()
-        );
+                        .build());
     }
 
 }

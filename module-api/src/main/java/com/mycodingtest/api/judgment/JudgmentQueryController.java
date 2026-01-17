@@ -23,9 +23,8 @@ public class JudgmentQueryController {
 
     @GetMapping("/api/judgments")
     @Operation(summary = "채점 결과 목록 조회", description = "특정 문제의 채점 결과 목록을 조회합니다.")
-    public ResponseEntity<List<JudgmentResponse>> getJudgmentResultList(
-            @RequestParam Long problemId,
-            @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<List<JudgmentResponse>> getJudgmentResultList(@RequestParam Long problemId,
+                                                                        @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(
                 judgmentService.readJudgments(problemId, userDetails.getUserId())
                         .stream()

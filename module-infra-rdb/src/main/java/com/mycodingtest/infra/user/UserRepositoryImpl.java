@@ -24,4 +24,5 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
         return mapper.toDomain(repository.save(mapper.toEntity(user)));
     }
+
 }

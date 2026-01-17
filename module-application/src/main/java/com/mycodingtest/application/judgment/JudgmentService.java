@@ -7,7 +7,6 @@ import com.mycodingtest.domain.judgment.BojMetaData;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentRepository;
 import com.mycodingtest.infra.judgment.JudgmentEntity;
-import com.mycodingtest.infra.judgment.JudgmentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,15 +23,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JudgmentService {
 
-    private final JudgmentRepository repository;
-    private final JudgmentMapper mapper;
+    private final JudgmentRepository judgmentRepository;
 
     /**
      * 특정 문제와 사용자에 대한 모든 채점 기록을 최신순으로 조회합니다.
      */
     @Transactional(readOnly = true)
     public List<Judgment> readJudgments(Long problemId, Long userId) {
-        return repository.findByProblemIdAndUserId(problemId, userId);
+        return judgmentRepository.findByProblemIdAndUserId(problemId, userId);
     }
 
     /**
@@ -40,7 +38,7 @@ public class JudgmentService {
      */
     @Transactional(readOnly = true)
     public boolean isJudgmentExist(Long submissionId, Platform platform) {
-        return repository.existsBySubmissionId(submissionId);//TODO: 플랫폼 조건 빠짐
+        return judgmentRepository.existsBySubmissionId(submissionId, platform);
     }
 
     /**
@@ -70,23 +68,14 @@ public class JudgmentService {
                                 .build()
                 )
                 .build();
-        return repository.save(judgment);
+        return judgmentRepository.save(judgment);
     }
-    // 1. 도메인 객체 생성 (비즈니스 로직 및 유효성 검사 수행)
-//    Judgment domain = Judgment.create(
-//            command.getUserId(),
-//            command.getProblemId(),
-//            command.getSubmissionId(),
-//            command.getPlatform(),
-//            command.getSourceCode()
-//    );
-//
 
     /**
      * 특정 채점 기록을 삭제합니다.
      */
     @Transactional
     public void deleteJudgment(DeleteJudgmentCommand command) {
-        repository.deleteByIdAndUserId(command.judgmentId(), command.userId());
+        judgmentRepository.deleteByIdAndUserId(command.judgmentId(), command.userId());
     }
 }

@@ -26,7 +26,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public Review update(Review review) {
-        ReviewEntity entity = repository.findById(review.getReviewId())
+        ReviewEntity entity = repository.findById(review.getId())
                 .orElseThrow();
         entity.apply(review);
         return mapper.toDomain(repository.save(entity));
@@ -62,4 +62,5 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 entityPage.isLast()
         );
     }
+
 }

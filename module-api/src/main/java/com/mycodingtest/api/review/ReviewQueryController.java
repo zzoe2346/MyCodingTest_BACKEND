@@ -9,7 +9,7 @@ import com.mycodingtest.domain.review.ReviewStatus;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Tag(name = "복습", description = "복습 관련 API")
 public class ReviewQueryController {
 
@@ -29,26 +29,24 @@ public class ReviewQueryController {
     public ResponseEntity<ReviewResponse> getReview(@PathVariable Long reviewId,
                                                     @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(
-                ReviewResponse.from(reviewService.getReview(reviewId, userDetails.getUserId()))
-        );
+                ReviewResponse.from(reviewService.getReview(reviewId, userDetails.getUserId())));
     }
 
     @GetMapping("/api/reviews/unreviewed/count")
     @Operation(summary = "리뷰를 기다리는 문제 개수 반환")
     public ResponseEntity<ReviewCountStatusInToDoResponse> getWaitReviewCount(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(
-                ReviewCountStatusInToDoResponse.from(reviewService.getReviewCountStatusInToDo(userDetails.getUserId()))
-        );
+                ReviewCountStatusInToDoResponse
+                        .from(reviewService.getReviewCountStatusInToDo(userDetails.getUserId())));
     }
 
     @GetMapping("/api/reviews")
     public ResponseEntity<PagedResult<ReviewSummary>> getReviewSummaries(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                                          @RequestParam(defaultValue = "0") int page,
                                                                          @RequestParam(defaultValue = "10") int size,
-                                                                         @RequestParam(required = false, defaultValue = "TODO") ReviewStatus filter) {
+                                                                         @RequestParam(required = false, defaultValue = "TO_DO") ReviewStatus filter) {
         return ResponseEntity.ok(
-                reviewService.getReviewSummaries(userDetails.getUserId(), page, size, filter)
-        );
+                reviewService.getReviewSummaries(userDetails.getUserId(), page, size, filter));
     }
 
 }

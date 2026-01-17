@@ -25,4 +25,5 @@ public class UserMapper {
                 .picture(domain.getPicture())
                 .build();
     }
+
 }

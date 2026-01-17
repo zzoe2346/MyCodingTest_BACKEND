@@ -28,7 +28,7 @@ public record ReviewSummary(
                 review.getRecentSubmitAt(),
                 review.getRecentResult(),
                 review.isFavorited(),
-                review.getReviewId(),
+                review.getId(),
                 review.getDifficultyLevel(),
                 review.getImportanceLevel(),
                 review.getReviewed(),

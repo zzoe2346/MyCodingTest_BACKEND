@@ -23,7 +23,7 @@ public class ProblemRepositoryImpl implements ProblemRepository {
     }
 
     @Override
-    public Optional<Problem> findProblem(Integer problemNumber, Platform platform) {
+    public Optional<Problem> findProblemByproblemNumberAndPlatform(Integer problemNumber, Platform platform) {
         return repository.findByProblemNumberAndPlatform(problemNumber, platform).map(mapper::toDomain);
     }
 
@@ -33,4 +33,5 @@ public class ProblemRepositoryImpl implements ProblemRepository {
                 .map(mapper::toDomain)
                 .toList();
     }
+
 }

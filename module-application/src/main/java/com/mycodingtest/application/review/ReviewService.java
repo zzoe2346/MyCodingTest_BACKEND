@@ -78,18 +78,15 @@ public class ReviewService {
                         .revisedCode(command.sourceCode())
                         .recentSubmitAt(command.submittedAt())
                         .recentResult(command.resultText())
-                        .build()
-        );
+                        .build());
     }
 
     public Review updateReview(UpdateReviewCommand command) {
         Review review = reviewRepository.findById(command.reviewId())
-                .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
+                .orElseThrow(ResourceNotFoundException::new);
 
-        // 권한 체크 등 비즈니스 검증 로직
-//        validateOwner(review, command.getUserId());
+        review.validateOwnership(command.userId());
 
-        // 도메인 모델에게 업데이트 위임
         review.update(
                 command.isFavorite(),
                 command.difficultyLevel(),

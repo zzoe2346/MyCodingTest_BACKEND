@@ -8,7 +8,7 @@ public class ReviewMapper {
 
     public Review toDomain(ReviewEntity entity) {
         return Review.builder()
-                .reviewId(entity.getId())
+                .id(entity.getId())
                 .problemId(entity.getProblemId())
                 .userId(entity.getUserId())
                 .content(entity.getContent())

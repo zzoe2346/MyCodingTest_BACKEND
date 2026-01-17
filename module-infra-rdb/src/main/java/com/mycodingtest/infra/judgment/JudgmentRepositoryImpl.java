@@ -1,5 +1,6 @@
 package com.mycodingtest.infra.judgment;
 
+import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JudgmentRepositoryImpl implements JudgmentRepository {
 
-
     private final JpaJudgmentRepository jpaJudgmentRepository;
     private final JudgmentMapper mapper;
 
@@ -22,8 +22,8 @@ public class JudgmentRepositoryImpl implements JudgmentRepository {
     }
 
     @Override
-    public boolean existsBySubmissionId(Long submissionId) {
-        return jpaJudgmentRepository.existsBySubmissionId(submissionId);
+    public boolean existsBySubmissionId(Long submissionId, Platform platform) {
+        return jpaJudgmentRepository.existsBySubmissionIdAndPlatform(submissionId, platform);
     }
 
     @Override
@@ -38,4 +38,5 @@ public class JudgmentRepositoryImpl implements JudgmentRepository {
                 .map(mapper::toDomain)
                 .toList();
     }
+
 }

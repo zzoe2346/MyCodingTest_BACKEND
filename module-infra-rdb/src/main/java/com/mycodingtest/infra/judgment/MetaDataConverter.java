@@ -9,7 +9,7 @@ import jakarta.persistence.Converter;
 @Converter
 public class MetaDataConverter implements AttributeConverter<MetaData, String> {
 
-    private static final ObjectMapper mapper = new ObjectMapper(); // 단순하게 생성
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public String convertToDatabaseColumn(MetaData meta) {
@@ -30,5 +30,6 @@ public class MetaDataConverter implements AttributeConverter<MetaData, String> {
             return null;
         }
     }
+
 }
 
