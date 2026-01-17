@@ -1,11 +1,11 @@
 package com.mycodingtest.application.problem;
 
-import com.mycodingtest.domain.common.Platform;
+import com.mycodingtest.application.problem.dto.CreateProblemCommand;
 import com.mycodingtest.domain.problem.Problem;
 import com.mycodingtest.domain.problem.ProblemRepository;
-import com.mycodingtest.application.problem.dto.CreateProblemCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <h3>문제 데이터 서비스 (ProblemService)</h3>
@@ -26,15 +26,15 @@ public class ProblemService {
      * 이미 존재하면 기존 정보를 반환하고, 없으면 새로 생성하여 저장합니다.
      * </p>
      */
+    @Transactional
     public Problem getOrCreateProblem(CreateProblemCommand command) {
-        return problemRepository.findProblem(command.problemNumber(), command.platform())
+        return problemRepository.findProblemByproblemNumberAndPlatform(command.problemNumber(), command.platform())
                 .orElseGet(() -> problemRepository.save(
-                                Problem.builder()
-                                        .problemNumber(command.problemNumber())
-                                        .problemTitle(command.problemTitle()).platform(Platform.BOJ)
-                                        .build()
-                        )
-                );
+                        Problem.builder()
+                                .problemNumber(command.problemNumber())
+                                .problemTitle(command.problemTitle())
+                                .platform(command.platform())
+                                .build()));
     }
 
 }
