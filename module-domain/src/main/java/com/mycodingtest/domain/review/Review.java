@@ -58,42 +58,6 @@ public class Review {
     private LocalDateTime recentSubmitAt;
     private String recentResult;
 
-
-    /**
-     * 리뷰 작성을 시작합니다.
-     */
-    public void startReview() {
-        this.status = ReviewStatus.IN_PROGRESS;
-    }
-
-    /**
-     * 리뷰 작성을 완료 처리합니다.
-     * <p>상태가 COMPLETED로 변경되며, 완료 시간이 기록됩니다.</p>
-     */
-    public void completeReview() {
-        this.status = ReviewStatus.COMPLETED;
-        this.reviewedAt = LocalDateTime.now();
-    }
-
-    /**
-     * 해당 문제를 완전히 마스터했음을 표시합니다.
-     */
-    public void masterProblem() {
-        this.status = ReviewStatus.MASTERED;
-        this.reviewedAt = LocalDateTime.now();
-    }
-
-    /**
-     * 난이도와 중요도를 갱신합니다.
-     *
-     * @param difficultyLevel 새로운 난이도
-     * @param importanceLevel 새로운 중요도
-     */
-    public void updateRatingLevels(Integer difficultyLevel, Integer importanceLevel) {
-        this.difficultyLevel = difficultyLevel;
-        this.importanceLevel = importanceLevel;
-    }
-
     /**
      * 리뷰의 소유권을 검증합니다.
      * <p>자신의 리뷰만 수정/조회할 수 있다는 보안 규칙을 도메인 레벨에서 강제합니다.</p>
@@ -107,18 +71,17 @@ public class Review {
         }
     }
 
-    /**
-     * 즐겨찾기 상태를 토글(Toggle)합니다.
-     */
-    public void changeFavorite() {
-        this.favorited = !this.favorited;
-    }
-
-    public void updateRevisedCode(String code) {
-        this.revisedCode = code;
-    }
-
-    public void updateContent(String content) {
-        this.content = content;
+    public void update(Boolean isFavorite, Integer difficultyLevel, Integer importanceLevel, String code, String content, ReviewStatus status) {
+        if (isFavorite != null) this.favorited = isFavorite;
+        if (difficultyLevel != null) this.difficultyLevel = difficultyLevel;
+        if (importanceLevel != null) this.importanceLevel = importanceLevel;
+        if (code != null) this.revisedCode = code;
+        if (content != null) this.content = content;
+        if (status != null) {
+            this.status = status;
+            if (status == ReviewStatus.COMPLETED) {
+                this.reviewedAt = LocalDateTime.now();
+            }
+        }
     }
 }
