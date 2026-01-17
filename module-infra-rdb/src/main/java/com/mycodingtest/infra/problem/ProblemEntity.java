@@ -1,6 +1,7 @@
 package com.mycodingtest.infra.problem;
 
 import com.mycodingtest.domain.common.Platform;
+import com.mycodingtest.domain.problem.Problem;
 import com.mycodingtest.infra.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,5 +29,17 @@ public class ProblemEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Platform platform;
+
+    public static ProblemEntity from(Problem domain) {
+        return ProblemEntity.builder()
+                .problemNumber(domain.getProblemNumber())
+                .problemTitle(domain.getProblemTitle())
+                .platform(domain.getPlatform())
+                .build();
+    }
+
+    public Problem toDomain() {
+        return Problem.from(this.problemNumber, this.problemTitle, this.platform);
+    }
 
 }

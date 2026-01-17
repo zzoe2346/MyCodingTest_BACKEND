@@ -30,11 +30,10 @@ public class ProblemService {
     public Problem getOrCreateProblem(CreateProblemCommand command) {
         return problemRepository.findProblemByproblemNumberAndPlatform(command.problemNumber(), command.platform())
                 .orElseGet(() -> problemRepository.save(
-                        Problem.builder()
-                                .problemNumber(command.problemNumber())
-                                .problemTitle(command.problemTitle())
-                                .platform(command.platform())
-                                .build()));
+                        Problem.from(
+                                command.problemNumber(),
+                                command.problemTitle(),
+                                command.platform())));
     }
 
 }

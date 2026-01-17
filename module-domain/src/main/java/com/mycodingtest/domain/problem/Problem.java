@@ -47,4 +47,27 @@ public class Problem {
      */
     private Platform platform;
 
+    /**
+     * 새로운 문제를 생성합니다.
+     *
+     * @param problemNumber 문제 번호
+     * @param problemTitle  문제 제목
+     * @param platform      출처 플랫폼
+     * @return 생성된 Problem 인스턴스
+     * @throws IllegalArgumentException 필수 값이 누락된 경우
+     */
+    public static Problem from(Integer problemNumber, String problemTitle, Platform platform) {
+        if (problemNumber == null || problemNumber <= 0) {
+            throw new IllegalArgumentException("문제 번호는 양수여야 합니다");
+        }
+        if (platform == null) {
+            throw new IllegalArgumentException("플랫폼은 필수입니다");
+        }
+        return Problem.builder()
+                .problemNumber(problemNumber)
+                .problemTitle(problemTitle)
+                .platform(platform)
+                .build();
+    }
+
 }
