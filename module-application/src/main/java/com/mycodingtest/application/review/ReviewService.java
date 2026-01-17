@@ -11,7 +11,6 @@ import com.mycodingtest.domain.problem.ProblemRepository;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewRepository;
 import com.mycodingtest.domain.review.ReviewStatus;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,6 +80,7 @@ public class ReviewService {
                         .build());
     }
 
+    @Transactional
     public Review updateReview(UpdateReviewCommand command) {
         Review review = reviewRepository.findById(command.reviewId())
                 .orElseThrow(ResourceNotFoundException::new);
@@ -93,11 +93,12 @@ public class ReviewService {
                 command.importanceLevel(),
                 command.code(),
                 command.content(),
-                command.status()
-        );
+                command.status());
+        reviewRepository.update(review);
         return review;
     }
 
+    @Transactional(readOnly = true)
     public PagedResult<ReviewSummary> getReviewSummaries(Long userId, int page, int size, ReviewStatus filter) {
         // 1. 리뷰 목록 페이징 조회
         DomainPage<Review> domainPage = reviewRepository.findAllByUserIdAndStatus(userId, filter, page, size);
