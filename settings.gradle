@@ -1,1 +1,6 @@
 rootProject.name = 'myCodingTest'
+
+include 'module-api'
+include 'module-application'
+include 'module-domain'
+include 'module-infra-rdb'

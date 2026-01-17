@@ -1,105 +1,64 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.1'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'jacoco'
-    id("org.asciidoctor.jvm.convert") version "4.0.4"
 }
 
-configurations {
-    asciidoctorExt
+allprojects {
+    group = 'com.mycodingtest'
+    version = '0.0.1-SNAPSHOT'
+    repositories { mavenCentral() }
 }
 
-ext {
-    snippetsDir = file('build/generated-snippets')
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
 
-group = 'com'
-version = '0.0.1-SNAPSHOT'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+    java {
+        toolchain { languageVersion = JavaLanguageVersion.of(21) }
     }
-}
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    runtimeOnly 'com.h2database:h2'
-//    implementation group: 'io.awspring.cloud', name: 'spring-cloud-aws-starter', version: '3.2.1'
-//    implementation 'io.awspring.cloud:spring-cloud-aws-dependencies:3.2.1'
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
-    implementation 'mysql:mysql-connector-java:8.0.33'
-    implementation 'org.springframework.security:spring-security-oauth2-client:6.4.2'
-
-//    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.3.0'
-    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor:3.0.3'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.3'
-}
-
-asciidoctor {
-    inputs.dir snippetsDir
-    configurations 'asciidoctorExt' //  어 이거하니 인식하네
-}
-
-tasks.register('copyDocument',Copy) {
-    from file("build/docs/asciidoc")
-    into file("src/main/resources/static/docs")
-}
-
-//tasks.named('test') {
-//    useJUnitPlatform{
-//        includeTags 'unit'
-//    }
-//    finalizedBy jacocoTestReport
-//}
-
-tasks.named('test') {
-    useJUnitPlatform{
-        includeTags 'unit'
+    dependencies {
+        implementation 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok:1.18.30'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
-}
 
-tasks.register('integrationTest', Test) {
-    group("verification")
-    useJUnitPlatform {
-        includeTags 'integration'
-        excludeTags 'unit'
+    dependencyManagement {
+        imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
+        }
     }
-    outputs.dir snippetsDir
+
+    test { useJUnitPlatform() }
 }
 
-//jacocoTestReport {
-//    reports {
-//        xml.required = true
-//        xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacoco.xml')
-//        html.required = true
-//        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
-//    }
+// 루트 프로젝트 설정 (기존 src 폴더용)
+//java {
+//    toolchain { languageVersion = JavaLanguageVersion.of(21) }
 //}
-
-//jacocoTestCoverageVerification {
-//    dependsOn test
-//    violationRules {
-//        rule {
-//            limit {
-//                minimum = 1.0
-//            }
-//        }
-//    }
+//
+//dependencies {
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation 'org.springframework.boot:spring-boot-starter-validation'
+//    implementation 'org.springframework.boot:spring-boot-starter-web'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.projectlombok:lombok'
+//    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation 'org.springframework.security:spring-security-test'
+//    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//    runtimeOnly 'com.h2database:h2'
+//    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+//    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+//    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+//    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+//    implementation 'mysql:mysql-connector-java:8.0.33'
+//    implementation 'org.springframework.security:spring-security-oauth2-client:6.4.2'
 //}
+//
+//test { useJUnitPlatform() }
+//
