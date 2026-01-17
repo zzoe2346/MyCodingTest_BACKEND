@@ -57,7 +57,7 @@ public class ReviewService {
     public void createReview(CreateReviewCommand command) {
         reviewRepository.findByProblemIdAndUserId(command.problemId(), command.userId())
                 .ifPresent(existingReview -> {
-                    existingReview.onJudgmentCreated(command.submittedAt(), command.judgmentId(), command.resultText());
+                    existingReview.onJudgmentCreated(command.submittedAt(), command.resultText());
                     reviewRepository.update(existingReview);
                 });
         reviewRepository.create(
