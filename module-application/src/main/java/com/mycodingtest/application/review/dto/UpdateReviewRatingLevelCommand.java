@@ -1,4 +1,4 @@
-package com.mycodingtest.review.dto;
+package com.mycodingtest.application.review.dto;
 
 public record UpdateReviewRatingLevelCommand(
         int difficultyLevel,

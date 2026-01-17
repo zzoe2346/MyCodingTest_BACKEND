@@ -1,5 +1,6 @@
 package com.mycodingtest.collector;
 
+import com.mycodingtest.application.collector.BojIngestionService;
 import com.mycodingtest.collector.dto.IngestProblemAndJudgmentRequest;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;

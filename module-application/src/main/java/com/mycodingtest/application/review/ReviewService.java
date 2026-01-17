@@ -1,10 +1,10 @@
-package com.mycodingtest.review;
+package com.mycodingtest.application.review;
 
 import com.mycodingtest.domain.common.exception.ResourceNotFoundException;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewRepository;
-import com.mycodingtest.review.dto.CreateReviewCommand;
-import com.mycodingtest.review.dto.UpdateReviewRatingLevelCommand;
+import com.mycodingtest.application.review.dto.CreateReviewCommand;
+import com.mycodingtest.application.review.dto.UpdateReviewRatingLevelCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

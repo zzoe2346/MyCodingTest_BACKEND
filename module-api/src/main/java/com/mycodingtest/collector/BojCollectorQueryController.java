@@ -1,5 +1,6 @@
 package com.mycodingtest.collector;
 
+import com.mycodingtest.application.collector.BojIngestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

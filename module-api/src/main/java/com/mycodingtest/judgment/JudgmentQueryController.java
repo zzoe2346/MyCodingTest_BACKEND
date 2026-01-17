@@ -1,8 +1,9 @@
 package com.mycodingtest.judgment;
 
+import com.mycodingtest.application.judgment.JudgmentService;
 import com.mycodingtest.security.CustomUserDetails;
 import com.mycodingtest.judgment.dto.response.JudgmentResponse;
-import com.mycodingtest.judgment.dto.ReadJudgmentsCommand;
+import com.mycodingtest.application.judgment.dto.ReadJudgmentsCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.mycodingtest.judgment.dto;
+package com.mycodingtest.application.judgment.dto;
 
 public record ReadJudgmentsCommand(
         Long problemId,

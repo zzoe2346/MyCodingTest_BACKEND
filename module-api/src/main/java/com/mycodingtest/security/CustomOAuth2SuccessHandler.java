@@ -3,7 +3,7 @@ package com.mycodingtest.security;
 import com.mycodingtest.authorization.CookieUtil;
 import com.mycodingtest.authorization.JwtUtil;
 import com.mycodingtest.domain.user.User;
-import com.mycodingtest.user.UserService;
+import com.mycodingtest.application.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;

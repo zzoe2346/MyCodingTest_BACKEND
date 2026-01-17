@@ -1,6 +1,6 @@
 package com.mycodingtest.collector.dto;
 
-import com.mycodingtest.collector.IngestProblemAndJudgmentCommand;
+import com.mycodingtest.application.collector.IngestProblemAndJudgmentCommand;
 
 import java.time.LocalDateTime;
 

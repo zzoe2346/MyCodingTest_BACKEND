@@ -1,9 +1,9 @@
-package com.mycodingtest.problem;
+package com.mycodingtest.application.problem;
 
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.problem.Problem;
 import com.mycodingtest.domain.problem.ProblemRepository;
-import com.mycodingtest.problem.dto.CreateProblemCommand;
+import com.mycodingtest.application.problem.dto.CreateProblemCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

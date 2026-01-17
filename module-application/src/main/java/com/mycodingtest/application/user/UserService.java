@@ -1,4 +1,4 @@
-package com.mycodingtest.user;
+package com.mycodingtest.application.user;
 
 import com.mycodingtest.domain.user.User;
 import com.mycodingtest.domain.user.UserRepository;

@@ -1,14 +1,13 @@
-package com.mycodingtest.collector;
+package com.mycodingtest.application.collector;
 
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.problem.Problem;
-import com.mycodingtest.judgment.JudgmentService;
-import com.mycodingtest.judgment.dto.CreateBojJudgmentCommand;
-import com.mycodingtest.problem.ProblemService;
-import com.mycodingtest.infra.problem.ProblemEntity;
-import com.mycodingtest.problem.dto.CreateProblemCommand;
-import com.mycodingtest.review.ReviewService;
-import com.mycodingtest.review.dto.CreateReviewCommand;
+import com.mycodingtest.application.judgment.JudgmentService;
+import com.mycodingtest.application.judgment.dto.CreateBojJudgmentCommand;
+import com.mycodingtest.application.problem.ProblemService;
+import com.mycodingtest.application.problem.dto.CreateProblemCommand;
+import com.mycodingtest.application.review.ReviewService;
+import com.mycodingtest.application.review.dto.CreateReviewCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

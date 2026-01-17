@@ -1,7 +1,8 @@
 package com.mycodingtest.judgment;
 
+import com.mycodingtest.application.judgment.JudgmentService;
 import com.mycodingtest.security.CustomUserDetails;
-import com.mycodingtest.judgment.dto.DeleteJudgmentCommand;
+import com.mycodingtest.application.judgment.dto.DeleteJudgmentCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,10 @@
 package com.mycodingtest.review;
 
+import com.mycodingtest.application.review.ReviewService;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.review.dto.ReviewRatingLevelsUpdateRequest;
 import com.mycodingtest.review.dto.ReviewRecentStatusResponse;
-import com.mycodingtest.review.dto.UpdateReviewRatingLevelCommand;
+import com.mycodingtest.application.review.dto.UpdateReviewRatingLevelCommand;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

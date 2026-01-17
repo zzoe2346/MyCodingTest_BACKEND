@@ -1,4 +1,4 @@
-package com.mycodingtest.judgment;
+package com.mycodingtest.application.judgment;
 
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.BojMetaData;
@@ -6,9 +6,9 @@ import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentRepository;
 import com.mycodingtest.infra.judgment.JudgmentEntity;
 import com.mycodingtest.infra.judgment.JudgmentMapper;
-import com.mycodingtest.judgment.dto.CreateBojJudgmentCommand;
-import com.mycodingtest.judgment.dto.DeleteJudgmentCommand;
-import com.mycodingtest.judgment.dto.ReadJudgmentsCommand;
+import com.mycodingtest.application.judgment.dto.CreateBojJudgmentCommand;
+import com.mycodingtest.application.judgment.dto.DeleteJudgmentCommand;
+import com.mycodingtest.application.judgment.dto.ReadJudgmentsCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,5 +1,6 @@
 package com.mycodingtest.review;
 
+import com.mycodingtest.application.review.ReviewService;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.security.CustomUserDetails;
 import com.mycodingtest.review.dto.WaitReviewCountResponse;
