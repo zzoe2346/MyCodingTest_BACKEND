@@ -28,37 +28,10 @@
 ## Multi-Module Architecture
 
 본 프로젝트는 **DDD(Domain-Driven Design)** 와 **계층형 아키텍처**를 적용한 멀티 모듈 구조로 설계되었습니다.
+<p align="center">
+<img height="600" alt="image" src="https://github.com/user-attachments/assets/57ba0132-5928-44d1-adc3-296f68126d62" />
+</p>
 
-```mermaid
-graph TB
-    subgraph "Presentation Layer"
-        API[module-api<br/>REST Controllers]
-    end
-
-    subgraph "Security Layer"
-        SEC[module-security<br/>OAuth2, JWT]
-    end
-
-    subgraph "Application Layer"
-        APP[module-application<br/>Use Cases, Services]
-    end
-
-    subgraph "Domain Layer"
-        DOM[module-domain<br/>Entities, Repositories]
-    end
-
-    subgraph "Infrastructure Layer"
-        INFRA[module-infra-rdb<br/>JPA, DB Access]
-    end
-
-    API --> APP
-    API --> SEC
-    SEC --> APP
-    APP --> DOM
-    APP --> INFRA
-    INFRA --> DOM
-    SEC --> DOM
-```
 
 ### 의존성 규칙
 
