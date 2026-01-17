@@ -1,7 +1,7 @@
 package com.mycodingtest.api.collector;
 
 import com.mycodingtest.application.collector.BojIngestionService;
-import com.mycodingtest.api.collector.dto.IngestProblemAndJudgmentRequest;
+import com.mycodingtest.api.collector.dto.CreateProblemAndJudgmentRequest;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +22,7 @@ public class BojCollectorCommandController {
 
     @PostMapping("/api/boj")
     @Operation(summary = "채점 결과 저장", description = "크롬 익스텐션으로 부터 전송된 채점 결과를 저장합니다.")
-    public ResponseEntity<Void> createProblemAndJudgment(@RequestBody IngestProblemAndJudgmentRequest request,
+    public ResponseEntity<Void> createProblemAndJudgment(@RequestBody CreateProblemAndJudgmentRequest request,
                                                          @AuthenticationPrincipal CustomUserDetails userDetails) {
         bojIngestionService.ingest(request.toCommand(userDetails.getUserId()));
         return ResponseEntity.status(HttpStatus.CREATED).build();

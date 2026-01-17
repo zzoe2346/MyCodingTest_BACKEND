@@ -1,10 +1,10 @@
 package com.mycodingtest.api.collector.dto;
 
-import com.mycodingtest.application.collector.IngestProblemAndJudgmentCommand;
+import com.mycodingtest.application.collector.CreateProblemAndJudgmentCommand;
 
 import java.time.LocalDateTime;
 
-public record IngestProblemAndJudgmentRequest(
+public record CreateProblemAndJudgmentRequest(
         Integer problemNumber,
         String problemTitle,
         Long submissionId,
@@ -18,8 +18,8 @@ public record IngestProblemAndJudgmentRequest(
         String code
 ) {
 
-    public IngestProblemAndJudgmentCommand toCommand(Long userId) {
-        return IngestProblemAndJudgmentCommand.builder()
+    public CreateProblemAndJudgmentCommand toCommand(Long userId) {
+        return CreateProblemAndJudgmentCommand.builder()
                 .problemNumber(problemNumber)
                 .problemTitle(problemTitle)
                 .submissionId(submissionId)
