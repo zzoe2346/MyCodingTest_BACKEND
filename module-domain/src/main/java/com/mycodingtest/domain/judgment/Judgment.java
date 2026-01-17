@@ -1,19 +1,19 @@
 package com.mycodingtest.domain.judgment;
 
 import com.mycodingtest.domain.common.Platform;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 /**
  * <h3>채점 (Judgment)</h3>
  * <p>
- * 사용자가 특정 플랫폼(BOJ, Programmers 등)에서 문제를 풀고 제출한 개별 채점 결과를 나타내는 Aggregate Root입니다.
- * 하나의 문제는 여러 번의 채점 기록을 가질 수 있으며, 본 시스템은 이 채점 기록을 수집하여 리뷰 데이터를 생성하는 기초 자료로 활용합니다.
+ * 사용자가 특정 플랫폼(BOJ, Programmers 등)에서 문제를 풀고 제출한 개별 채점 결과를 나타내는 Aggregate
+ * Root입니다.
+ * 하나의 문제는 여러 번의 채점 기록을 가질 수 있으며, 본 시스템은 이 채점 기록을 수집하여 리뷰 데이터를 생성하는 기초 자료로
+ * 활용합니다.
  * </p>
  */
 @Getter
-@AllArgsConstructor
 @Builder
 public class Judgment {
 
@@ -55,6 +55,7 @@ public class Judgment {
      * 플랫폼별 특화 메타데이터
      * <p>
      * 플랫폼마다 상이한 채점 정보(메모리, 시간, 언어 버전 등)를 유연하게 저장하기 위해 반정규화된 JSON 형태로 관리합니다.
+     * </p>
      */
     private MetaData metaData;
 
@@ -62,5 +63,45 @@ public class Judgment {
      * 채점한 소스 코드
      */
     private String sourceCode;
+
+    /**
+     * 새로운 채점 기록을 생성합니다.
+     *
+     * @param problemId    문제 ID
+     * @param userId       사용자 ID
+     * @param submissionId 외부 플랫폼 제출 ID
+     * @param status       채점 결과 상태
+     * @param platform     플랫폼
+     * @param metaData     플랫폼별 메타데이터
+     * @param sourceCode   소스 코드
+     * @return 생성된 Judgment 인스턴스
+     * @throws IllegalArgumentException 필수 값이 누락된 경우
+     */
+    public static Judgment from(Long problemId,
+                                Long userId,
+                                Long submissionId,
+                                JudgmentStatus status,
+                                Platform platform,
+                                MetaData metaData,
+                                String sourceCode) {
+        if (problemId == null) {
+            throw new IllegalArgumentException("문제 ID는 필수입니다");
+        }
+        if (userId == null) {
+            throw new IllegalArgumentException("사용자 ID는 필수입니다");
+        }
+        if (submissionId == null) {
+            throw new IllegalArgumentException("제출 ID는 필수입니다");
+        }
+        return Judgment.builder()
+                .problemId(problemId)
+                .userId(userId)
+                .submissionId(submissionId)
+                .status(status)
+                .platform(platform)
+                .metaData(metaData)
+                .sourceCode(sourceCode)
+                .build();
+    }
 
 }
