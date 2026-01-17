@@ -35,7 +35,7 @@ public class BojIngestionService {
      * </ol>
      */
     @Transactional
-    public void ingest(IngestProblemAndJudgmentCommand command) {
+    public void ingest(CreateProblemAndJudgmentCommand command) {
         // 1. 문제 엔티티 확보
         Problem problem = problemService.getOrCreateProblem(CreateProblemCommand.from(command, Platform.BOJ));
         // 2. 채점 상세 기록 저장

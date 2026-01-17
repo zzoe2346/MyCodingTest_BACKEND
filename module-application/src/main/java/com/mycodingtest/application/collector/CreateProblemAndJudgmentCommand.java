@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record IngestProblemAndJudgmentCommand(
+public record CreateProblemAndJudgmentCommand(
         Integer problemNumber,
         String problemTitle,
         Long submissionId,
