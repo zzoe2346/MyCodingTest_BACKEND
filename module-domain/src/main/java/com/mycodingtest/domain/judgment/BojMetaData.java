@@ -10,14 +10,12 @@ import java.time.LocalDateTime;
  * <h3>백준 채점 메타데이터 (BojMetaData)</h3>
  * <p>
  * 백준 온라인 저지(BOJ) 플랫폼에 특화된 채점 상세 정보를 담는 Value Object입니다.
- * {@link MetaData} 인터페이스를 구현하며, Judgment 엔티티의 JSON 컬럼에 저장됩니다.
+ * {@link MetaData} 인터페이스를 구현하며, {@link Judgment} 엔티티의 JSON 컬럼에 저장됩니다.
  * </p>
  */
 @Builder
 @Getter
 public class BojMetaData implements MetaData {
-
-    String type = Platform.BOJ.name();
 
     /**
      * 플랫폼에서의 제출 번호
@@ -57,8 +55,5 @@ public class BojMetaData implements MetaData {
     /**
      * 제출 일시
      */
-//    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH:mm:ss")
     LocalDateTime submittedAt;
-
-    //소스도?
 }
