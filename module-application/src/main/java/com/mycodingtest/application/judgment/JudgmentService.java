@@ -28,7 +28,7 @@ public class JudgmentService {
      * 특정 문제와 사용자에 대한 모든 채점 기록을 최신순으로 조회합니다.
      */
     @Transactional(readOnly = true)
-    public List<Judgment> readJudgments(Long problemId, Long userId) {
+    public List<Judgment> getJudgments(Long problemId, Long userId) {
         return judgmentRepository.findByProblemIdAndUserId(problemId, userId);
     }
 

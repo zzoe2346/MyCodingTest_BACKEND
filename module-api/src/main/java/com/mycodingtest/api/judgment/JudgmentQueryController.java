@@ -26,7 +26,7 @@ public class JudgmentQueryController {
     public ResponseEntity<List<JudgmentResponse>> getJudgmentResultList(@RequestParam Long problemId,
                                                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(
-                judgmentService.readJudgments(problemId, userDetails.getUserId())
+                judgmentService.getJudgments(problemId, userDetails.getUserId())
                         .stream()
                         .map(JudgmentResponse::from)
                         .toList());
