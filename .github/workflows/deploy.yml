@@ -1,73 +1,73 @@
-name: Deploy Spring to Lightsail Instance
-
-on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'README.md'
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Make properties with secrets
-        run: |
-          mkdir -p ./src/main/resources
-          touch ./src/main/resources/application.properties
-          echo "${{ secrets.PROD_PROPERTIES }}" > ./src/main/resources/application.properties
-
-      - name: Make properties for test
-        run: |
-          mkdir -p ./src/test/resources
-          touch ./src/test/resources/application.properties
-          echo "${{ secrets.TEST_PROPERTIES }}" > ./src/test/resources/application.properties
-
-      - name: Set up Java 21
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Run Integration Test !!!
-        run: ./gradlew integrationTest
-
-      - name: Make API Document
-        run: ./gradlew asciidoctor
-
-      - name: Copy API Document
-        run: ./gradlew copyDocument
-
-      - name: Build the Spring Application with Gradle
-        run: ./gradlew build -x test  # Gradle 빌드 실행 (테스트 제외)
-
-      - name: Change jar file name
-        run: mv ./build/libs/*SNAPSHOT.jar ./my-coding-test.jar
-
-      - name: Transfer using by SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.INSTANCE_PUBLIC_IP}}
-          username: ${{ secrets.INSTANCE_USERNAME }}
-          key: ${{ secrets.INSTANCE_SSH_KEY }}
-          source: my-coding-test.jar
-          target: /home/ubuntu/my-coding-test/temp
-
-      - name: executing remote ssh commands
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.INSTANCE_PUBLIC_IP}}
-          username: ${{ secrets.INSTANCE_USERNAME }}
-          key: ${{ secrets.INSTANCE_SSH_KEY }}
-          script: |
-            sudo fuser -k -n tcp 8080 || true
-            rm -rf /home/ubuntu/my-coding-test/current
-            mkdir /home/ubuntu/my-coding-test/current
-            mv /home/ubuntu/my-coding-test/temp/my-coding-test.jar /home/ubuntu/my-coding-test/current/my-coding-test.jar
-            cd /home/ubuntu/my-coding-test/current
-            nohup java -Duser.timezone=Asia/Seoul -jar my-coding-test.jar > ./output.log 2>&1 &
-            rm -rf /home/ubuntu/my-coding-test/temp
+#name: Deploy Spring to Lightsail Instance
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#    paths-ignore:
+#      - 'README.md'
+#
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Make properties with secrets
+#        run: |
+#          mkdir -p ./src/main/resources
+#          touch ./src/main/resources/application.properties
+#          echo "${{ secrets.PROD_PROPERTIES }}" > ./src/main/resources/application.properties
+#
+#      - name: Make properties for test
+#        run: |
+#          mkdir -p ./src/test/resources
+#          touch ./src/test/resources/application.properties
+#          echo "${{ secrets.TEST_PROPERTIES }}" > ./src/test/resources/application.properties
+#
+#      - name: Set up Java 21
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '21'
+#
+#      - name: Run Integration Test !!!
+#        run: ./gradlew integrationTest
+#
+#      - name: Make API Document
+#        run: ./gradlew asciidoctor
+#
+#      - name: Copy API Document
+#        run: ./gradlew copyDocument
+#
+#      - name: Build the Spring Application with Gradle
+#        run: ./gradlew build -x test  # Gradle 빌드 실행 (테스트 제외)
+#
+#      - name: Change jar file name
+#        run: mv ./build/libs/*SNAPSHOT.jar ./my-coding-test.jar
+#
+#      - name: Transfer using by SCP
+#        uses: appleboy/scp-action@v0.1.7
+#        with:
+#          host: ${{ secrets.INSTANCE_PUBLIC_IP}}
+#          username: ${{ secrets.INSTANCE_USERNAME }}
+#          key: ${{ secrets.INSTANCE_SSH_KEY }}
+#          source: my-coding-test.jar
+#          target: /home/ubuntu/my-coding-test/temp
+#
+#      - name: executing remote ssh commands
+#        uses: appleboy/ssh-action@v1.2.0
+#        with:
+#          host: ${{ secrets.INSTANCE_PUBLIC_IP}}
+#          username: ${{ secrets.INSTANCE_USERNAME }}
+#          key: ${{ secrets.INSTANCE_SSH_KEY }}
+#          script: |
+#            sudo fuser -k -n tcp 8080 || true
+#            rm -rf /home/ubuntu/my-coding-test/current
+#            mkdir /home/ubuntu/my-coding-test/current
+#            mv /home/ubuntu/my-coding-test/temp/my-coding-test.jar /home/ubuntu/my-coding-test/current/my-coding-test.jar
+#            cd /home/ubuntu/my-coding-test/current
+#            nohup java -Duser.timezone=Asia/Seoul -jar my-coding-test.jar > ./output.log 2>&1 &
+#            rm -rf /home/ubuntu/my-coding-test/temp
