@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="#data-collection-&-review-pipeline">Data Collection & Review Pipeline</a> •
+  <a href="#data-collection--review-pipeline">Data Collection & Review Pipeline</a> •
   <a href="#multi-module-architecture">Multi-Module Architecture</a> •
   <a href="#module-structure">Module Structure</a> •
   <a href="#domain-model">Domain Model</a> •
