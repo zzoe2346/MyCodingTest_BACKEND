@@ -24,13 +24,7 @@ public class UserService {
     @Transactional
     public User getOrCreateUser(String name, String email, String picture, String provider, String oauthId) {
         return userRepository.save(
-                User.builder()
-                        .name(name)
-                        .email(email)
-                        .picture(picture)
-                        .oauthProvider(provider)
-                        .oauthId(oauthId)
-                        .build());
+                User.from(name, email, picture, provider, oauthId));
     }
 
 }

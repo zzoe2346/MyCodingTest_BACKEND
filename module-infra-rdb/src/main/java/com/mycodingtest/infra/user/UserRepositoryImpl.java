@@ -12,17 +12,16 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final JpaUserRepository repository;
-    private final UserMapper mapper;
 
     @Override
     public Optional<User> findUser(String oauthProvider, String oauthId) {
         return repository.findByOauthProviderAndOauthId(oauthProvider, oauthId)
-                .map(mapper::toDomain);
+                .map(UserEntity::toDomain);
     }
 
     @Override
     public User save(User user) {
-        return mapper.toDomain(repository.save(mapper.toEntity(user)));
+        return repository.save(UserEntity.from(user)).toDomain();
     }
 
 }

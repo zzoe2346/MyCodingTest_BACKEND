@@ -1,5 +1,6 @@
 package com.mycodingtest.domain.user;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,7 +18,7 @@ import lombok.Getter;
  *
  * @see UserRepository
  */
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @Getter
 public class User {
 
@@ -56,4 +57,56 @@ public class User {
      * </p>
      */
     private String oauthId;
+
+    /**
+     * OAuth 로그인을 통해 새로운 사용자를 생성합니다.
+     *
+     * @param name          사용자 이름
+     * @param email         이메일
+     * @param picture       프로필 이미지 URL
+     * @param oauthProvider OAuth 제공자 (예: "google", "kakao")
+     * @param oauthId       제공자별 고유 ID
+     * @return 생성된 User 인스턴스
+     * @throws IllegalArgumentException 필수 값이 누락된 경우
+     */
+    public static User from(String name, String email, String picture, String oauthProvider, String oauthId) {
+        if (oauthProvider == null || oauthProvider.isBlank()) {
+            throw new IllegalArgumentException("OAuth 제공자는 필수입니다");
+        }
+        if (oauthId == null || oauthId.isBlank()) {
+            throw new IllegalArgumentException("OAuth ID는 필수입니다");
+        }
+        return User.builder()
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .oauthProvider(oauthProvider)
+                .oauthId(oauthId)
+                .build();
+    }
+
+    /**
+     * 영속성 계층에서 조회된 데이터로 User를 복원합니다.
+     * <p>
+     * 인프라 계층의 Mapper에서 사용됩니다.
+     * </p>
+     *
+     * @param id            시스템 내부 ID
+     * @param name          사용자 이름
+     * @param email         이메일
+     * @param picture       프로필 이미지 URL
+     * @param oauthProvider OAuth 제공자
+     * @param oauthId       제공자별 고유 ID
+     * @return 복원된 User 인스턴스
+     */
+    public static User from(Long id, String name, String email, String picture, String oauthProvider, String oauthId) {
+        return User.builder()
+                .id(id)
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .oauthProvider(oauthProvider)
+                .oauthId(oauthId)
+                .build();
+    }
 }
