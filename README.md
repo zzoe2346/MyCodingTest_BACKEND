@@ -16,6 +16,7 @@
 </p>
 
 <p align="center">
+  <a href="#data-collection-&-review-pipeline">Data Collection & Review Pipeline</a> •
   <a href="#multi-module-architecture">Multi-Module Architecture</a> •
   <a href="#module-structure">Module Structure</a> •
   <a href="#domain-model">Domain Model</a> •
@@ -24,6 +25,12 @@
 </p>
 
 ---
+## Data Collection & Review Pipeline
+<p align="center">
+
+<img height="500" alt="image" src="https://github.com/user-attachments/assets/18a2daf3-e2fa-45ab-b8eb-fd39fc3d33e0" />
+</p>
+
 
 ## Multi-Module Architecture
 
