@@ -23,7 +23,7 @@ public class MetaDataConverter implements AttributeConverter<MetaData, String> {
     @Override
     public MetaData convertToEntityAttribute(String dbData) {
         try {
-            if (dbData.contains("BOJ")) return mapper.readValue(dbData, BojMetaData.class);
+            if (dbData.contains("baekjoonId")) return mapper.readValue(dbData, BojMetaData.class);
             // if (dbData.contains("PROG")) return mapper.readValue(dbData, PgsMetaData.class);
             return null;
         } catch (Exception e) {

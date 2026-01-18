@@ -1,8 +1,10 @@
 package com.mycodingtest.domain.judgment;
 
 import com.mycodingtest.domain.common.Platform;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +16,10 @@ import java.time.LocalDateTime;
  * </p>
  */
 @Builder
+@AllArgsConstructor
 @Getter
+@NoArgsConstructor
 public class BojMetaData implements MetaData {
-
     /**
      * 플랫폼에서의 제출 번호
      */
