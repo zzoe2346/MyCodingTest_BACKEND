@@ -43,18 +43,52 @@ public class ReviewEntity extends BaseEntity {
     private LocalDateTime recentSubmitAt;
     private String recentResult;
 
-    public void apply(Review review) {
-        this.problemId = review.getProblemId();
-        this.userId = review.getUserId();
-        this.content = review.getContent();
-        this.difficultyLevel = review.getDifficultyLevel();
-        this.importanceLevel = review.getImportanceLevel();
-        this.revisedCode = review.getRevisedCode();
-        this.reviewedAt = review.getReviewedAt();
-        this.status = review.getStatus();
-        this.favorited = review.isFavorited();
-        this.recentSubmitAt = review.getRecentSubmitAt();
-        this.recentResult = review.getRecentResult();
+    public static ReviewEntity from(Review domain) {
+        return ReviewEntity.builder()
+                .problemId(domain.getProblemId())
+                .userId(domain.getUserId())
+                .content(domain.getContent())
+                .difficultyLevel(domain.getDifficultyLevel())
+                .importanceLevel(domain.getImportanceLevel())
+                .revisedCode(domain.getRevisedCode())
+                .reviewedAt(domain.getReviewedAt())
+                .status(domain.getStatus())
+                .favorited(domain.isFavorited())
+                .recentSubmitAt(domain.getRecentSubmitAt())
+                .recentResult(domain.getRecentResult())
+                .build();
+    }
+
+    public void update(Review domain) {
+        this.problemId = domain.getProblemId();
+        this.userId = domain.getUserId();
+        this.content = domain.getContent();
+        this.difficultyLevel = domain.getDifficultyLevel();
+        this.importanceLevel = domain.getImportanceLevel();
+        this.revisedCode = domain.getRevisedCode();
+        this.reviewedAt = domain.getReviewedAt();
+        this.status = domain.getStatus();
+        this.favorited = domain.isFavorited();
+        this.recentSubmitAt = domain.getRecentSubmitAt();
+        this.recentResult = domain.getRecentResult();
+    }
+
+    public Review toDomain() {
+        return Review.from(
+                this.getId(),
+                this.problemId,
+                this.userId,
+                this.content,
+                this.difficultyLevel,
+                this.importanceLevel,
+                this.revisedCode,
+                this.reviewedAt,
+                this.status,
+                this.favorited,
+                this.reviewed,
+                this.recentSubmitAt,
+                this.recentResult
+        );
     }
 
 }

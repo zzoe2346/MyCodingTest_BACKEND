@@ -16,25 +16,24 @@ import java.util.Optional;
 public class ReviewRepositoryImpl implements ReviewRepository {
 
     private final JpaReviewRepository repository;
-    private final ReviewMapper mapper;
 
     @Override
     public Review create(Review review) {
-        ReviewEntity saved = repository.save(mapper.toEntity(review));
-        return mapper.toDomain(saved);
+        ReviewEntity saved = repository.save(ReviewEntity.from(review));
+        return saved.toDomain();
     }
 
     @Override
     public Review update(Review review) {
         ReviewEntity entity = repository.findById(review.getId())
                 .orElseThrow();
-        entity.apply(review);
-        return mapper.toDomain(repository.save(entity));
+        entity.update(review);
+        return entity.toDomain();
     }
 
     @Override
     public Optional<Review> findById(Long id) {
-        return repository.findById(id).map(mapper::toDomain);
+        return repository.findById(id).map(ReviewEntity::toDomain);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     @Override
     public Optional<Review> findByProblemIdAndUserId(Long problemId, Long userId) {
         return repository.findByProblemIdAndUserId(problemId, userId)
-                .map(mapper::toDomain);
+                .map(ReviewEntity::toDomain);
     }
 
     @Override
@@ -54,7 +53,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         Page<ReviewEntity> entityPage = repository.findAllByUserIdAndStatus(userId, filter, Pageable.ofSize(size).withPage(page));
 
         return new DomainPage<>(
-                entityPage.getContent().stream().map(mapper::toDomain).toList(),
+                entityPage.getContent().stream().map(ReviewEntity::toDomain).toList(),
                 entityPage.getTotalElements(),
                 entityPage.getTotalPages(),
                 entityPage.getNumber(),

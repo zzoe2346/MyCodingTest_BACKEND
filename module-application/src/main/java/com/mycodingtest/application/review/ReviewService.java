@@ -71,13 +71,12 @@ public class ReviewService {
                     reviewRepository.update(existingReview);
                 });
         reviewRepository.create(
-                Review.builder()
-                        .problemId(command.problemId())
-                        .userId(command.userId())
-                        .revisedCode(command.sourceCode())
-                        .recentSubmitAt(command.submittedAt())
-                        .recentResult(command.resultText())
-                        .build());
+                Review.from(
+                        command.problemId(),
+                        command.userId(),
+                        command.sourceCode(),
+                        command.submittedAt(),
+                        command.resultText()));
     }
 
     @Transactional

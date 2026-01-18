@@ -58,6 +58,7 @@ public class Review {
      * 초기값 -1은 '평가되지 않음'을 의미합니다.
      * </p>
      */
+    @Builder.Default
     private Integer difficultyLevel = -1;
 
     /**
@@ -66,6 +67,7 @@ public class Review {
      * 초기값 -1은 '설정되지 않음'을 의미합니다.
      * </p>
      */
+    @Builder.Default
     private Integer importanceLevel = -1;
 
     /**
@@ -111,6 +113,54 @@ public class Review {
      * 가장 최근 채점 결과 텍스트 (예: "맞았습니다!!")
      */
     private String recentResult;
+
+    /**
+     * 새로운 채점 결과에 대한 리뷰를 생성합니다.
+     *
+     * @param problemId   문제 ID
+     * @param userId      사용자 ID
+     * @param sourceCode  채점 소스 코드 (초기 revisedCode로 설정)
+     * @param submittedAt 채점 제출 시각
+     * @param resultText  채점 결과 텍스트
+     * @return 생성된 Review 인스턴스
+     * @throws IllegalArgumentException 필수 값이 누락된 경우
+     */
+    public static Review from(Long problemId, Long userId, String sourceCode, LocalDateTime submittedAt, String resultText) {
+        if (problemId == null) {
+            throw new IllegalArgumentException("문제 ID는 필수입니다");
+        }
+        if (userId == null) {
+            throw new IllegalArgumentException("사용자 ID는 필수입니다");
+        }
+        return Review.builder()
+                .problemId(problemId)
+                .userId(userId)
+                .revisedCode(sourceCode)
+                .recentSubmitAt(submittedAt)
+                .recentResult(resultText)
+                .status(ReviewStatus.TO_DO)
+                .reviewed(false)
+                .favorited(false)
+                .build();
+    }
+
+    public static Review from(Long id, Long problemId, Long userId, String content, Integer difficultyLevel, Integer importanceLevel, String revisedCode, LocalDateTime reviewedAt, ReviewStatus status, boolean favorited, boolean reviewed, LocalDateTime recentSubmitAt, String recentResult) {
+        return Review.builder()
+                .id(id)
+                .problemId(problemId)
+                .userId(userId)
+                .content(content)
+                .difficultyLevel(difficultyLevel)
+                .importanceLevel(importanceLevel)
+                .revisedCode(revisedCode)
+                .reviewedAt(reviewedAt)
+                .status(status)
+                .favorited(favorited)
+                .reviewed(reviewed)
+                .recentSubmitAt(recentSubmitAt)
+                .recentResult(recentResult)
+                .build();
+    }
 
     /**
      * 리뷰의 소유권을 검증합니다.
