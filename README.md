@@ -35,6 +35,7 @@
 ## Multi-Module Architecture
 
 본 프로젝트는 **DDD(Domain-Driven Design)** 와 **계층형 아키텍처**를 적용한 멀티 모듈 구조로 설계되었습니다.
+> [⭐️ 리팩토링 과정에대한 글](https://jeongseonghun.com/posts/Dev-refactoring-mycodingtest-with-ddd-and-multi-module)
 <p align="center">
 <img height="600" alt="image" src="https://github.com/user-attachments/assets/57ba0132-5928-44d1-adc3-296f68126d62" />
 </p>
