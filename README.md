@@ -72,7 +72,7 @@
 
 ```
 application/
-├── collector/       # 데이터 수집 서비스
+├── collector/       # 데이터 수집 서비스 (Orchestration)
 ├── judgment/        # 채점 처리 서비스
 ├── problem/         # 문제 정보 서비스
 ├── review/          # 리뷰 관리 서비스
@@ -90,18 +90,19 @@ application/
 ```
 domain/
 ├── common/          # 공통 유틸리티
-├── judgment/        # 채점 도메인
-│   ├── Judgment.java           # Entity
+├── judgment/        # ⭐️채점 도메인
+│   ├── Judgment.java           # Entity (Aggregate Root)
+│   ├── SubmissionInfo.java     # Value Object (제출 정보 그룹화)
 │   ├── JudgmentRepository.java # Repository Interface
 │   ├── JudgmentStatus.java     # Enum
-│   └── MetaData.java           # Value Object
+│   └── MetaData.java           # Value Object (플랫폼별 메타데이터, SubmissionInfo 소속)
 ├── problem/         # 문제 도메인
 │   ├── Problem.java
 │   └── ProblemRepository.java
-├── review/          # 리뷰 도메인
-│   ├── Review.java
-│   ├── ReviewRepository.java
-│   └── ReviewStatus.java
+├── review/          # ⭐️리뷰 도메인
+│   ├── Review.java             # Entity (Aggregate Root)
+│   ├── ReviewRepository.java   # Repository Interface
+│   └── ReviewStatus.java       # Enum
 └── user/            # 사용자 도메인
     ├── User.java
     └── UserRepository.java
@@ -178,11 +179,7 @@ erDiagram
         Long id PK
         Long problemId FK
         Long userId FK
-        Long submissionId UK
-        JudgmentStatus status
-        Platform platform
-        MetaData metaData
-        String sourceCode
+        SubmissionInfo submissionInfo "VO (submissionId, status, platform, metaData, sourceCode)"
         LocalDateTime createdAt
         LocalDateTime updatedAt
     }
