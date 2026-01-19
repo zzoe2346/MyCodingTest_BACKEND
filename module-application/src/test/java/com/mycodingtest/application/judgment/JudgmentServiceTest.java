@@ -7,6 +7,7 @@ import com.mycodingtest.domain.judgment.BojMetaData;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentRepository;
 import com.mycodingtest.domain.judgment.JudgmentStatus;
+import com.mycodingtest.domain.judgment.SubmissionInfo;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,9 +41,12 @@ class JudgmentServiceTest {
             // given
             Long problemId = 1000L;
             Long userId = 1L;
+            SubmissionInfo info1 = SubmissionInfo.from(123L, Platform.BOJ, JudgmentStatus.SUCCESS, null, "code1");
+            SubmissionInfo info2 = SubmissionInfo.from(124L, Platform.BOJ, JudgmentStatus.FAIL, null, "code2");
+
             List<Judgment> expectedJudgments = List.of(
-                    Judgment.from( problemId, userId, 123L, JudgmentStatus.SUCCESS, Platform.BOJ, null, "code1"),
-                    Judgment.from( problemId, userId, 124L, JudgmentStatus.FAIL, Platform.BOJ, null, "code2"));
+                    Judgment.from(problemId, userId, info1),
+                    Judgment.from(problemId, userId, info2));
             given(repository.findByProblemIdAndUserId(problemId, userId)).willReturn(expectedJudgments);
 
             // when
@@ -108,14 +112,14 @@ class JudgmentServiceTest {
                     .userId(1L)
                     .build();
 
-            Judgment savedJudgment = Judgment.from(
-                     1000L,
-                    1L,
-                    12345L,
-                    JudgmentStatus.SUCCESS,
-                    Platform.BOJ,
-                    null,
-                    "public class Main {}");
+            SubmissionInfo submissionInfo = SubmissionInfo.from(12345L, Platform.BOJ, JudgmentStatus.SUCCESS, null, "public class Main {}");
+
+            Judgment savedJudgment = Judgment.builder()
+                    .id(1L)
+                    .problemId(1000L)
+                    .userId(1L)
+                    .submissionInfo(submissionInfo)
+                    .build();
 
             given(repository.save(any(Judgment.class))).willReturn(savedJudgment);
 
@@ -124,15 +128,15 @@ class JudgmentServiceTest {
 
             // then
             assertThat(result.getId()).isEqualTo(1L);
-            assertThat(result.getSubmissionId()).isEqualTo(12345L);
+            assertThat(result.getSubmissionInfo().getSubmissionId()).isEqualTo(12345L);
 
             ArgumentCaptor<Judgment> captor = ArgumentCaptor.forClass(Judgment.class);
             verify(repository).save(captor.capture());
 
             Judgment capturedJudgment = captor.getValue();
-            assertThat(capturedJudgment.getPlatform()).isEqualTo(Platform.BOJ);
-            assertThat(capturedJudgment.getSourceCode()).isEqualTo("public class Main {}");
-            assertThat(capturedJudgment.getMetaData()).isInstanceOf(BojMetaData.class);
+            assertThat(capturedJudgment.getSubmissionInfo().getPlatform()).isEqualTo(Platform.BOJ);
+            assertThat(capturedJudgment.getSubmissionInfo().getSourceCode()).isEqualTo("public class Main {}");
+            assertThat(capturedJudgment.getSubmissionInfo().getMetaData()).isInstanceOf(BojMetaData.class);
         }
     }
 

@@ -2,6 +2,7 @@ package com.mycodingtest.infra.judgment;
 
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.Judgment;
+import com.mycodingtest.domain.judgment.SubmissionInfo;
 import com.mycodingtest.domain.judgment.JudgmentStatus;
 import com.mycodingtest.domain.judgment.MetaData;
 import com.mycodingtest.infra.BaseEntity;
@@ -34,23 +35,20 @@ public class JudgmentEntity extends BaseEntity {
                 .id(getId())
                 .problemId(this.problemId)
                 .userId(userId)
-                .submissionId(submissionId)
-                .status(status)
-                .platform(platform)
-                .metaData(metaData)
-                .sourceCode(sourceCode)
+                .submissionInfo(SubmissionInfo.from(submissionId, platform, status, metaData, sourceCode))
                 .build();
     }
 
     public static JudgmentEntity from(Judgment domain) {
+        SubmissionInfo info = domain.getSubmissionInfo();
         return JudgmentEntity.builder()
                 .problemId(domain.getProblemId())
                 .userId(domain.getUserId())
-                .submissionId(domain.getSubmissionId())
-                .status(domain.getStatus())
-                .platform(domain.getPlatform())
-                .metaData(domain.getMetaData())
-                .sourceCode(domain.getSourceCode())
+                .submissionId(info.getSubmissionId())
+                .status(info.getStatus())
+                .platform(info.getPlatform())
+                .metaData(info.getMetaData())
+                .sourceCode(info.getSourceCode())
                 .build();
     }
 

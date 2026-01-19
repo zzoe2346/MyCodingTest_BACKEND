@@ -6,6 +6,7 @@ import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.BojMetaData;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentRepository;
+import com.mycodingtest.domain.judgment.SubmissionInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,15 +60,16 @@ public class JudgmentService {
                 .submittedAt(command.submittedAt())
                 .build();
 
-        Judgment judgment = Judgment.from(
+        return judgmentRepository.save(Judgment.from(
                 command.problemId(),
                 command.userId(),
-                command.submissionId(),
-                Platform.BOJ.toStatus(command.resultText()),
-                Platform.BOJ,
-                metaData,
-                command.sourceCode());
-        return judgmentRepository.save(judgment);
+                SubmissionInfo.from(
+                        command.submissionId(),
+                        Platform.BOJ,
+                        Platform.BOJ.toStatus(command.resultText()),
+                        metaData,
+                        command.sourceCode()
+                )));
     }
 
     /**

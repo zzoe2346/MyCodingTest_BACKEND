@@ -33,75 +33,35 @@ public class Judgment {
     private Long userId;
 
     /**
-     * <b>외부 플랫폼의 제출 식별자</b>
-     * <p>
-     * 백준(BOJ) 등의 플랫폼에서 부여한 고유 제출 번호입니다.
-     * 동일한 제출 내역이 중복으로 수집되는 것을 방지하기 위한 식별자로 사용됩니다.
-     * </p>
+     * 제출 정보 (플랫폼, 결과, 메타데이터, 소스코드 등)
      */
-    private Long submissionId;
-
-    /**
-     * 채점 결과 상태 (성공, 실패 등)
-     */
-    private JudgmentStatus status;
-
-    /**
-     * 채점이 이루어진 원본 플랫폼 정보
-     */
-    private Platform platform;
-
-    /**
-     * 플랫폼별 특화 메타데이터
-     * <p>
-     * 플랫폼마다 상이한 채점 정보(메모리, 시간, 언어 버전 등)를 유연하게 저장하기 위해 반정규화된 JSON 형태로 관리합니다.
-     * </p>
-     */
-    private MetaData metaData;
-
-    /**
-     * 채점한 소스 코드
-     */
-    private String sourceCode;
+    private SubmissionInfo submissionInfo;
 
     /**
      * 새로운 채점 기록을 생성합니다.
      *
-     * @param problemId    문제 ID
-     * @param userId       사용자 ID
-     * @param submissionId 외부 플랫폼 제출 ID
-     * @param status       채점 결과 상태
-     * @param platform     플랫폼
-     * @param metaData     플랫폼별 메타데이터
-     * @param sourceCode   소스 코드
+     * @param problemId      문제 ID
+     * @param userId         사용자 ID
+     * @param submissionInfo 제출 정보
      * @return 생성된 Judgment 인스턴스
      * @throws IllegalArgumentException 필수 값이 누락된 경우
      */
     public static Judgment from(Long problemId,
                                 Long userId,
-                                Long submissionId,
-                                JudgmentStatus status,
-                                Platform platform,
-                                MetaData metaData,
-                                String sourceCode) {
+                                SubmissionInfo submissionInfo) {
         if (problemId == null) {
             throw new IllegalArgumentException("문제 ID는 필수입니다");
         }
         if (userId == null) {
             throw new IllegalArgumentException("사용자 ID는 필수입니다");
         }
-        if (submissionId == null) {
-            throw new IllegalArgumentException("제출 ID는 필수입니다");
+        if (submissionInfo == null) {
+            throw new IllegalArgumentException("제출 정보는 필수입니다");
         }
         return Judgment.builder()
                 .problemId(problemId)
                 .userId(userId)
-                .submissionId(submissionId)
-                .status(status)
-                .platform(platform)
-                .metaData(metaData)
-                .sourceCode(sourceCode)
+                .submissionInfo(submissionInfo)
                 .build();
     }
-
 }
