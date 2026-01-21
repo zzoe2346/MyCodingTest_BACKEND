@@ -1,15 +1,14 @@
 package com.mycodingtest.application.collector;
 
 import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
-import com.mycodingtest.application.judgment.query.JudgmentQueryService;
-import com.mycodingtest.domain.common.Platform;
-import com.mycodingtest.domain.problem.Problem;
-import com.mycodingtest.application.judgment.command.JudgmentCommandService;
 import com.mycodingtest.application.judgment.command.CreateBojJudgmentCommand;
-import com.mycodingtest.application.problem.ProblemService;
-import com.mycodingtest.application.problem.dto.CreateProblemCommand;
+import com.mycodingtest.application.judgment.command.JudgmentCommandService;
+import com.mycodingtest.application.judgment.query.JudgmentQueryService;
+import com.mycodingtest.application.problem.command.ProblemCommandService;
+import com.mycodingtest.application.problem.command.SyncProblemCommand;
 import com.mycodingtest.application.review.ReviewService;
 import com.mycodingtest.application.review.dto.CreateReviewCommand;
+import com.mycodingtest.domain.common.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +25,7 @@ public class BojIngestionService {
 
     private final JudgmentCommandService judgmentCommandService;
     private final JudgmentQueryService judgmentQueryService;
-    private final ProblemService problemService;
+    private final ProblemCommandService problemCommandService;
     private final ReviewService reviewService;
 
     /**
@@ -40,11 +39,11 @@ public class BojIngestionService {
     @Transactional
     public void ingest(CreateProblemAndJudgmentCommand command) {
         // 1. 문제 엔티티 확보
-        Problem problem = problemService.getOrCreateProblem(CreateProblemCommand.from(command, Platform.BOJ));
+        Long syncedProblemId = problemCommandService.syncProblem(SyncProblemCommand.from(command, Platform.BOJ));
         // 2. 채점 상세 기록 저장
-        judgmentCommandService.createJudgmentFromBoj(CreateBojJudgmentCommand.from(command, problem.getId()));
+        judgmentCommandService.createJudgmentFromBoj(CreateBojJudgmentCommand.from(command, syncedProblemId));
         // 3. 리뷰 오답 노트 생성
-        reviewService.createReview(CreateReviewCommand.from(command, problem.getId()));
+        reviewService.createReview(CreateReviewCommand.from(command, syncedProblemId));
     }
 
     /**

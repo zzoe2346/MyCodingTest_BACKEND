@@ -1,6 +1,5 @@
-package com.mycodingtest.application.problem;
+package com.mycodingtest.application.problem.command;
 
-import com.mycodingtest.application.problem.dto.CreateProblemCommand;
 import com.mycodingtest.domain.problem.Problem;
 import com.mycodingtest.domain.problem.ProblemRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <h3>문제 데이터 서비스 (ProblemService)</h3>
+ * <h3>문제 데이터 서비스 (ProblemCommandService)</h3>
  * <p>
  * 플랫폼별 알고리즘 문제 정보를 관리합니다.
  * </p>
  */
 @Service
 @RequiredArgsConstructor
-public class ProblemService {
+public class ProblemCommandService {
 
     private final ProblemRepository problemRepository;
 
@@ -27,13 +26,14 @@ public class ProblemService {
      * </p>
      */
     @Transactional
-    public Problem getOrCreateProblem(CreateProblemCommand command) {
+    public Long syncProblem(SyncProblemCommand command) {
         return problemRepository.findProblemByproblemNumberAndPlatform(command.problemNumber(), command.platform())
                 .orElseGet(() -> problemRepository.save(
                         Problem.from(
                                 command.problemNumber(),
                                 command.problemTitle(),
-                                command.platform())));
+                                command.platform())))
+                .getId();
     }
 
 }
