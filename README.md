@@ -25,21 +25,23 @@
 </p>
 
 ---
+
 ## Data Collection & Review Pipeline
+
 <p align="center">
 
 <img height="500" alt="image" src="https://github.com/user-attachments/assets/18a2daf3-e2fa-45ab-b8eb-fd39fc3d33e0" />
 </p>
 
-
 ## Multi-Module Architecture
 
 본 프로젝트는 **DDD(Domain-Driven Design)** 와 **계층형 아키텍처**를 적용한 멀티 모듈 구조로 설계되었습니다.
+
 > [⭐️ 리팩토링 과정에대한 글](https://jeongseonghun.com/posts/Dev-refactoring-mycodingtest-with-ddd-and-multi-module)
+
 <p align="center">
 <img height="600" alt="image" src="https://github.com/user-attachments/assets/57ba0132-5928-44d1-adc3-296f68126d62" />
 </p>
-
 
 ### 의존성 규칙
 
@@ -55,12 +57,18 @@
 
 > Presentation Layer - REST API 엔드포인트
 
-| 패키지       | 설명                        |
-| ------------ | --------------------------- |
-| `auth/`      | 인증 관련 API               |
-| `collector/` | 외부 플랫폼 데이터 수집 API |
-| `judgment/`  | 채점 결과 조회 API          |
-| `review/`    | 오답노트 CRUD API           |
+```
+api/
+├── SwaggerConfig.java           # Swagger API 문서 설정
+├── auth/                        # 인증 관련 API
+├── collector/                   # 외부 플랫폼 데이터 수집 API
+├── judgment/                    # 채점 결과 조회 API
+└── review/                      # 오답노트 CRUD API
+    # 각 패키지 내부 구성은 다음과 같습니다.
+    ├── ReviewCommandController.java 
+    ├── ReviewQueryController.java
+    └── dto/
+```
 
 **Dependencies**: `module-application`, `module-domain`, `module-security`
 
@@ -68,15 +76,36 @@
 
 ### 📦 module-application
 
-> Application Layer - 비즈니스 로직의 응집 및 트랜잭션 경계 설정, 도메인 객체들을 조합하여 비즈니스 유스케이스를 완성함
+> Application Layer - 비즈니스 로직의 응집 및 트랜잭션 경계 설정, 도메인 객체들을 조합하여 비즈니스 유스케이스를 완성
 
 ```
 application/
-├── collector/       # 데이터 수집 서비스 (Orchestration)
-├── judgment/        # 채점 처리 서비스
-├── problem/         # 문제 정보 서비스
-├── review/          # 리뷰 관리 서비스
-└── user/            # 사용자 관리 서비스
+├── collector/                   # 데이터 수집 서비스(Orchestration)
+│   ├── BojIngestionService.java
+│   └── dto/
+├── judgment/                    # 채점 처리 서비스
+│   ├── command/
+│   │   ├── JudgmentCommandService.java
+│   │   ├── CreateBojJudgmentCommand.java
+│   │   └── DeleteJudgmentCommand.java
+│   ├── query/
+│   │   ├── JudgmentQueryService.java
+│   │   └── JudgmentInfo.java
+│   └── support/
+├── problem/                     # 문제 정보 서비스
+│   └── command/
+├── review/                      # 복습 관리 서비스
+│   ├── command/
+│   │   ├── ReviewCommandService.java
+│   │   ├── CreateReviewCommand.java
+│   │   └── UpdateReviewCommand.java
+│   └── query/
+│       ├── ReviewQueryService.java
+│       ├── ReviewInfo.java
+│       ├── ReviewSummary.java
+│       └── ReviewSummaryPage.java
+└── user/                        # 사용자 관리 서비스
+    └── UserService.java
 ```
 
 **Dependencies**: `module-domain`, `module-infra-rdb`
@@ -89,21 +118,28 @@ application/
 
 ```
 domain/
-├── common/          # 공통 유틸리티
-├── judgment/        # ⭐️채점 도메인
-│   ├── Judgment.java           # Entity (Aggregate Root)
-│   ├── SubmissionInfo.java     # Value Object (제출 정보 그룹화)
-│   ├── JudgmentRepository.java # Repository Interface
-│   ├── JudgmentStatus.java     # Enum
-│   └── MetaData.java           # Value Object (플랫폼별 메타데이터, SubmissionInfo 소속)
-├── problem/         # 문제 도메인
+├── common/                      # 공통
+│   ├── DomainPage.java          # 페이지네이션 VO
+│   ├── Platform.java            # 플랫폼 Enum
+│   └── exception/               # 도메인 예외
+│       ├── ResourceNotFoundException.java
+│       ├── InvalidOwnershipException.java
+│       └── NotOurUserException.java
+├── judgment/                    # ⭐️채점 도메인
+│   ├── Judgment.java            # Entity (Aggregate Root)
+│   ├── JudgmentRepository.java  # Repository Interface
+│   ├── JudgmentStatus.java      # Enum
+│   ├── SubmissionInfo.java      # Value Object (제출 정보)
+│   ├── MetaData.java            # Value Object (플랫폼별 메타데이터 인터페이스)
+│   └── BojMetaData.java         # BOJ 플랫폼 메타데이터 구현체
+├── problem/                     # 문제 도메인
 │   ├── Problem.java
 │   └── ProblemRepository.java
-├── review/          # ⭐️리뷰 도메인
-│   ├── Review.java             # Entity (Aggregate Root)
-│   ├── ReviewRepository.java   # Repository Interface
-│   └── ReviewStatus.java       # Enum
-└── user/            # 사용자 도메인
+├── review/                      # ⭐️리뷰 도메인
+│   ├── Review.java              # Entity (Aggregate Root)
+│   ├── ReviewRepository.java    # Repository Interface
+│   └── ReviewStatus.java        # Enum
+└── user/                        # 사용자 도메인
     ├── User.java
     └── UserRepository.java
 ```
@@ -118,15 +154,24 @@ domain/
 
 ```
 infra/
-├── BaseEntity.java              # 공통 엔티티
+├── BaseEntity.java              # 공통 엔티티 (생성/수정 시간)
 ├── judgment/
 │   ├── JudgmentEntity.java      # JPA Entity
 │   ├── JpaJudgmentRepository.java   # Spring Data JPA
 │   ├── JudgmentRepositoryImpl.java  # Repository 구현체
-│   └── JudgmentMapper.java      # Domain ↔ Entity 변환
+│   └── MetaDataConverter.java   # MetaData JSON 변환기
 ├── problem/
+│   ├── ProblemEntity.java
+│   ├── JpaProblemRepository.java
+│   └── ProblemRepositoryImpl.java
 ├── review/
+│   ├── ReviewEntity.java
+│   ├── JpaReviewRepository.java
+│   └── ReviewRepositoryImpl.java
 └── user/
+    ├── UserEntity.java
+    ├── JpaUserRepository.java
+    └── UserRepositoryImpl.java
 ```
 
 **Dependencies**: `module-domain`
