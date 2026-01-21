@@ -1,4 +1,4 @@
-package com.mycodingtest.application.review.dto;
+package com.mycodingtest.application.review.query;
 
 import com.mycodingtest.domain.problem.Problem;
 import com.mycodingtest.domain.review.Review;

@@ -6,8 +6,8 @@ import com.mycodingtest.application.judgment.command.JudgmentCommandService;
 import com.mycodingtest.application.judgment.query.JudgmentQueryService;
 import com.mycodingtest.application.problem.command.ProblemCommandService;
 import com.mycodingtest.application.problem.command.SyncProblemCommand;
-import com.mycodingtest.application.review.ReviewService;
-import com.mycodingtest.application.review.dto.CreateReviewCommand;
+import com.mycodingtest.application.review.command.CreateReviewCommand;
+import com.mycodingtest.application.review.command.ReviewCommandService;
 import com.mycodingtest.domain.common.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class BojIngestionService {
     private final JudgmentCommandService judgmentCommandService;
     private final JudgmentQueryService judgmentQueryService;
     private final ProblemCommandService problemCommandService;
-    private final ReviewService reviewService;
+    private final ReviewCommandService reviewCommandService;
 
     /**
      * <b>데이터 통합(Ingestion) 프로세스</b>
@@ -43,7 +43,7 @@ public class BojIngestionService {
         // 2. 채점 상세 기록 저장
         judgmentCommandService.createJudgmentFromBoj(CreateBojJudgmentCommand.from(command, syncedProblemId));
         // 3. 리뷰 오답 노트 생성
-        reviewService.createReview(CreateReviewCommand.from(command, syncedProblemId));
+        reviewCommandService.createReview(CreateReviewCommand.from(command, syncedProblemId));
     }
 
     /**

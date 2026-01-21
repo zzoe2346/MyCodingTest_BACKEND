@@ -1,4 +1,4 @@
-package com.mycodingtest.application.review.dto;
+package com.mycodingtest.application.review.command;
 
 import com.mycodingtest.domain.review.ReviewStatus;
 

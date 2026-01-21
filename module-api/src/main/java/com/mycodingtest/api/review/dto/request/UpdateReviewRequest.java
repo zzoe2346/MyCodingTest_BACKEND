@@ -1,6 +1,6 @@
 package com.mycodingtest.api.review.dto.request;
 
-import com.mycodingtest.application.review.dto.UpdateReviewCommand;
+import com.mycodingtest.application.review.command.UpdateReviewCommand;
 import com.mycodingtest.domain.review.ReviewStatus;
 
 public record UpdateReviewRequest(

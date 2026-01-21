@@ -1,9 +1,5 @@
-package com.mycodingtest.application.review;
+package com.mycodingtest.application.review.query;
 
-import com.mycodingtest.application.review.dto.CreateReviewCommand;
-import com.mycodingtest.application.review.dto.PagedResult;
-import com.mycodingtest.application.review.dto.ReviewSummary;
-import com.mycodingtest.application.review.dto.UpdateReviewCommand;
 import com.mycodingtest.domain.common.DomainPage;
 import com.mycodingtest.domain.common.exception.ResourceNotFoundException;
 import com.mycodingtest.domain.problem.Problem;
@@ -20,14 +16,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * <h3>리뷰 및 오답 노트 서비스 (ReviewService)</h3>
+ * <h3>리뷰 및 오답 노트 서비스 (ReviewQueryService)</h3>
  * <p>
  * 사용자의 학습 기록(Review)에 대한 상태 변경, 평가, 조회 등의 비즈니스 로직을 수행합니다.
  * </p>
  */
 @Service
 @RequiredArgsConstructor
-public class ReviewService {
+public class ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
     private final ProblemRepository problemRepository;
@@ -36,7 +32,7 @@ public class ReviewService {
      * 단건 리뷰 정보를 조회합니다. (소유권 검증 포함)
      */
     @Transactional(readOnly = true)
-    public Review getReview(Long reviewId, Long userId) {
+    public ReviewInfo getReview(Long reviewId, Long userId) {
         return getReviewAndValidateOwnership(reviewId, userId);
     }
 
@@ -51,54 +47,18 @@ public class ReviewService {
     /**
      * 공통 로직: 리뷰 존재 여부 확인 및 소유권 검증
      */
-    private Review getReviewAndValidateOwnership(Long reviewId, Long userId) {
+    private ReviewInfo getReviewAndValidateOwnership(Long reviewId, Long userId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(ResourceNotFoundException::new);
 
         review.validateOwnership(userId);
 
-        return review;
+        return ReviewInfo.from(review);
     }
 
-    /**
-     * 새로운 리뷰를 생성합니다. (수집 엔진에 의해 호출됨)
-     */
-    @Transactional
-    public void createReview(CreateReviewCommand command) {
-        reviewRepository.findByProblemIdAndUserId(command.problemId(), command.userId())
-                .ifPresent(existingReview -> {
-                    existingReview.onJudgmentCreated(command.submittedAt(), command.resultText());
-                    reviewRepository.update(existingReview);
-                });
-        reviewRepository.create(
-                Review.from(
-                        command.problemId(),
-                        command.userId(),
-                        command.sourceCode(),
-                        command.submittedAt(),
-                        command.resultText()));
-    }
-
-    @Transactional
-    public Review updateReview(UpdateReviewCommand command) {
-        Review review = reviewRepository.findById(command.reviewId())
-                .orElseThrow(ResourceNotFoundException::new);
-
-        review.validateOwnership(command.userId());
-
-        review.update(
-                command.isFavorite(),
-                command.difficultyLevel(),
-                command.importanceLevel(),
-                command.code(),
-                command.content(),
-                command.status());
-        reviewRepository.update(review);
-        return review;
-    }
 
     @Transactional(readOnly = true)
-    public PagedResult<ReviewSummary> getReviewSummaries(Long userId, int page, int size, ReviewStatus filter) {
+    public ReviewSummaryPage<ReviewSummary> getReviewSummaries(Long userId, int page, int size, ReviewStatus filter) {
         // 1. 리뷰 목록 페이징 조회
         DomainPage<Review> domainPage = reviewRepository.findAllByUserIdAndStatus(userId, filter, page, size);
         List<Review> reviews = domainPage.content();
@@ -114,6 +74,7 @@ public class ReviewService {
         List<ReviewSummary> reviewSummaries = reviews.stream()
                 .map(review -> ReviewSummary.from(problemMap.get(review.getProblemId()), review))
                 .toList();
-        return PagedResult.from(reviewSummaries, domainPage);
+        return ReviewSummaryPage.from(reviewSummaries, domainPage);
     }
+
 }

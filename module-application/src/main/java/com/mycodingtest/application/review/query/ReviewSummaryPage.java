@@ -1,10 +1,10 @@
-package com.mycodingtest.application.review.dto;
+package com.mycodingtest.application.review.query;
 
 import com.mycodingtest.domain.common.DomainPage;
 
 import java.util.List;
 
-public record PagedResult<T>(
+public record ReviewSummaryPage<T>(
         List<T> content,
         long totalElements,
         int totalPages,
@@ -12,10 +12,10 @@ public record PagedResult<T>(
         int pageSize,
         boolean isLast
 ) {
-    public static <T> PagedResult<T> from(
+    public static <T> ReviewSummaryPage<T> from(
             List<T> content,
             DomainPage<?> domainPage
     ) {
-        return new PagedResult<>(content, domainPage.totalElements(), domainPage.totalPages(), domainPage.pageNumber(), domainPage.pageSize(), domainPage.isLast());
+        return new ReviewSummaryPage<>(content, domainPage.totalElements(), domainPage.totalPages(), domainPage.pageNumber(), domainPage.pageSize(), domainPage.isLast());
     }
 }
