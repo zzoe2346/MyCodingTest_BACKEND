@@ -1,5 +1,6 @@
 package com.mycodingtest.api.judgment.dto;
 
+import com.mycodingtest.application.judgment.query.JudgmentInfo;
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentStatus;
@@ -15,7 +16,16 @@ public record JudgmentResponse(
         MetaData metaData,
         String sourceCode
 ) {
-    public static JudgmentResponse from(Judgment entity) {
-        return new JudgmentResponse(entity.getProblemId(), entity.getUserId(), entity.getSubmissionId(), entity.getId(), entity.getStatus(), entity.getPlatform(), entity.getMetaData(), entity.getSourceCode());
+    public static JudgmentResponse from(JudgmentInfo info) {
+        return new JudgmentResponse(
+                info.problemId(),
+                info.userId(),
+                info.submissionInfo().getSubmissionId(),
+                info.id(),
+                info.submissionInfo().getStatus(),
+                info.submissionInfo().getPlatform(),
+                info.submissionInfo().getMetaData(),
+                info.submissionInfo().getSourceCode()
+        );
     }
 }

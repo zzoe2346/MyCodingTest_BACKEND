@@ -1,4 +1,4 @@
-package com.mycodingtest.application.judgment.dto;
+package com.mycodingtest.application.judgment.command;
 
  import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
  import lombok.Builder;

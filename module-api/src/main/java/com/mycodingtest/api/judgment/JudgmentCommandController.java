@@ -1,7 +1,7 @@
 package com.mycodingtest.api.judgment;
 
-import com.mycodingtest.application.judgment.JudgmentService;
-import com.mycodingtest.application.judgment.dto.DeleteJudgmentCommand;
+import com.mycodingtest.application.judgment.command.JudgmentCommandService;
+import com.mycodingtest.application.judgment.command.DeleteJudgmentCommand;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class JudgmentCommandController {
 
-    private final JudgmentService judgmentService;
+    private final JudgmentCommandService judgmentCommandService;
 
     /**
      * 채점결과 삭제
@@ -30,7 +30,7 @@ public class JudgmentCommandController {
     @Operation(summary = "채점 결과 삭제", description = "특정 채점 결과를 삭제합니다.")
     public ResponseEntity<Void> deleteSolvedProblem(@PathVariable Long judgmentId,
                                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        judgmentService.deleteJudgment(DeleteJudgmentCommand.from(judgmentId, customUserDetails.getUserId()));
+        judgmentCommandService.deleteJudgment(DeleteJudgmentCommand.from(judgmentId, customUserDetails.getUserId()));
         return ResponseEntity.ok().build();
     }
 

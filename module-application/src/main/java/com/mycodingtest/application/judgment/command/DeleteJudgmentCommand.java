@@ -1,4 +1,4 @@
-package com.mycodingtest.application.judgment.dto;
+package com.mycodingtest.application.judgment.command;
 
 public record DeleteJudgmentCommand(
         Long judgmentId,

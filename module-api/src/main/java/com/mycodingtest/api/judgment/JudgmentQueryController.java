@@ -1,7 +1,7 @@
 package com.mycodingtest.api.judgment;
 
 import com.mycodingtest.api.judgment.dto.JudgmentResponse;
-import com.mycodingtest.application.judgment.JudgmentService;
+import com.mycodingtest.application.judgment.query.JudgmentQueryService;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,14 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JudgmentQueryController {
 
-    private final JudgmentService judgmentService;
+    private final JudgmentQueryService queryService;
 
     @GetMapping("/api/judgments")
     @Operation(summary = "채점 결과 목록 조회", description = "특정 문제의 채점 결과 목록을 조회합니다.")
     public ResponseEntity<List<JudgmentResponse>> getJudgmentResultList(@RequestParam Long problemId,
                                                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(
-                judgmentService.getJudgments(problemId, userDetails.getUserId())
+                queryService.getJudgments(problemId, userDetails.getUserId())
                         .stream()
                         .map(JudgmentResponse::from)
                         .toList());

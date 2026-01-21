@@ -1,10 +1,11 @@
 package com.mycodingtest.application.collector;
 
 import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
+import com.mycodingtest.application.judgment.query.JudgmentQueryService;
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.problem.Problem;
-import com.mycodingtest.application.judgment.JudgmentService;
-import com.mycodingtest.application.judgment.dto.CreateBojJudgmentCommand;
+import com.mycodingtest.application.judgment.command.JudgmentCommandService;
+import com.mycodingtest.application.judgment.command.CreateBojJudgmentCommand;
 import com.mycodingtest.application.problem.ProblemService;
 import com.mycodingtest.application.problem.dto.CreateProblemCommand;
 import com.mycodingtest.application.review.ReviewService;
@@ -23,7 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BojIngestionService {
 
-    private final JudgmentService judgmentService;
+    private final JudgmentCommandService judgmentCommandService;
+    private final JudgmentQueryService judgmentQueryService;
     private final ProblemService problemService;
     private final ReviewService reviewService;
 
@@ -40,7 +42,7 @@ public class BojIngestionService {
         // 1. 문제 엔티티 확보
         Problem problem = problemService.getOrCreateProblem(CreateProblemCommand.from(command, Platform.BOJ));
         // 2. 채점 상세 기록 저장
-        judgmentService.createJudgmentFromBoj(CreateBojJudgmentCommand.from(command, problem.getId()));
+        judgmentCommandService.createJudgmentFromBoj(CreateBojJudgmentCommand.from(command, problem.getId()));
         // 3. 리뷰 오답 노트 생성
         reviewService.createReview(CreateReviewCommand.from(command, problem.getId()));
     }
@@ -51,7 +53,7 @@ public class BojIngestionService {
      * @throws IllegalStateException 이미 수집된 제출 번호인 경우
      */
     public void checkDuplicatedSubmissionId(Long submissionId) {
-        boolean isDuplicated = judgmentService.isJudgmentExist(submissionId, Platform.BOJ);
+        boolean isDuplicated = judgmentQueryService.isJudgmentExist(submissionId, Platform.BOJ);
         if (isDuplicated) {
             throw new IllegalStateException("이미 존재하는 제출 번호입니다: " + submissionId);
         }
