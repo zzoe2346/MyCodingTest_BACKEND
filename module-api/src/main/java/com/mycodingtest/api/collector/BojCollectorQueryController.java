@@ -1,6 +1,6 @@
 package com.mycodingtest.api.collector;
 
-import com.mycodingtest.application.collector.BojIngestionService;
+import com.mycodingtest.application.collector.command.BojIngestionCommandService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class BojCollectorQueryController {
 
-    private final BojIngestionService bojIngestionService;
+    private final BojIngestionCommandService bojIngestionCommandService;
 
     @GetMapping("/api/boj/check/{submissionId}")
     @Operation(summary = "이미 제출된 채점 결과인지 확인", description = "특정 채점 결과의 제출 코드를 조회합니다.")
     public ResponseEntity<Void> getDuplicatedSubmissionIdCheckResult(@PathVariable Long submissionId) {
         try {
-            bojIngestionService.checkDuplicatedSubmissionId(submissionId);
+            bojIngestionCommandService.checkDuplicatedSubmissionId(submissionId);
             return ResponseEntity.ok().build();
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();

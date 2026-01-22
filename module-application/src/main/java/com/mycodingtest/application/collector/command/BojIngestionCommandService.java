@@ -1,6 +1,5 @@
-package com.mycodingtest.application.collector;
+package com.mycodingtest.application.collector.command;
 
-import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
 import com.mycodingtest.application.judgment.command.CreateBojJudgmentCommand;
 import com.mycodingtest.application.judgment.command.JudgmentCommandService;
 import com.mycodingtest.application.judgment.query.JudgmentQueryService;
@@ -21,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class BojIngestionService {
+public class BojIngestionCommandService {
 
     private final JudgmentCommandService judgmentCommandService;
     private final JudgmentQueryService judgmentQueryService;

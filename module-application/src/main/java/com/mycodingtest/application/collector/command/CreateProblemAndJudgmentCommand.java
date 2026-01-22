@@ -1,4 +1,4 @@
-package com.mycodingtest.application.collector.dto;
+package com.mycodingtest.application.collector.command;
 
 import lombok.Builder;
 
