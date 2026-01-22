@@ -3,6 +3,7 @@ package com.mycodingtest.api.review;
 import com.mycodingtest.api.review.dto.request.UpdateReviewRequest;
 import com.mycodingtest.api.review.dto.response.ReviewRecentStatusResponse;
 import com.mycodingtest.application.review.command.ReviewCommandService;
+import com.mycodingtest.application.review.command.UpdateReviewCommand;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +28,7 @@ public class ReviewCommandController {
     public ResponseEntity<ReviewRecentStatusResponse> updateReview(@PathVariable Long reviewId,
                                                                    @RequestBody UpdateReviewRequest request,
                                                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
-        Review updatedReview = reviewCommandService.updateReview(request.toCommand(reviewId, userDetails.getUserId()));
+        Review updatedReview = reviewCommandService.updateReview(UpdateReviewCommand.from(reviewId, userDetails.getUserId()));
         return ResponseEntity.ok(ReviewRecentStatusResponse.from(updatedReview));
     }
 
