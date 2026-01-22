@@ -1,6 +1,6 @@
 package com.mycodingtest.api.review.dto.response;
 
-import com.mycodingtest.domain.review.Review;
+import com.mycodingtest.application.review.command.UpdateReviewResult;
 import com.mycodingtest.domain.review.ReviewStatus;
 
 public record ReviewRecentStatusResponse(
@@ -11,14 +11,14 @@ public record ReviewRecentStatusResponse(
         String content,
         ReviewStatus status
 ) {
-    public static ReviewRecentStatusResponse from(Review updatedReview) {
+    public static ReviewRecentStatusResponse from(UpdateReviewResult updatedReview) {
         return new ReviewRecentStatusResponse(
                 updatedReview.isFavorited(),
-                updatedReview.getDifficultyLevel(),
-                updatedReview.getImportanceLevel(),
-                updatedReview.getRevisedCode(),
-                updatedReview.getContent(),
-                updatedReview.getStatus()
+                updatedReview.difficultyLevel(),
+                updatedReview.importanceLevel(),
+                updatedReview.revisedCode(),
+                updatedReview.content(),
+                updatedReview.status()
         );
     }
 }

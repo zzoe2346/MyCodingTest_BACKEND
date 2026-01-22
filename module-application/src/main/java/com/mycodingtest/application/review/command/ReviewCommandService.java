@@ -39,7 +39,7 @@ public class ReviewCommandService {
     }
 
     @Transactional
-    public Review updateReview(UpdateReviewCommand command) {
+    public UpdateReviewResult updateReview(UpdateReviewCommand command) {
         Review review = reviewRepository.findById(command.reviewId())
                 .orElseThrow(ResourceNotFoundException::new);
         review.validateOwnership(command.userId());
@@ -51,7 +51,7 @@ public class ReviewCommandService {
                 command.content(),
                 command.status());
         reviewRepository.update(review);
-        return review;
+        return UpdateReviewResult.from(review);
     }
 
 }
