@@ -1,6 +1,6 @@
 package com.mycodingtest.application.problem.command;
 
-import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
+import com.mycodingtest.application.collector.command.CreateProblemAndJudgmentCommand;
 import com.mycodingtest.domain.common.Platform;
 
 public record SyncProblemCommand(
