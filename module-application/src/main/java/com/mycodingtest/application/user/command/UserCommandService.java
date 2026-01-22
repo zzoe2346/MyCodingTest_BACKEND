@@ -1,4 +1,4 @@
-package com.mycodingtest.application.user;
+package com.mycodingtest.application.user.command;
 
 import com.mycodingtest.domain.user.User;
 import com.mycodingtest.domain.user.UserRepository;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserCommandService {
 
     private final UserRepository userRepository;
 
@@ -22,9 +22,9 @@ public class UserService {
      * 신규 사용자를 시스템에 등록합니다.
      */
     @Transactional
-    public User getOrCreateUser(String name, String email, String picture, String provider, String oauthId) {
-        return userRepository.save(
-                User.from(name, email, picture, provider, oauthId));
+    public User syncUser(SyncUserCommand command) {
+        return userRepository.findUser(command.provider(), command.oauthId())
+                .orElseGet(() -> userRepository.save(User.from(command.name(), command.email(), command.picture(), command.provider(), command.oauthId())));
     }
 
 }

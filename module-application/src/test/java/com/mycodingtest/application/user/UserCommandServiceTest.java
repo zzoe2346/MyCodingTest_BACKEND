@@ -1,5 +1,7 @@
 package com.mycodingtest.application.user;
 
+import com.mycodingtest.application.user.command.SyncUserCommand;
+import com.mycodingtest.application.user.command.UserCommandService;
 import com.mycodingtest.domain.user.User;
 import com.mycodingtest.domain.user.UserRepository;
 import org.junit.jupiter.api.Nested;
@@ -16,13 +18,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserCommandServiceTest {
 
     @Mock
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
+    private UserCommandService userCommandService;
 
     @Nested
     class 사용자_생성_또는_조회 {
@@ -40,7 +42,7 @@ class UserServiceTest {
             given(userRepository.save(any(User.class))).willReturn(savedUser);
 
             // when
-            User result = userService.getOrCreateUser(name, email, picture, provider, oauthId);
+            User result = userCommandService.syncUser(SyncUserCommand.from(name, email, picture, provider, oauthId));
 
             // then
             assertThat(result.getId()).isEqualTo(1L);
@@ -69,7 +71,7 @@ class UserServiceTest {
             given(userRepository.save(any(User.class))).willReturn(savedUser);
 
             // when
-            User result = userService.getOrCreateUser(name, email, picture, provider, oauthId);
+            User result = userCommandService.syncUser(SyncUserCommand.from(name, email, picture, provider, oauthId));
 
             // then
             assertThat(result.getOauthProvider()).isEqualTo("kakao");

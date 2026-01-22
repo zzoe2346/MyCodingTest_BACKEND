@@ -1,7 +1,8 @@
 package com.mycodingtest.security;
 
+import com.mycodingtest.application.user.command.SyncUserCommand;
 import com.mycodingtest.domain.user.User;
-import com.mycodingtest.application.user.UserService;
+import com.mycodingtest.application.user.command.UserCommandService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,12 +22,12 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
     @Value("${url.redirect}")
     private String redirectUrl;
-    private final UserService userService;
+    private final UserCommandService userCommandService;
     private final JwtUtil jwtUtil;
     private final CookieUtil cookieUtil;
 
-    public CustomOAuth2SuccessHandler(UserService userService, JwtUtil jwtUtil, CookieUtil cookieUtil) {
-        this.userService = userService;
+    public CustomOAuth2SuccessHandler(UserCommandService userCommandService, JwtUtil jwtUtil, CookieUtil cookieUtil) {
+        this.userCommandService = userCommandService;
         this.jwtUtil = jwtUtil;
         this.cookieUtil = cookieUtil;
     }
@@ -55,8 +56,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             throw new RuntimeException("지원하는 OAuth2 제공자가 아닙니다.");
         }
 
-        //뭐 가입안됭ㅆ으면 가입시깈낟.
-        User user = userService.getOrCreateUser(name, email, picture, provider, oauthId);
+        User user = userCommandService.syncUser(SyncUserCommand.from(name, email, picture, provider, oauthId));
         String jwt = jwtUtil.generateToken(user.getId(), user.getPicture(), user.getName());
         response.addHeader(HttpHeaders.SET_COOKIE, cookieUtil.generateJwtCookie(jwt).toString());
         response.sendRedirect(redirectUrl);
