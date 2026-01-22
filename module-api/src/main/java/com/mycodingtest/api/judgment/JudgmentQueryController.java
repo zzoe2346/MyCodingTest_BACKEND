@@ -1,6 +1,6 @@
 package com.mycodingtest.api.judgment;
 
-import com.mycodingtest.api.judgment.dto.JudgmentResponse;
+import com.mycodingtest.api.judgment.dto.response.JudgmentResponse;
 import com.mycodingtest.application.judgment.query.JudgmentQueryService;
 import com.mycodingtest.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,8 +1,7 @@
-package com.mycodingtest.api.judgment.dto;
+package com.mycodingtest.api.judgment.dto.response;
 
 import com.mycodingtest.application.judgment.query.JudgmentInfo;
 import com.mycodingtest.domain.common.Platform;
-import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentStatus;
 import com.mycodingtest.domain.judgment.MetaData;
 
