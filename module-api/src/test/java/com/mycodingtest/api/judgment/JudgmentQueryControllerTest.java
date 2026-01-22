@@ -1,6 +1,6 @@
 package com.mycodingtest.api.judgment;
 
-import com.mycodingtest.application.judgment.JudgmentService;
+import com.mycodingtest.application.judgment.command.JudgmentCommandService;
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentStatus;
@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.given;
 class JudgmentQueryControllerTest {
 
     @Mock
-    private JudgmentService judgmentService;
+    private JudgmentCommandService judgmentCommandService;
 
     @InjectMocks
     private JudgmentQueryController judgmentQueryController;
@@ -40,7 +40,7 @@ class JudgmentQueryControllerTest {
             List<Judgment> judgments = List.of(
                     Judgment.from( problemId, userId, 12345L, JudgmentStatus.SUCCESS, Platform.BOJ, null, "code1"),
                     Judgment.from( problemId, userId, 12346L, JudgmentStatus.FAIL, Platform.BOJ, null, "code2"));
-            given(judgmentService.getJudgments(problemId, userId)).willReturn(judgments);
+            given(judgmentCommandService.getJudgments(problemId, userId)).willReturn(judgments);
 
             // when
             var result = judgmentQueryController.getJudgmentResultList(problemId, userDetails);
@@ -58,7 +58,7 @@ class JudgmentQueryControllerTest {
             Long problemId = 9999L;
             Long userId = 1L;
             CustomUserDetails userDetails = new CustomUserDetails(userId, "pic", "user");
-            given(judgmentService.getJudgments(problemId, userId)).willReturn(List.of());
+            given(judgmentCommandService.getJudgments(problemId, userId)).willReturn(List.of());
 
             // when
             var result = judgmentQueryController.getJudgmentResultList(problemId, userDetails);

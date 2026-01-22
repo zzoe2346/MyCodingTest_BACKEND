@@ -1,8 +1,8 @@
 package com.mycodingtest.api.review;
 
-import com.mycodingtest.application.review.ReviewService;
-import com.mycodingtest.application.review.dto.PagedResult;
-import com.mycodingtest.application.review.dto.ReviewSummary;
+import com.mycodingtest.application.review.command.ReviewCommandService;
+import com.mycodingtest.application.review.query.ReviewSummaryPage;
+import com.mycodingtest.application.review.query.ReviewSummary;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewStatus;
 import com.mycodingtest.security.CustomUserDetails;
@@ -23,7 +23,7 @@ import static org.mockito.BDDMockito.given;
 class ReviewQueryControllerTest {
 
     @Mock
-    private ReviewService reviewService;
+    private ReviewCommandService reviewCommandService;
 
     @InjectMocks
     private ReviewQueryController controller;
@@ -52,7 +52,7 @@ class ReviewQueryControllerTest {
                     true,
                     null,
                     null);
-            given(reviewService.getReview(reviewId, userId)).willReturn(review);
+            given(reviewCommandService.getReview(reviewId, userId)).willReturn(review);
 
             // when
             var result = controller.getReview(reviewId, userDetails);
@@ -73,7 +73,7 @@ class ReviewQueryControllerTest {
             // given
             Long userId = 1L;
             CustomUserDetails userDetails = new CustomUserDetails(userId, "pic", "user");
-            given(reviewService.getReviewCountStatusInToDo(userId)).willReturn(5L);
+            given(reviewCommandService.getReviewCountStatusInToDo(userId)).willReturn(5L);
 
             // when
             var result = controller.getWaitReviewCount(userDetails);
@@ -97,14 +97,14 @@ class ReviewQueryControllerTest {
             int size = 10;
             ReviewStatus filter = ReviewStatus.TO_DO;
 
-            PagedResult<ReviewSummary> pagedResult = new PagedResult<>(
+            ReviewSummaryPage<ReviewSummary> reviewSummaryPage = new ReviewSummaryPage<>(
                     List.of(),
                     0,
                     0,
                     0,
                     10,
                     true);
-            given(reviewService.getReviewSummaries(userId, page, size, filter)).willReturn(pagedResult);
+            given(reviewCommandService.getReviewSummaries(userId, page, size, filter)).willReturn(reviewSummaryPage);
 
             // when
             var result = controller.getReviewSummaries(userDetails, page, size, filter);

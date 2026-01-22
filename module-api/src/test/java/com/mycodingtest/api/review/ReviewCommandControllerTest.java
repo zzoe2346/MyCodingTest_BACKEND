@@ -1,7 +1,8 @@
 package com.mycodingtest.api.review;
 
 import com.mycodingtest.api.review.dto.request.UpdateReviewRequest;
-import com.mycodingtest.application.review.ReviewService;
+import com.mycodingtest.application.review.command.ReviewCommandService;
+import com.mycodingtest.application.review.command.UpdateReviewResult;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewStatus;
 import com.mycodingtest.security.CustomUserDetails;
@@ -15,14 +16,13 @@ import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ReviewCommandControllerTest {
 
     @Mock
-    private ReviewService reviewService;
+    private ReviewCommandService reviewCommandService;
 
     @InjectMocks
     private ReviewCommandController controller;
@@ -59,7 +59,7 @@ class ReviewCommandControllerTest {
                     true,
                     null,
                     null);
-            given(reviewService.updateReview(any())).willReturn(updatedReview);
+            given(reviewCommandService.updateReview(any())).willReturn(UpdateReviewResult.from(updatedReview));
 
             // when
             var result = controller.updateReview(reviewId, request, userDetails);
@@ -99,7 +99,7 @@ class ReviewCommandControllerTest {
                     true,
                     null,
                     null);
-            given(reviewService.updateReview(any())).willReturn(updatedReview);
+            given(reviewCommandService.updateReview(any())).willReturn(UpdateReviewResult.from(updatedReview));
 
             // when
             var result = controller.updateReview(reviewId, request, userDetails);

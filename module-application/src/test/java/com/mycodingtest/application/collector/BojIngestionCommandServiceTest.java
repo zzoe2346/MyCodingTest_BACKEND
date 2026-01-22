@@ -1,9 +1,11 @@
 package com.mycodingtest.application.collector;
 
-import com.mycodingtest.application.collector.dto.CreateProblemAndJudgmentCommand;
-import com.mycodingtest.application.judgment.JudgmentService;
-import com.mycodingtest.application.problem.ProblemService;
-import com.mycodingtest.application.review.ReviewService;
+import com.mycodingtest.application.collector.command.BojIngestionCommandService;
+import com.mycodingtest.application.collector.command.CreateProblemAndJudgmentCommand;
+import com.mycodingtest.application.judgment.command.JudgmentCommandService;
+import com.mycodingtest.application.judgment.query.JudgmentQueryService;
+import com.mycodingtest.application.problem.command.ProblemCommandService;
+import com.mycodingtest.application.review.command.ReviewCommandService;
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.problem.Problem;
 import org.junit.jupiter.api.Nested;
@@ -21,19 +23,21 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class BojIngestionServiceTest {
+class BojIngestionCommandServiceTest {
 
     @Mock
-    private JudgmentService judgmentService;
+    private JudgmentCommandService judgmentCommandService;
+    @Mock
+    private JudgmentQueryService judgmentQueryService;
 
     @Mock
-    private ProblemService problemService;
+    private ProblemCommandService problemCommandService;
 
     @Mock
-    private ReviewService reviewService;
+    private ReviewCommandService reviewCommandService;
 
     @InjectMocks
-    private BojIngestionService bojIngestionService;
+    private BojIngestionCommandService bojIngestionCommandService;
 
     @Nested
     class 데이터_수집 {
@@ -56,17 +60,15 @@ class BojIngestionServiceTest {
                     .sourceCode("public class Main {}")
                     .build();
 
-            Problem mockProblem = Problem.from(1000, "A+B", Platform.BOJ);
-
-            given(problemService.getOrCreateProblem(any())).willReturn(mockProblem);
+            given(problemCommandService.syncProblem(any()));
 
             // when
-            bojIngestionService.ingest(command);
+            bojIngestionCommandService.ingest(command);
 
             // then
-            verify(problemService).getOrCreateProblem(any());
-            verify(judgmentService).createJudgmentFromBoj(any());
-            verify(reviewService).createReview(any());
+            verify(problemCommandService).syncProblem(any());
+            verify(judgmentCommandService).createJudgmentFromBoj(any());
+            verify(reviewCommandService).createReview(any());
         }
     }
 
@@ -77,10 +79,10 @@ class BojIngestionServiceTest {
         void 중복_제출이면_예외가_발생한다() {
             // given
             Long submissionId = 99999L;
-            given(judgmentService.isJudgmentExist(submissionId, Platform.BOJ)).willReturn(true);
+            given(judgmentQueryService.isJudgmentExist(submissionId, Platform.BOJ)).willReturn(true);
 
             // when & then
-            assertThatThrownBy(() -> bojIngestionService.checkDuplicatedSubmissionId(submissionId))
+            assertThatThrownBy(() -> bojIngestionCommandService.checkDuplicatedSubmissionId(submissionId))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessageContaining("이미 존재하는 제출 번호입니다");
         }
@@ -89,10 +91,10 @@ class BojIngestionServiceTest {
         void 중복이_아니면_예외가_발생하지_않는다() {
             // given
             Long submissionId = 99999L;
-            given(judgmentService.isJudgmentExist(submissionId, Platform.BOJ)).willReturn(false);
+            given(judgmentQueryService.isJudgmentExist(submissionId, Platform.BOJ)).willReturn(false);
 
             // when & then
-            bojIngestionService.checkDuplicatedSubmissionId(submissionId);
+            bojIngestionCommandService.checkDuplicatedSubmissionId(submissionId);
             // 예외가 발생하지 않으면 성공
         }
     }

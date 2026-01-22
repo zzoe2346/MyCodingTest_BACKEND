@@ -1,6 +1,6 @@
 package com.mycodingtest.api.collector;
 
-import com.mycodingtest.application.collector.BojIngestionService;
+import com.mycodingtest.application.collector.command.BojIngestionCommandService;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.willThrow;
 class BojCollectorQueryControllerTest {
 
     @Mock
-    private BojIngestionService bojIngestionService;
+    private BojIngestionCommandService bojIngestionCommandService;
 
     @InjectMocks
     private BojCollectorQueryController controller;
@@ -30,7 +30,7 @@ class BojCollectorQueryControllerTest {
         void 중복이_아니면_OK를_반환한다() {
             // given
             Long submissionId = 12345L;
-            willDoNothing().given(bojIngestionService).checkDuplicatedSubmissionId(submissionId);
+            willDoNothing().given(bojIngestionCommandService).checkDuplicatedSubmissionId(submissionId);
 
             // when
             ResponseEntity<Void> result = controller.getDuplicatedSubmissionIdCheckResult(submissionId);
@@ -44,7 +44,7 @@ class BojCollectorQueryControllerTest {
             // given
             Long submissionId = 99999L;
             willThrow(new IllegalStateException("이미 존재하는 제출 번호입니다"))
-                    .given(bojIngestionService).checkDuplicatedSubmissionId(submissionId);
+                    .given(bojIngestionCommandService).checkDuplicatedSubmissionId(submissionId);
 
             // when
             ResponseEntity<Void> result = controller.getDuplicatedSubmissionIdCheckResult(submissionId);
