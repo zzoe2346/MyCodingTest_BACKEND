@@ -39,7 +39,7 @@ public class ProblemEntity extends BaseEntity {
     }
 
     public Problem toDomain() {
-        return Problem.from(this.problemNumber, this.problemTitle, this.platform);
+        return Problem.from(this.getId(), this.problemNumber, this.problemTitle, this.platform);
     }
 
 }

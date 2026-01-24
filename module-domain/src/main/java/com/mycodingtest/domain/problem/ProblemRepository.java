@@ -32,4 +32,6 @@ public interface ProblemRepository {
     Optional<Problem> findProblemByproblemNumberAndPlatform(Integer problemNumber, Platform platform);
 
     List<Problem> findAllByIdIn(List<Long> problemIds);
+
+    Problem saveAndFlush(Problem from);
 }

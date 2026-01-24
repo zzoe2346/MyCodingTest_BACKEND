@@ -28,7 +28,7 @@ public class ProblemCommandService {
     @Transactional
     public Long syncProblem(SyncProblemCommand command) {
         return problemRepository.findProblemByproblemNumberAndPlatform(command.problemNumber(), command.platform())
-                .orElseGet(() -> problemRepository.save(
+                .orElseGet(() -> problemRepository.saveAndFlush(
                         Problem.from(
                                 command.problemNumber(),
                                 command.problemTitle(),

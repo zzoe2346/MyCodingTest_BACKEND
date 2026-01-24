@@ -33,4 +33,9 @@ public class ProblemRepositoryImpl implements ProblemRepository {
                 .toList();
     }
 
+    @Override
+    public Problem saveAndFlush(Problem problem) {
+        ProblemEntity saved = repository.saveAndFlush(ProblemEntity.from(problem));
+        return saved.toDomain();
+    }
 }
