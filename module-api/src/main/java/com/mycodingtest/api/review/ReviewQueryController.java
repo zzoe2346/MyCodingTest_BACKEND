@@ -49,4 +49,11 @@ public class ReviewQueryController {
                 reviewQueryService.getReviewSummaries(userDetails.getUserId(), page, size, filter));
     }
 
+    @GetMapping("/api/reviews/all")
+    public ResponseEntity<ReviewSummaryPage<ReviewSummary>> getReviewSummaries(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                                               @RequestParam(defaultValue = "0") int page,
+                                                                               @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(
+                reviewQueryService.getAllReviewSummaries(userDetails.getUserId(), page, size));
+    }
 }

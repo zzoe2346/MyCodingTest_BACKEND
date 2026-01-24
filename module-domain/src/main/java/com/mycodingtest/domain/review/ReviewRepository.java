@@ -70,4 +70,6 @@ public interface ReviewRepository {
      * @return 페이징된 리뷰 목록
      */
     DomainPage<Review> findAllByUserIdAndStatus(Long userId, ReviewStatus filter, int page, int size);
+
+    DomainPage<Review> findAllByUserId(Long userId, int page, int size);
 }

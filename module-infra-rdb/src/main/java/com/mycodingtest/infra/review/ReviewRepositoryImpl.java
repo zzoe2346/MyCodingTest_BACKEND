@@ -62,4 +62,17 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         );
     }
 
+    @Override
+    public DomainPage<Review> findAllByUserId(Long userId, int page, int size) {
+        Page<ReviewEntity> entityPage = repository.findAllByUserId(userId, Pageable.ofSize(size).withPage(page));
+
+        return new DomainPage<>(
+                entityPage.getContent().stream().map(ReviewEntity::toDomain).toList(),
+                entityPage.getTotalElements(),
+                entityPage.getTotalPages(),
+                entityPage.getNumber(),
+                entityPage.getSize(),
+                entityPage.isLast()
+        );
+    }
 }
