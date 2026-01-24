@@ -70,4 +70,19 @@ public class Problem {
                 .build();
     }
 
+    public static Problem from(Long problemId, Integer problemNumber, String problemTitle, Platform platform) {
+        if (problemNumber == null || problemNumber <= 0) {
+            throw new IllegalArgumentException("문제 번호는 양수여야 합니다");
+        }
+        if (platform == null) {
+            throw new IllegalArgumentException("플랫폼은 필수입니다");
+        }
+        return Problem.builder()
+                .id(problemId)
+                .problemNumber(problemNumber)
+                .problemTitle(problemTitle)
+                .platform(platform)
+                .build();
+    }
+
 }
