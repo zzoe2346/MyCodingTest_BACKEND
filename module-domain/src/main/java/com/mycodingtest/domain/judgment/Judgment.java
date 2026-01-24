@@ -1,6 +1,5 @@
 package com.mycodingtest.domain.judgment;
 
-import com.mycodingtest.domain.common.Platform;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -49,9 +48,6 @@ public class Judgment {
     public static Judgment from(Long problemId,
                                 Long userId,
                                 SubmissionInfo submissionInfo) {
-        if (problemId == null) {
-            throw new IllegalArgumentException("문제 ID는 필수입니다");
-        }
         if (userId == null) {
             throw new IllegalArgumentException("사용자 ID는 필수입니다");
         }
