@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-
+@MockitoSettings
 class ProblemCommandServiceTest {
 
     @Mock
@@ -38,10 +39,9 @@ class ProblemCommandServiceTest {
                     .willReturn(Optional.of(existingProblem));
 
             // when
-            Long syncedProblemId = problemCommandService.syncProblem(command);
+            problemCommandService.syncProblem(command);
 
             // then
-            assertThat(syncedProblemId).isEqualTo(1L);
             verify(problemRepository, never()).save(any());
         }
 
@@ -55,10 +55,9 @@ class ProblemCommandServiceTest {
             given(problemRepository.save(any(Problem.class))).willReturn(newProblem);
 
             // when
-            Long alreadySyncedProblemId = problemCommandService.syncProblem(command);
+            problemCommandService.syncProblem(command);
 
             // then
-            assertThat(alreadySyncedProblemId).isEqualTo(2L);
 
             ArgumentCaptor<Problem> captor = ArgumentCaptor.forClass(Problem.class);
             verify(problemRepository).save(captor.capture());

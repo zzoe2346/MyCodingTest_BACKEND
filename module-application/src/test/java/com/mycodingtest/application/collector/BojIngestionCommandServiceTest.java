@@ -2,9 +2,12 @@ package com.mycodingtest.application.collector;
 
 import com.mycodingtest.application.collector.command.BojIngestionCommandService;
 import com.mycodingtest.application.collector.command.CreateProblemAndJudgmentCommand;
+import com.mycodingtest.application.judgment.command.CreateBojJudgmentCommand;
 import com.mycodingtest.application.judgment.command.JudgmentCommandService;
 import com.mycodingtest.application.judgment.query.JudgmentQueryService;
 import com.mycodingtest.application.problem.command.ProblemCommandService;
+import com.mycodingtest.application.problem.command.SyncProblemCommand;
+import com.mycodingtest.application.review.command.CreateReviewCommand;
 import com.mycodingtest.application.review.command.ReviewCommandService;
 import com.mycodingtest.domain.common.Platform;
 import com.mycodingtest.domain.problem.Problem;
@@ -60,7 +63,7 @@ class BojIngestionCommandServiceTest {
                     .sourceCode("public class Main {}")
                     .build();
 
-            given(problemCommandService.syncProblem(any()));
+            given(problemCommandService.syncProblem(any())).willReturn(1L);
 
             // when
             bojIngestionCommandService.ingest(command);

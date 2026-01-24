@@ -1,9 +1,12 @@
 package com.mycodingtest.api.judgment;
 
-import com.mycodingtest.application.judgment.command.JudgmentCommandService;
+import com.mycodingtest.application.judgment.query.JudgmentInfo;
+import com.mycodingtest.application.judgment.query.JudgmentQueryService;
 import com.mycodingtest.domain.common.Platform;
+import com.mycodingtest.domain.judgment.BojMetaData;
 import com.mycodingtest.domain.judgment.Judgment;
 import com.mycodingtest.domain.judgment.JudgmentStatus;
+import com.mycodingtest.domain.judgment.SubmissionInfo;
 import com.mycodingtest.security.CustomUserDetails;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,7 +25,7 @@ import static org.mockito.BDDMockito.given;
 class JudgmentQueryControllerTest {
 
     @Mock
-    private JudgmentCommandService judgmentCommandService;
+    private JudgmentQueryService judgmentQueryService;
 
     @InjectMocks
     private JudgmentQueryController judgmentQueryController;
@@ -37,10 +40,11 @@ class JudgmentQueryControllerTest {
             Long userId = 1L;
             CustomUserDetails userDetails = new CustomUserDetails(userId, "pic", "user");
 
-            List<Judgment> judgments = List.of(
-                    Judgment.from( problemId, userId, 12345L, JudgmentStatus.SUCCESS, Platform.BOJ, null, "code1"),
-                    Judgment.from( problemId, userId, 12346L, JudgmentStatus.FAIL, Platform.BOJ, null, "code2"));
-            given(judgmentCommandService.getJudgments(problemId, userId)).willReturn(judgments);
+            List<JudgmentInfo> judgments = List.of(
+                    JudgmentInfo.from(Judgment.from(1L, userId, SubmissionInfo.from(123L, Platform.BOJ, JudgmentStatus.SUCCESS, null, "{java}"))),
+                    JudgmentInfo.from(Judgment.from(2L, userId, SubmissionInfo.from(1234L, Platform.BOJ, JudgmentStatus.FAIL, null, "{java}")))
+            );
+            given(judgmentQueryService.getJudgments(problemId, userId)).willReturn(judgments);
 
             // when
             var result = judgmentQueryController.getJudgmentResultList(problemId, userDetails);
@@ -48,8 +52,10 @@ class JudgmentQueryControllerTest {
             // then
             assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(result.getBody()).hasSize(2);
-            assertThat(result.getBody().get(0).submissionId()).isEqualTo(12345L);
-            assertThat(result.getBody().get(1).submissionId()).isEqualTo(12346L);
+            assertThat(result.getBody().get(0).problemId()).isEqualTo(1L);
+            assertThat(result.getBody().get(0).submissionId()).isEqualTo(123L);
+            assertThat(result.getBody().get(1).problemId()).isEqualTo(2L);
+            assertThat(result.getBody().get(1).submissionId()).isEqualTo(1234L);
         }
 
         @Test
@@ -58,7 +64,7 @@ class JudgmentQueryControllerTest {
             Long problemId = 9999L;
             Long userId = 1L;
             CustomUserDetails userDetails = new CustomUserDetails(userId, "pic", "user");
-            given(judgmentCommandService.getJudgments(problemId, userId)).willReturn(List.of());
+            given(judgmentQueryService.getJudgments(problemId, userId)).willReturn(List.of());
 
             // when
             var result = judgmentQueryController.getJudgmentResultList(problemId, userDetails);

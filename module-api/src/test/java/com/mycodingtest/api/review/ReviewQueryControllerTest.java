@@ -1,8 +1,9 @@
 package com.mycodingtest.api.review;
 
-import com.mycodingtest.application.review.command.ReviewCommandService;
-import com.mycodingtest.application.review.query.ReviewSummaryPage;
+import com.mycodingtest.application.review.query.ReviewInfo;
+import com.mycodingtest.application.review.query.ReviewQueryService;
 import com.mycodingtest.application.review.query.ReviewSummary;
+import com.mycodingtest.application.review.query.ReviewSummaryPage;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewStatus;
 import com.mycodingtest.security.CustomUserDetails;
@@ -23,7 +24,7 @@ import static org.mockito.BDDMockito.given;
 class ReviewQueryControllerTest {
 
     @Mock
-    private ReviewCommandService reviewCommandService;
+    private ReviewQueryService reviewQueryService;
 
     @InjectMocks
     private ReviewQueryController controller;
@@ -52,7 +53,7 @@ class ReviewQueryControllerTest {
                     true,
                     null,
                     null);
-            given(reviewCommandService.getReview(reviewId, userId)).willReturn(review);
+            given(reviewQueryService.getReview(reviewId, userId)).willReturn(ReviewInfo.from(review));
 
             // when
             var result = controller.getReview(reviewId, userDetails);
@@ -73,7 +74,7 @@ class ReviewQueryControllerTest {
             // given
             Long userId = 1L;
             CustomUserDetails userDetails = new CustomUserDetails(userId, "pic", "user");
-            given(reviewCommandService.getReviewCountStatusInToDo(userId)).willReturn(5L);
+            given(reviewQueryService.getReviewCountStatusInToDo(userId)).willReturn(5L);
 
             // when
             var result = controller.getWaitReviewCount(userDetails);
@@ -104,7 +105,7 @@ class ReviewQueryControllerTest {
                     0,
                     10,
                     true);
-            given(reviewCommandService.getReviewSummaries(userId, page, size, filter)).willReturn(reviewSummaryPage);
+            given(reviewQueryService.getReviewSummaries(userId, page, size, filter)).willReturn(reviewSummaryPage);
 
             // when
             var result = controller.getReviewSummaries(userDetails, page, size, filter);

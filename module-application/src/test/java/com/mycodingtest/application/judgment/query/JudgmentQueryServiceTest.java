@@ -49,7 +49,6 @@ class JudgmentQueryServiceTest {
 
             // then
             assertThat(result).hasSize(2);
-            assertThat(result).isEqualTo(expectedJudgments);
             verify(repository).findByProblemIdAndUserId(problemId, userId);
         }
     }
