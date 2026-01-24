@@ -7,7 +7,6 @@ build/
 application.properties
 application-deploy.properties
 application-real.properties
-application-test.properties
 uml
 data
 ### STS ###
