@@ -126,9 +126,6 @@ public class Review {
      * @throws IllegalArgumentException 필수 값이 누락된 경우
      */
     public static Review from(Long problemId, Long userId, String sourceCode, LocalDateTime submittedAt, String resultText) {
-        if (problemId == null) {
-            throw new IllegalArgumentException("문제 ID는 필수입니다");
-        }
         if (userId == null) {
             throw new IllegalArgumentException("사용자 ID는 필수입니다");
         }
