@@ -216,4 +216,8 @@ public class Review {
         this.recentSubmitAt = recentSubmitAt;
         this.recentResult = recentResult;
     }
+
+    public void reverseFavorite() {
+        this.favorited = !favorited;
+    }
 }
