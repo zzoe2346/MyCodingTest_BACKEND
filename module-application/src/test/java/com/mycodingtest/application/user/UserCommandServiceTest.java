@@ -3,6 +3,7 @@ package com.mycodingtest.application.user;
 import com.mycodingtest.application.user.command.SyncUserCommand;
 import com.mycodingtest.application.user.command.UserCommandService;
 import com.mycodingtest.domain.user.User;
+import com.mycodingtest.domain.user.UserCreatedEvent;
 import com.mycodingtest.domain.user.UserRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,17 +12,25 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("NonAsciiCharacters")
 class UserCommandServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private UserCommandService userCommandService;
@@ -38,6 +47,7 @@ class UserCommandServiceTest {
             String provider = "google";
             String oauthId = "google-12345";
 
+            given(userRepository.findUser(provider, oauthId)).willReturn(Optional.empty());
             User savedUser = User.from(1L, name, email, picture, provider, oauthId);
             given(userRepository.save(any(User.class))).willReturn(savedUser);
 
@@ -67,6 +77,7 @@ class UserCommandServiceTest {
             String provider = "kakao";
             String oauthId = "kakao-67890";
 
+            given(userRepository.findUser(provider, oauthId)).willReturn(Optional.empty());
             User savedUser = User.from(2L, name, email, picture, provider, oauthId);
             given(userRepository.save(any(User.class))).willReturn(savedUser);
 
@@ -76,6 +87,48 @@ class UserCommandServiceTest {
             // then
             assertThat(result.getOauthProvider()).isEqualTo("kakao");
             assertThat(result.getOauthId()).isEqualTo("kakao-67890");
+        }
+
+        @Test
+        void 신규_사용자_생성_시_UserCreatedEvent를_발행한다() {
+            // given
+            String name = "신규사용자";
+            String email = "new@example.com";
+            String picture = "https://example.com/profile.jpg";
+            String provider = "google";
+            String oauthId = "google-new-123";
+
+            given(userRepository.findUser(provider, oauthId)).willReturn(Optional.empty());
+            User savedUser = User.from(99L, name, email, picture, provider, oauthId);
+            given(userRepository.save(any(User.class))).willReturn(savedUser);
+
+            // when
+            userCommandService.syncUser(SyncUserCommand.from(name, email, picture, provider, oauthId));
+
+            // then
+            ArgumentCaptor<UserCreatedEvent> eventCaptor = ArgumentCaptor.forClass(UserCreatedEvent.class);
+            verify(eventPublisher).publishEvent(eventCaptor.capture());
+
+            UserCreatedEvent publishedEvent = eventCaptor.getValue();
+            assertThat(publishedEvent.userId()).isEqualTo(99L);
+        }
+
+        @Test
+        void 기존_사용자_조회_시_이벤트를_발행하지_않는다() {
+            // given
+            String provider = "google";
+            String oauthId = "google-existing-123";
+            User existingUser = User.from(1L, "기존사용자", "existing@example.com", null, provider, oauthId);
+
+            given(userRepository.findUser(provider, oauthId)).willReturn(Optional.of(existingUser));
+
+            // when
+            User result = userCommandService
+                    .syncUser(SyncUserCommand.from("기존사용자", "existing@example.com", null, provider, oauthId));
+
+            // then
+            assertThat(result.getId()).isEqualTo(1L);
+            verify(eventPublisher, never()).publishEvent(any(UserCreatedEvent.class));
         }
     }
 }
