@@ -32,6 +32,9 @@ public class WelcomeService {
             // 학습 진도를 추적하는 데 도움을 드립니다.
             //
             // 시작해볼까요?
+            // 현재는 백준만 지원하며 아래 크롬 확장자를 설치해주셔야 서비스를 정상적으로 이용 가능하신점 참고 부탁드립니다.
+            // https://chromewebstore.google.com/detail/my-coding-test-connector/ekmnmpgdcpflanopjcopleffealdeifj
+            // 설치 후, 평소처럼 백준에서 문제를 풀기만 하면 됩니다.
             
             public class HelloWorld {
                 public static void main(String[] args) {
@@ -45,7 +48,7 @@ public class WelcomeService {
     private final ReviewRepository reviewRepository;
 
     /**
-     * 신규 사용자를 위한 환영 문제와 IN_PROGRESS 상태의 리뷰를 생성합니다.
+     * 신규 사용자를 위한 환영 문제와 TO_DO 상태의 리뷰를 생성합니다.
      *
      * @param userId 신규 사용자 ID
      */
