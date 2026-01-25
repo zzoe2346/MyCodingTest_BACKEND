@@ -68,7 +68,7 @@ public class WelcomeService {
                 .revisedCode(WELCOME_CODE)
                 .recentSubmitAt(LocalDateTime.now())
                 .recentResult(WELCOME_RESULT)
-                .status(ReviewStatus.IN_PROGRESS)
+                .status(ReviewStatus.TO_DO)
                 .reviewed(false)
                 .favorited(false)
                 .build();
