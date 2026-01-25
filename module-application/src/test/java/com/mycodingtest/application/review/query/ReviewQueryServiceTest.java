@@ -1,6 +1,5 @@
 package com.mycodingtest.application.review.query;
 
-import com.mycodingtest.application.review.command.ReviewCommandService;
 import com.mycodingtest.domain.common.exception.InvalidOwnershipException;
 import com.mycodingtest.domain.common.exception.ResourceNotFoundException;
 import com.mycodingtest.domain.problem.ProblemRepository;
@@ -16,7 +15,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @MockitoSettings
@@ -43,6 +41,7 @@ class ReviewQueryServiceTest {
                     .id(reviewId)
                     .userId(userId)
                     .content("테스트 리뷰")
+                    .reviewed(true)
                     .build();
             given(reviewRepository.findById(reviewId)).willReturn(Optional.of(review));
 
@@ -83,7 +82,6 @@ class ReviewQueryServiceTest {
                     .isInstanceOf(InvalidOwnershipException.class);
         }
     }
-
 
 
     @Nested

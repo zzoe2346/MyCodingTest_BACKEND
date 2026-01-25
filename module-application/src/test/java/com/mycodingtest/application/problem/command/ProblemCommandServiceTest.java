@@ -49,10 +49,10 @@ class ProblemCommandServiceTest {
         void 문제가_없으면_새로_생성하여_저장한다() {
             // given
             SyncProblemCommand command = new SyncProblemCommand(1001, "A-B", Platform.BOJ);
-            Problem newProblem = Problem.from(1001, "A-B", Platform.BOJ);
+            Problem newProblem = Problem.from(1L, 1001, "A-B", Platform.BOJ);
             given(problemRepository.findProblemByproblemNumberAndPlatform(1001, Platform.BOJ))
                     .willReturn(Optional.empty());
-            given(problemRepository.save(any(Problem.class))).willReturn(newProblem);
+            given(problemRepository.saveAndFlush(any(Problem.class))).willReturn(newProblem);
 
             // when
             problemCommandService.syncProblem(command);
@@ -60,7 +60,7 @@ class ProblemCommandServiceTest {
             // then
 
             ArgumentCaptor<Problem> captor = ArgumentCaptor.forClass(Problem.class);
-            verify(problemRepository).save(captor.capture());
+            verify(problemRepository).saveAndFlush(captor.capture());
 
             Problem capturedProblem = captor.getValue();
             assertThat(capturedProblem.getProblemNumber()).isEqualTo(1001);

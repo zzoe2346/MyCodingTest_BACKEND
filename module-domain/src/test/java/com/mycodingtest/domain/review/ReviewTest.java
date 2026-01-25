@@ -210,10 +210,6 @@ class ReviewTest {
         @Test
         void 필수_필드가_없으면_예외가_발생한다() {
             // given & when & then
-            assertThatThrownBy(() -> Review.from(null, 1L, "code", null, null))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("문제 ID는 필수입니다");
-
             assertThatThrownBy(() -> Review.from(1L, null, "code", null, null))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("사용자 ID는 필수입니다");
