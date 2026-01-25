@@ -3,7 +3,7 @@ package com.mycodingtest.api.review.dto.response;
 import com.mycodingtest.application.review.command.UpdateReviewResult;
 import com.mycodingtest.domain.review.ReviewStatus;
 
-public record ReviewRecentStatusResponse(
+public record UpdatedReviewResponse(
         Boolean isFavorite,
         Integer difficultyLevel,
         Integer importanceLevel,
@@ -11,8 +11,8 @@ public record ReviewRecentStatusResponse(
         String content,
         ReviewStatus status
 ) {
-    public static ReviewRecentStatusResponse from(UpdateReviewResult updatedReview) {
-        return new ReviewRecentStatusResponse(
+    public static UpdatedReviewResponse from(UpdateReviewResult updatedReview) {
+        return new UpdatedReviewResponse(
                 updatedReview.isFavorited(),
                 updatedReview.difficultyLevel(),
                 updatedReview.importanceLevel(),

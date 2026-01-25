@@ -25,9 +25,9 @@ public class ReviewCommandController {
 
     @PutMapping("/api/reviews/{reviewId}")
     @Operation(summary = "리뷰 정보 통합 수정", description = "리뷰의 모든 필드를 선택적으로 수정합니다.")
-    public ResponseEntity<ReviewRecentStatusResponse> updateReview(@PathVariable Long reviewId,
-                                                                   @RequestBody UpdateReviewRequest request,
-                                                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<UpdatedReviewResponse> updateReview(@PathVariable Long reviewId,
+                                                              @RequestBody UpdateReviewRequest request,
+                                                              @AuthenticationPrincipal CustomUserDetails userDetails) {
         UpdateReviewResult updatedReview = reviewCommandService.updateReview(
                 UpdateReviewCommand.from(
                         reviewId,
@@ -38,7 +38,7 @@ public class ReviewCommandController {
                         request.code(),
                         request.content(),
                         request.status()));
-        return ResponseEntity.ok(ReviewRecentStatusResponse.from(updatedReview));
+        return ResponseEntity.ok(UpdatedReviewResponse.from(updatedReview));
     }
 
 }
