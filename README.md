@@ -271,21 +271,6 @@ erDiagram
     PROBLEM ||--o{ REVIEW : "has"
 ```
 
----
-
-## System Architecture
-
-### Deployment
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/49960a4f-a6f9-42a3-8bba-41fb015b90cb" alt="Deploy Architecture" width="600">
-</p>
-
-### CI/CD Pipeline
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/f2e25372-b12b-4692-b9ed-fe5055d145ee" alt="CI/CD Pipeline" width="700">
-</p>
 
 ---
 
