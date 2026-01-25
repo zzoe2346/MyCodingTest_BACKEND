@@ -56,4 +56,13 @@ public class ReviewQueryController {
         return ResponseEntity.ok(
                 reviewQueryService.getAllReviewSummaries(userDetails.getUserId(), page, size));
     }
+
+    @GetMapping("/api/reviews/favorite")
+    @Operation(summary = "즐겨찾기된 리뷰 조회")
+    public ResponseEntity<ReviewSummaryPage<ReviewSummary>> getFavoriteReviewSummaries(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                                                       @RequestParam(defaultValue = "0") int page,
+                                                                                       @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(
+                reviewQueryService.getFavoriteReviewSummary(userDetails.getUserId(), page, size));
+    }
 }

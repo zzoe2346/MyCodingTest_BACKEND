@@ -54,4 +54,12 @@ public class ReviewCommandService {
         return UpdateReviewResult.from(review);
     }
 
+    @Transactional
+    public void reverseFavorite(Long reviewId, Long userId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(ResourceNotFoundException::new);
+        review.validateOwnership(userId);
+        review.reverseFavorite();
+        reviewRepository.update(review);
+    }
 }

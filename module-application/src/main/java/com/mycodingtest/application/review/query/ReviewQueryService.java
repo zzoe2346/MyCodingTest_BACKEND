@@ -95,4 +95,22 @@ public class ReviewQueryService {
                 .toList();
         return ReviewSummaryPage.from(reviewSummaries, domainPage);
     }
+
+    public ReviewSummaryPage<ReviewSummary> getFavoriteReviewSummary(Long userId, int page, int size) {
+        DomainPage<Review> domainPage = reviewRepository.findAllByUserIdAndFavorite(userId, page, size);
+        List<Review> reviews = domainPage.content();
+
+        // 2. 연관된 ID 추출
+        List<Long> problemIds = reviews.stream().map(Review::getProblemId).toList();
+
+        // 3. 문제 정보들 한꺼번에 가져오기
+        Map<Long, Problem> problemMap = problemRepository.findAllByIdIn(problemIds).stream()
+                .collect(Collectors.toMap(Problem::getId, problem -> problem));
+
+        // 5. 조립
+        List<ReviewSummary> reviewSummaries = reviews.stream()
+                .map(review -> ReviewSummary.from(problemMap.get(review.getProblemId()), review))
+                .toList();
+        return ReviewSummaryPage.from(reviewSummaries, domainPage);
+    }
 }

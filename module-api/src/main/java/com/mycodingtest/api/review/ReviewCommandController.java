@@ -1,7 +1,7 @@
 package com.mycodingtest.api.review;
 
 import com.mycodingtest.api.review.dto.request.UpdateReviewRequest;
-import com.mycodingtest.api.review.dto.response.ReviewRecentStatusResponse;
+import com.mycodingtest.api.review.dto.response.UpdatedReviewResponse;
 import com.mycodingtest.application.review.command.ReviewCommandService;
 import com.mycodingtest.application.review.command.UpdateReviewCommand;
 import com.mycodingtest.application.review.command.UpdateReviewResult;
@@ -39,6 +39,14 @@ public class ReviewCommandController {
                         request.content(),
                         request.status()));
         return ResponseEntity.ok(UpdatedReviewResponse.from(updatedReview));
+    }
+
+    @PutMapping("/api/reviews/{reviewId}/favorite")
+    @Operation(summary = "리뷰 즐겨찾기 반전", description = "리뷰의 즐겨찾기를 반전시킵니다.")
+    public ResponseEntity<Void> updateReview(@PathVariable Long reviewId,
+                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+        reviewCommandService.reverseFavorite(reviewId, userDetails.getUserId());
+        return ResponseEntity.ok().build();
     }
 
 }

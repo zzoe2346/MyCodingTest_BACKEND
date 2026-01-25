@@ -72,4 +72,6 @@ public interface ReviewRepository {
     DomainPage<Review> findAllByUserIdAndStatus(Long userId, ReviewStatus filter, int page, int size);
 
     DomainPage<Review> findAllByUserId(Long userId, int page, int size);
+
+    DomainPage<Review> findAllByUserIdAndFavorite(Long userId, int page, int size);
 }
