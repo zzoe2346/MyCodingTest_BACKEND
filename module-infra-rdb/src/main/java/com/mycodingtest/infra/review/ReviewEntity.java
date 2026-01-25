@@ -3,10 +3,7 @@ package com.mycodingtest.infra.review;
 import com.mycodingtest.domain.review.Review;
 import com.mycodingtest.domain.review.ReviewStatus;
 import com.mycodingtest.infra.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -32,6 +29,7 @@ public class ReviewEntity extends BaseEntity {
     private String content;
     private Integer difficultyLevel = -1;
     private Integer importanceLevel = -1;
+    @Column(columnDefinition = "longtext")
     private String revisedCode;
     private LocalDateTime reviewedAt;
     @Enumerated(EnumType.STRING)

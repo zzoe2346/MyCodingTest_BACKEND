@@ -28,6 +28,7 @@ public class JudgmentEntity extends BaseEntity {
     @Convert(converter = MetaDataConverter.class)
     @Column(columnDefinition = "longtext")
     private MetaData metaData;
+    @Column(columnDefinition = "longtext")
     private String sourceCode;
 
     public Judgment toDomain() {
