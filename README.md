@@ -27,9 +27,14 @@
 ---
 ## Deployment Architecture
 <p align="center">
-  <img width="3968" height="1944" alt="image" src="https://github.com/user-attachments/assets/38419e3b-b1e5-4a8d-aa12-732a9dc748c2" />
-
+  <img  height="500" alt="image" src="https://github.com/user-attachments/assets/38419e3b-b1e5-4a8d-aa12-732a9dc748c2" />
 </p>
+
+## CI/CD Pipeline
+<p align="center">
+<img height="500" alt="image" src="https://github.com/user-attachments/assets/6d6dd743-9ea2-4c57-a004-7c506ce815df" />
+</p>
+
 
 ## Data Collection & Review Pipeline
 
