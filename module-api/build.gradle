@@ -8,6 +8,8 @@ dependencies {
     implementation project(':module-application')
     implementation project(':module-domain')
     implementation project(':module-security')
+    implementation project(':module-infra-rdb')
+
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
