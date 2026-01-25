@@ -9,13 +9,14 @@ public record ReviewInfo(
         Long id,
         Long userId,
         Long problemId,
-        Boolean isFavorited,
+        Boolean isFavorite,
         Integer difficultyLevel,
         Integer importanceLevel,
         String revisedCode,
         String content,
         ReviewStatus status,
-        LocalDateTime reviewedAt
+        LocalDateTime reviewedAt,
+        boolean reviewed
 ) {
     public static ReviewInfo from(Review review) {
         return new ReviewInfo(
@@ -28,7 +29,8 @@ public record ReviewInfo(
                 review.getRevisedCode(),
                 review.getContent(),
                 review.getStatus(),
-                review.getReviewedAt()
+                review.getReviewedAt(),
+                review.getReviewed()
         );
     }
 }
