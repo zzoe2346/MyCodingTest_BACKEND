@@ -13,8 +13,10 @@ public enum Platform {
     BOJ {
         @Override
         public JudgmentStatus toStatus(String resultText) {
-            if (resultText.contains("맞았습니다")) return JudgmentStatus.SUCCESS;
-            if (resultText.contains("틀렸습니다")) return JudgmentStatus.FAIL;
+            if (resultText.contains("맞았습니다"))
+                return JudgmentStatus.SUCCESS;
+            if (resultText.contains("틀렸습니다"))
+                return JudgmentStatus.FAIL;
             return JudgmentStatus.ERROR;
         }
     },
@@ -22,6 +24,18 @@ public enum Platform {
         @Override
         public JudgmentStatus toStatus(String resultText) {
             return null;
+        }
+    },
+    /**
+     * <b>Welcome 플랫폼</b>
+     * <p>
+     * 신규 사용자를 위한 환영 문제 전용 플랫폼입니다.
+     * </p>
+     */
+    WELCOME {
+        @Override
+        public JudgmentStatus toStatus(String resultText) {
+            return JudgmentStatus.SUCCESS;
         }
     };
 
