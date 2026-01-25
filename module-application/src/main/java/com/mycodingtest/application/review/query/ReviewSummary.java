@@ -2,6 +2,7 @@ package com.mycodingtest.application.review.query;
 
 import com.mycodingtest.domain.problem.Problem;
 import com.mycodingtest.domain.review.Review;
+import com.mycodingtest.domain.review.ReviewStatus;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +19,8 @@ public record ReviewSummary(
         int difficultyLevel,
         int importanceLevel,
         boolean isReviewed,
-        LocalDateTime reviewedAt
+        LocalDateTime reviewedAt,
+        ReviewStatus status
 ) {
     public static ReviewSummary from(Problem problem, Review review) {
         return new ReviewSummary(
@@ -32,7 +34,8 @@ public record ReviewSummary(
                 review.getDifficultyLevel(),
                 review.getImportanceLevel(),
                 review.getReviewed(),
-                review.getReviewedAt()
+                review.getReviewedAt(),
+                review.getStatus()
         );
     }
 }
