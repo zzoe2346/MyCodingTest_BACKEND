@@ -38,6 +38,7 @@ jobs:
           strip_components: 3 # module-api/build/libs 경로를 제거하고 파일만 전송
 
       # 3. SSH 접속 후 Docker Compose의 app 재시작
+      # docker compose up -d app 안쓴다...
       - name: Restart Docker Compose
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -46,5 +47,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/app
-#            docker compose up -d app
             docker compose restart app
