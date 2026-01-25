@@ -27,7 +27,8 @@
 ---
 ## Deployment Architecture
 <p align="center">
-<img width="3228" height="1648" alt="image" src="https://github.com/user-attachments/assets/28400554-a892-4ebe-a8cc-56a276f40928" />
+  <img width="3968" height="1944" alt="image" src="https://github.com/user-attachments/assets/38419e3b-b1e5-4a8d-aa12-732a9dc748c2" />
+
 </p>
 
 ## Data Collection & Review Pipeline
