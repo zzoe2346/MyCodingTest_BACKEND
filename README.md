@@ -65,7 +65,7 @@ api/
 ├── judgment/                    # 채점 결과 조회 API
 └── review/                      # 오답노트 CRUD API
     # 각 패키지 내부 구성은 다음과 같습니다.
-    ├── ReviewCommandController.java 
+    ├── ReviewCommandController.java
     ├── ReviewQueryController.java
     └── dto/
 ```
@@ -80,6 +80,8 @@ api/
 
 ```
 application/
+├── config/
+│   └── AsyncConfig.java         # 비동기 처리 설정
 ├── collector/                   # 데이터 수집 서비스(Orchestration)
 │   ├── BojIngestionService.java
 │   └── dto/
@@ -98,14 +100,20 @@ application/
 │   ├── command/
 │   │   ├── ReviewCommandService.java
 │   │   ├── CreateReviewCommand.java
-│   │   └── UpdateReviewCommand.java
+│   │   ├── UpdateReviewCommand.java
+│   │   └── UpdateReviewResult.java
 │   └── query/
 │       ├── ReviewQueryService.java
 │       ├── ReviewInfo.java
 │       ├── ReviewSummary.java
 │       └── ReviewSummaryPage.java
 └── user/                        # 사용자 관리 서비스
-    └── UserService.java
+    ├── command/
+    │   ├── UserCommandService.java
+    │   ├── SyncUserCommand.java
+    │   └── WelcomeService.java  # 신규 사용자 온보딩
+    └── event/
+        └── UserCreatedEventListener.java  # 비동기 이벤트 리스너
 ```
 
 **Dependencies**: `module-domain`, `module-infra-rdb`
@@ -138,10 +146,11 @@ domain/
 ├── review/                      # ⭐️리뷰 도메인
 │   ├── Review.java              # Entity (Aggregate Root)
 │   ├── ReviewRepository.java    # Repository Interface
-│   └── ReviewStatus.java        # Enum
+│   └── ReviewStatus.java        # Enum (TO_DO, IN_PROGRESS, COMPLETED)
 └── user/                        # 사용자 도메인
     ├── User.java
-    └── UserRepository.java
+    ├── UserRepository.java
+    └── UserCreatedEvent.java    # 사용자 신규 생성 시 이벤트
 ```
 
 **Dependencies**: 없음 (Spring Context, Validation만 사용)
