@@ -25,23 +25,23 @@ public class WelcomeService {
     private static final Integer WELCOME_PROBLEM_NUMBER = 0;
     private static final String WELCOME_PROBLEM_TITLE = "HELLO WORLD";
     private static final String WELCOME_CODE = """
-            // Welcome to MyCodingTest! 🎉
-            // 환영합니다!
-            //
-            // 이 서비스는 알고리즘 문제 풀이를 복습하고
-            // 학습 진도를 추적하는 데 도움을 드립니다.
-            //
-            // 시작해볼까요?
-            // 현재는 백준만 지원하며 아래 크롬 확장자를 설치해주셔야 서비스를 정상적으로 이용 가능하신점 참고 부탁드립니다.
-            // https://chromewebstore.google.com/detail/my-coding-test-connector/ekmnmpgdcpflanopjcopleffealdeifj
-            // 설치 후, 평소처럼 백준에서 문제를 풀기만 하면 됩니다.
-            
-            public class HelloWorld {
-                public static void main(String[] args) {
-                    System.out.println("Hello, World!");
-                }
+        // 🎉 Welcome to MyCodingTest!
+        //
+        // My Coding Test는 여러분의 알고리즘 문제 풀이 복습과
+        // 꾸준한 학습 성장을 돕기 위해 만들어졌습니다.
+        //
+        // [시작 가이드]
+        // 1. 현재 '백준(Baekjoon)' 플랫폼을 우선 지원합니다.
+        // 2. 서비스 이용을 위해 아래 크롬 확장 프로그램을 반드시 설치해 주세요.
+        //    👉 https://chromewebstore.google.com/detail/my-coding-test-connector/ekmnmpgdcpflanopjcopleffealdeifj
+        // 3. 설치 후 평소처럼 문제를 풀면, 여러분의 기록이 자동으로 추적됩니다.
+        
+        public class HelloWorld {
+            public static void main(String[] args) {
+                System.out.println("Happy Coding!");
             }
-            """;
+        }
+        """;
     private static final String WELCOME_RESULT = "환영합니다! 🎉";
 
     private final ProblemRepository problemRepository;
